@@ -1,15 +1,7 @@
 package com.openclassrooms.realestatemanager
 
 import android.content.Context
-import org.junit.runner.RunWith
-import android.support.test.runner.AndroidJUnit4
-import kotlin.Throws
-import android.support.test.InstrumentationRegistry
 import android.net.wifi.WifiManager
-import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
-import android.os.Bundle
-import com.openclassrooms.realestatemanager.R
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,8 +46,8 @@ object Utils {
      * @param context
      * @return
      */
-    fun isInternetAvailable(context: Context?): Boolean? {
-        val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        return wifi.isWifiEnabled
-    }
+//    fun isInternetAvailable(context: Context?): Boolean? {
+//        val wifi = context?.getSystemService(Context.WIFI_SERVICE) as WifiManager
+//        return wifi.isWifiEnabled
+//    }
 }

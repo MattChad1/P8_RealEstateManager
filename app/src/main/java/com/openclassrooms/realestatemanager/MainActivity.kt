@@ -1,32 +1,32 @@
 package com.openclassrooms.realestatemanager
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
+import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 
 class MainActivity : AppCompatActivity() {
-    lateinit private var textViewMain: TextView;
-    lateinit private var textViewQuantity: TextView
+
+    lateinit var binding: ActivityMainBinding;
+    lateinit var toolbar: Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Bug 1 : Correction de l'id pour ce TextView
-        textViewMain = findViewById(R.id.activity_main_activity_text_view_main)
-        textViewQuantity = findViewById(R.id.activity_main_activity_text_view_quantity)
-        configureTextViewMain()
-        configureTextViewQuantity()
-    }
+        toolbar = binding.topAppBar
+        setSupportActionBar(toolbar)
 
-    private fun configureTextViewMain() {
-        textViewMain.setTextSize(15f)
-        textViewMain.setText("Le premier bien immobilier enregistré vaut ")
-    }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.main_fragment, ListPropertiesFragment::class.java, null)
+                .commit()
+        }
 
-    private fun configureTextViewQuantity() {
-        val quantity = Utils.convertDollarToEuro(100)
-        textViewQuantity.setTextSize(20f)
-        // Bug 2 : setText avec int. Ajout de String.valueOf
-        textViewQuantity.setText(quantity.toString())
+
     }
 }
