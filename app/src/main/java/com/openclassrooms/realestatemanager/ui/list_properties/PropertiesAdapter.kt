@@ -38,7 +38,7 @@ class PropertiesAdapter(private val properties: MutableList<Property>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.type.text = properties[position].type
+        viewHolder.type.text = properties[position].type?.str
         viewHolder.neighborhood.text = properties[position].description
         viewHolder.price.text = properties[position].price.toString()
     }

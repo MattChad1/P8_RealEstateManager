@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.datas.database
 import androidx.room.Room
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
+import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
 import com.openclassrooms.realestatemanager.datas.model.Property
 import junit.framework.Assert.assertEquals
 import org.junit.After
@@ -39,10 +40,11 @@ class LocaleDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGet() {
-        val property = Property(1)
-        propertyDao.insert(property)
-        val propertyGet = propertyDao.getPropertyById(1)
-        assertEquals(property, propertyGet)
+        val property = Property(0, TypeEnum.CONDO)
+        val id = propertyDao.insert(property)
+        val propertyGet = propertyDao.getPropertyById(id)
+        assertEquals(property.agent, propertyGet.agent)
+        assertEquals(property.type, propertyGet.type)
     }
 
 
