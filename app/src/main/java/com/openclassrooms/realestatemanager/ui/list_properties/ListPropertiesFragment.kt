@@ -31,7 +31,7 @@ class ListPropertiesFragment : Fragment() {
         val rv: RecyclerView = binding.rvListProperties
         rv.layoutManager = LinearLayoutManager(requireActivity())
         rv.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
-        val adapter = PropertiesAdapter(properties)
+        val adapter = PropertiesAdapter(requireActivity(), properties)
         rv.adapter = adapter
 
         viewModel.allProperties.observe(this) { newProperties ->

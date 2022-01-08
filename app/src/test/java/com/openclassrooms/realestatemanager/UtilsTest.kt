@@ -1,14 +1,16 @@
 package com.openclassrooms.realestatemanager
 
 import org.junit.runner.RunWith
-import android.support.test.runner.AndroidJUnit4
+
 import kotlin.Throws
-import android.support.test.InstrumentationRegistry
+
 import android.net.wifi.WifiManager
-import android.support.v7.app.AppCompatActivity
+
 import android.widget.TextView
 import android.os.Bundle
 import com.openclassrooms.realestatemanager.R
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import org.junit.Assert
 import org.junit.Test
 import java.text.DecimalFormat
@@ -31,9 +33,21 @@ class UtilsTest {
     @Test
     fun getTodayDate() {
         val dateResult = Utils.getTodayDate()
-        Assert.assertTrue(dateResult.matches("\\d{2}/\\d{2}/\\d{4}"))
+        assertTrue(dateResult!!.matches(Regex("\\d{2}/\\d{2}/\\d{4}")))
         val now = Calendar.getInstance()
         val mFormat = DecimalFormat("00")
-        Assert.assertEquals(mFormat.format(now[Calendar.DAY_OF_MONTH].toLong()) + "/" + mFormat.format((now[Calendar.MONTH] + 1).toLong()) + "/" + now[Calendar.YEAR], dateResult)
+        assertEquals(mFormat.format(now[Calendar.DAY_OF_MONTH].toLong()) + "/" + mFormat.format((now[Calendar.MONTH] + 1).toLong()) + "/" + now[Calendar.YEAR], dateResult)
+    }
+
+    @Test
+    fun formatPrice() {
+        val tested: Int = 1000000
+        val expected = "$1,000,000"
+        assertEquals(expected, Utils.formatPrice(tested))
+
+        val tested2: Int = 999
+        val expected2 = "$999"
+        assertEquals(expected2, Utils.formatPrice(tested2))
+
     }
 }

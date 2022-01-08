@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager
 import android.content.Context
 import android.net.wifi.WifiManager
 import java.text.DateFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,6 +39,10 @@ object Utils {
     fun getTodayDate(): String? {
         val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
         return dateFormat.format(Date())
+    }
+
+    fun formatPrice (price: Int?): String {
+        return if (price==null) "" else "$" + NumberFormat.getNumberInstance(Locale.US).format(price)
     }
 
     /**

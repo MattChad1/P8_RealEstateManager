@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         toolbar = binding.topAppBar
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null) {
+          if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.main_fragment, ListPropertiesFragment::class.java, null)
@@ -29,4 +31,17 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_toolbar,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        return true
+    }
+
+
 }

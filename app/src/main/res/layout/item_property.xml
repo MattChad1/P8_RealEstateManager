@@ -14,7 +14,7 @@
         android:scaleType="centerCrop"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        tools:src="@drawable/flat1"
+        android:src="@drawable/flat1"
         />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="10dp"
         android:textSize="15sp"
         tools:text="Manhattan"
         />
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="10dp"
         android:textSize="22sp"
         android:textColor="@color/colorAccent"
         tools:text="$12,599,000"

@@ -1,14 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.list_properties
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.datas.model.Property
 
-class PropertiesAdapter(private val properties: MutableList<Property>) :
+class PropertiesAdapter(private val context: Context, private val properties: MutableList<Property>) :
         RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
     /**
@@ -39,8 +41,10 @@ class PropertiesAdapter(private val properties: MutableList<Property>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.type.text = properties[position].type?.str
-        viewHolder.neighborhood.text = properties[position].description
-        viewHolder.price.text = properties[position].price.toString()
+//        viewHolder.neighborhood.text = properties[position].description
+        //TODO : A changer pour le vrai quartier
+        viewHolder.neighborhood.text = "Manhattan"
+        viewHolder.price.text = Utils.formatPrice(properties[position].price)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
