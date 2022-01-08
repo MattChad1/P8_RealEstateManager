@@ -3,6 +3,12 @@
 buildscript {
     ext.kotlin_version = '1.6.10'
 
+    ext{
+        activityVersion = '1.4.0'
+        lifecycleVersion = '2.4.0'
+        room_version = '2.4.0'
+    }
+
     repositories {
         google()
         mavenCentral()
