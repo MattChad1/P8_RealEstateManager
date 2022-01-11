@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.datas.model.Property
+import com.openclassrooms.realestatemanager.ui.ItemClickListener
 
-class PropertiesAdapter(private val context: Context, private val properties: MutableList<Property>) :
+class PropertiesAdapter(private val context: Context, private val properties: MutableList<Property>, private val clickListener: ItemClickListener) :
         RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
     /**
@@ -21,6 +22,7 @@ class PropertiesAdapter(private val context: Context, private val properties: Mu
         val type: TextView = view.findViewById(R.id.item_property_tv_type)
         val neighborhood: TextView = view.findViewById(R.id.item_property_tv_neighborhood)
         val price: TextView = view.findViewById(R.id.item_property_tv_price)
+
 
         init {
             // Define click listener for the ViewHolder's View.
@@ -45,6 +47,7 @@ class PropertiesAdapter(private val context: Context, private val properties: Mu
         //TODO : A changer pour le vrai quartier
         viewHolder.neighborhood.text = "Manhattan"
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
+        viewHolder.itemView.setOnClickListener { clickListener.onItemAdapterClickListener(position)}
     }
 
     // Return the size of your dataset (invoked by the layout manager)

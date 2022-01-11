@@ -1,10 +1,13 @@
 package com.openclassrooms.realestatemanager.datas.model
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
 import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity
 data class Property(
     @PrimaryKey(autoGenerate = true) var id: Long,

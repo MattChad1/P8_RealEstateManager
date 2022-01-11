@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
 import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 
@@ -42,6 +43,23 @@ class MainActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         return true
     }
+
+//    fun replaceFragment(fragmentClass: Fragment) {
+//       var fragment: Fragment? = null;
+//        try {
+//            fragment = fragmentClass?.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        // Insert the fragment by replacing any existing fragment
+//        if (fragment != null) {
+//            val transaction = supportFragmentManager.beginTransaction()
+//            transaction.replace(R.id.main_fragment, fragment)
+//            transaction.commit()
+//        }
+//    }
+
+
 
 
 }
