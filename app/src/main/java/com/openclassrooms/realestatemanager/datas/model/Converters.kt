@@ -1,8 +1,12 @@
 package com.openclassrooms.realestatemanager.datas.model
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
 import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 
 class Converters {
@@ -78,6 +82,20 @@ class Converters {
             return prox
         }
         return null
+    }
+
+    @TypeConverter
+    fun getStringFromPhotos(list: List<ImageRoom>?): String? {
+        if (list == null) return null
+        else return Json.encodeToString(list)
+
+    }
+
+    @TypeConverter
+    fun getPhotosFromString(str: String?): List<ImageRoom>? {
+        if (str == null) return null
+        else return Json.decodeFromString<List<ImageRoom>>(str)
+
     }
 
 }

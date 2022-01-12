@@ -11,16 +11,18 @@ import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
 import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
 import com.openclassrooms.realestatemanager.datas.model.Agent
 import com.openclassrooms.realestatemanager.datas.model.Converters
+import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.Property
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Property::class, Agent::class], version = 1, exportSchema = true)
+@Database(entities = [Property::class, Agent::class/*, ImageRoom::class*/], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class LocaleDatabase : RoomDatabase() {
 
     abstract fun propertyDao(): PropertyDao
     abstract fun agentDao(): AgentDao
+//    abstract fun imageRoomDao(): ImageRoomDao
 
     companion object {
         @Volatile
@@ -81,7 +83,7 @@ abstract class LocaleDatabase : RoomDatabase() {
                         300.00,
                         6,
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                        null,
+                        mutableListOf<ImageRoom>(ImageRoom(0 , 0, "flat1", "Salon"), ImageRoom(0 , 0, "flat2", "Autre pièce")),
                         "8 5th Avenue",
                         mutableListOf<ProximityEnum>(ProximityEnum.PARK, ProximityEnum.SCHOOL),
                         true,

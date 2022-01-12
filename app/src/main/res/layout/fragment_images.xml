@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_room"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:background="#333333"
+        tools:src="@drawable/flat1" />
+
+    <TextView
+        android:id="@+id/legende_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/image_room"
+        android:background="#333333"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:alpha="0.8"
+        android:textColor="#FFFFFF"
+        tools:text="Salon" />
+
+</RelativeLayout>
