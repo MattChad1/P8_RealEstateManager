@@ -17,6 +17,8 @@ data class Property(
     var price: Int? = null,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
+    var bedrooms: Int? = 0,
+    var bathrooms: Int? = 0,
     var description: String? = null,
 //    @Embedded
     var photos: MutableList<ImageRoom>? = null,

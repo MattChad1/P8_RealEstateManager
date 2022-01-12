@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.databinding.CardDatasDetailsBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailPropertyBinding
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.Property
@@ -56,6 +57,19 @@ lateinit var property: Property
         }
 
         binding.tvDetailDescription.text = property.description
+
+        val cardviews = listOf<
+                CardDatasDetailsBinding>(binding.cardviewSquareMeters, binding.cardviewNumberRooms, binding.cardviewNumberBathrooms, binding.cardviewNumberBedrooms)
+        val icons = listOf<Int>(R.drawable.ic_baseline_square_foot_24, R.drawable.ic_baseline_house_24, R.drawable.ic_outline_bathroom_24, R.drawable.ic_baseline_bed_24)
+        val titles = listOf<Int>(R.string.surface, R.string.num_rooms, R.string.num_bathrooms, R.string.num_bedrooms)
+        val datas = listOf<String>(this.getString(R.string.surface_data, property.squareFeet), property.rooms.toString(), property.bathrooms.toString(), property.bedrooms.toString(),)
+
+        for (i in 0..3) {
+            cardviews[i].iconDetail.setImageResource(icons[i])
+            cardviews[i].tvDetailTitle.text = getString(titles[i])
+            cardviews[i].tvDetailData.text = datas[i]
+
+        }
 
         // Inflate the layout for this fragment
         return binding.root

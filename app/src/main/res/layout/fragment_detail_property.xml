@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.detail_property.DetailPropertyFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_rooms"
@@ -33,19 +43,65 @@
 
     <TextView
         android:id="@+id/tv_detail_title"
+        style="tv"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
         android:layout_width="match_parent"
          android:layout_height="wrap_content"
-        android:text="Titre de l'annonce"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Description"
+
         />
 
     <TextView
         android:id="@+id/tv_detail_description"
+        style="tv"
         app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:layout_marginTop="15dp"
+        android:text="Lorem Ipsum"
         />
 
+    <include
+        layout="@layout/card_datas_details"
+        android:id="@+id/cardview_square_meters"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        layout="@layout/card_datas_details"
+        android:id="@+id/cardview_number_rooms"
+        app:layout_constraintTop_toBottomOf="@id/cardview_square_meters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <include
+        layout="@layout/card_datas_details"
+        android:id="@+id/cardview_number_bathrooms"
+        app:layout_constraintTop_toBottomOf="@id/cardview_number_rooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <include
+        layout="@layout/card_datas_details"
+        android:id="@+id/cardview_number_bedrooms"
+        app:layout_constraintTop_toBottomOf="@id/cardview_number_bathrooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+</FrameLayout>

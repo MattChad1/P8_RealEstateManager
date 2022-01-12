@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+// Detail Fragment
+
+    <string name="description">Dscription</string>
+    <string name="surface">Surface</string>
+    <string name="surface_data">%.2f sq m</string>
+    <string name="num_rooms">Number of rooms</string>
+    <string name="num_bathrooms">Number of bathrooms</string>
+    <string name="num_bedrooms">Number of bedrooms</string>
+    <string name="location">Location</string>
 
 
 </resources>
