@@ -5,19 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
 
-class PropertiesAdapter(private val context: Context, private val properties: MutableList<Property>, private val clickListener: ItemClickListener) :
-        RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
+class PropertiesAdapter(
+    private val context: Context,
+    private val properties: MutableList<Property>,
+    private val clickListener: ItemClickListener
+) :
+    RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
+    private var itemSelected: Long? = null
+    var viewSelected: View? = null
+
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val type: TextView = view.findViewById(R.id.item_property_tv_type)
         val neighborhood: TextView = view.findViewById(R.id.item_property_tv_neighborhood)
@@ -33,7 +38,7 @@ class PropertiesAdapter(private val context: Context, private val properties: Mu
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.item_property, viewGroup, false)
+            .inflate(R.layout.item_property, viewGroup, false)
         return ViewHolder(view)
     }
 
@@ -42,15 +47,48 @@ class PropertiesAdapter(private val context: Context, private val properties: Mu
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+        if (properties[position].id == itemSelected) {
+            viewHolder.itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.colorAccent
+                )
+            )
+        }
+        else viewHolder.itemView.setBackgroundColor(
+            ContextCompat.getColor(
+                context,
+                R.color.white
+            )
+        )
+
+
+
         viewHolder.type.text = properties[position].type?.str
 //        viewHolder.neighborhood.text = properties[position].description
         //TODO : A changer pour le vrai quartier
         viewHolder.neighborhood.text = "Manhattan"
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
-        viewHolder.itemView.setOnClickListener { clickListener.onItemAdapterClickListener(position)}
+        viewHolder.itemView.setOnClickListener {
+            clickListener.onItemAdapterClickListener(position)
+            noSelectItem(viewSelected)
+            viewSelected = viewHolder.itemView
+            highlightItem(viewSelected)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = properties.size
+
+    fun highlightItem (v: View?) {
+        v?.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
+        v?.findViewById<TextView>(R.id.item_property_tv_price)?.setTextColor(ContextCompat.getColor(context, R.color.white))
+    }
+
+    fun noSelectItem (v: View?) {
+        v?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        v?.findViewById<TextView>(R.id.item_property_tv_price)?.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+    }
+
 
 }

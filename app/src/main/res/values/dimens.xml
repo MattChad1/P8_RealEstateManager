@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+        <bool name="isTablet">false</bool>
+
+        //sizes
+        <dimen name="imageViewPager">300dp</dimen>
+
+</resources>

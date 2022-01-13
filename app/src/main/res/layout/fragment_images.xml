@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        android:background="#333333"
+        android:background="#FFFFFF"
         tools:src="@drawable/flat1" />
 
     <TextView

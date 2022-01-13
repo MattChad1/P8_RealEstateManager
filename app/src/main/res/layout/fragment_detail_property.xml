@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.detail_property.DetailPropertyFragment">
-
     <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="50dp"
+
+        tools:context=".ui.detail_property.DetailPropertyFragment"
         >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="260dp"
+        tools:background="@drawable/flat1"
         />
 
     <com.google.android.material.tabs.TabLayout
@@ -39,6 +38,7 @@
         app:tabPaddingStart="0dp"
         app:tabPaddingTop="0dp"
         android:background="#00000000"
+        tools:background="@drawable/dot_selected"
         />
 
 
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Lorem Ipsum"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non."
         />
 
     <include
@@ -118,7 +118,7 @@
             app:layout_constraintTop_toBottomOf="@id/cardview_location"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/imageViewPager"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
@@ -141,10 +141,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-
-
-
-
-
-</FrameLayout>

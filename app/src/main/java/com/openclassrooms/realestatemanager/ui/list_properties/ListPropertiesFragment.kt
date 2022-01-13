@@ -25,6 +25,7 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
     private val viewModel: ListPropertiesViewModel by viewModels() {
         ViewModelFactory(MyApplication.instance.propertyRepository)
     }
+    var itemSelected: Long? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,7 +41,15 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         rv.adapter = adapter
 
         viewModel.allProperties.observe(this) { newProperties ->
-            // Update the cached copy of the words in the adapter.
+
+            // Check if list is launched for the 1st time, then display details of the 1st item
+//            if (properties.isEmpty() && newProperties!= null && newProperties.isNotEmpty()) {
+//                newProperties[0]?.let {
+//                    sendNewDetails (it)
+//                }
+//
+//            }
+
             properties.let {
                 properties.clear()
                 if (newProperties != null) {
@@ -60,15 +69,24 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemAdapterClickListener(position: Int) {
+
+
+        sendNewDetails(properties[position])
+
+    }
+
+    fun sendNewDetails (property: Property) {
+        itemSelected = property.id
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()
-        val json = Json.encodeToString(properties[position])
-
+        val json = Json.encodeToString(property)
         args.putString("property", json)
         newFragment.arguments = args
 
-        transaction?.replace(R.id.main_fragment, newFragment)
+        if (resources.getBoolean(R.bool.isTablet)==false) transaction?.replace(R.id.main_fragment, newFragment)
+        else transaction?.replace(R.id.second_fragment, newFragment)
+
         transaction?.disallowAddToBackStack()
         transaction?.commit()
 

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
+import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
 import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +30,18 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.main_fragment, ListPropertiesFragment::class.java, null)
                 .commit()
         }
+
+//        var secondFragment = supportFragmentManager.findFragmentById(R.id.second_fragment);
+//
+//            //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
+//            if (secondFragment == null && binding.secondFragment != null) {
+//                secondFragment = DetailPropertyFragment()
+//                supportFragmentManager.beginTransaction()
+//                    .setReorderingAllowed(true)
+//                    .add(R.id.second_fragment, DetailPropertyFragment::class.java, null)
+//                    .commit()
+//            }
+
 
 
     }
