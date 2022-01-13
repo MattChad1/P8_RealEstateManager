@@ -44,21 +44,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-//    fun replaceFragment(fragmentClass: Fragment) {
-//       var fragment: Fragment? = null;
-//        try {
-//            fragment = fragmentClass?.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        // Insert the fragment by replacing any existing fragment
-//        if (fragment != null) {
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.main_fragment, fragment)
-//            transaction.commit()
-//        }
-//    }
-
 
 
 

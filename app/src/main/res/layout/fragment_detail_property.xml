@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="50dp"
         >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,8 +96,50 @@
         android:layout_height="wrap_content"
         />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <include
+            layout="@layout/card_datas_details"
+            android:id="@+id/cardview_location"
+            app:layout_constraintTop_toBottomOf="@id/cardview_number_bedrooms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+
+<!--        <fragment-->
+<!--            app:layout_constraintTop_toBottomOf="@id/cardview_location"-->
+<!--            android:id="@+id/fragment_maps"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            />-->
+
+        <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/map"
+            app:layout_constraintTop_toBottomOf="@id/cardview_location"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            map:mapType="normal"
+            map:liteMode="true"
+            tools:context=".ui.detail_property.MapsFragment"
+            />
+
+<!--        <fragment xmlns:map="http://schemas.android.com/apk/res-auto"-->
+<!--            android:name="com.google.android.gms.maps.MapFragment"-->
+<!--            android:id="@+id/map"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/cardview_location"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="300dp"-->
+<!--            map:cameraZoom="13"-->
+<!--            map:mapType="normal"-->
+<!--            map:liteMode="true"/>-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 

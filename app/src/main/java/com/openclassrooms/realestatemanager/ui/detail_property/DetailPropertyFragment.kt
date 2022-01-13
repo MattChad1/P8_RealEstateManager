@@ -2,11 +2,12 @@ package com.openclassrooms.realestatemanager.ui.detail_property
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.CardDatasDetailsBinding
@@ -59,17 +60,26 @@ lateinit var property: Property
         binding.tvDetailDescription.text = property.description
 
         val cardviews = listOf<
-                CardDatasDetailsBinding>(binding.cardviewSquareMeters, binding.cardviewNumberRooms, binding.cardviewNumberBathrooms, binding.cardviewNumberBedrooms)
-        val icons = listOf<Int>(R.drawable.ic_baseline_square_foot_24, R.drawable.ic_baseline_house_24, R.drawable.ic_outline_bathroom_24, R.drawable.ic_baseline_bed_24)
-        val titles = listOf<Int>(R.string.surface, R.string.num_rooms, R.string.num_bathrooms, R.string.num_bedrooms)
-        val datas = listOf<String>(this.getString(R.string.surface_data, property.squareFeet), property.rooms.toString(), property.bathrooms.toString(), property.bedrooms.toString(),)
+                CardDatasDetailsBinding>(binding.cardviewSquareMeters, binding.cardviewNumberRooms, binding.cardviewNumberBathrooms, binding.cardviewNumberBedrooms, binding.cardviewLocation)
+        val icons = listOf<Int>(com.openclassrooms.realestatemanager.R.drawable.ic_baseline_square_foot_24, com.openclassrooms.realestatemanager.R.drawable.ic_baseline_house_24, com.openclassrooms.realestatemanager.R.drawable.ic_outline_bathroom_24, com.openclassrooms.realestatemanager.R.drawable.ic_baseline_bed_24, com.openclassrooms.realestatemanager.R.drawable.ic_baseline_location_on_24)
+        val titles = listOf<Int>(com.openclassrooms.realestatemanager.R.string.surface, com.openclassrooms.realestatemanager.R.string.num_rooms, com.openclassrooms.realestatemanager.R.string.num_bathrooms, com.openclassrooms.realestatemanager.R.string.num_bedrooms, com.openclassrooms.realestatemanager.R.string.location)
+        val datas = listOf<String?>(this.getString(com.openclassrooms.realestatemanager.R.string.surface_data, property.squareFeet), property.rooms.toString(), property.bathrooms.toString(), property.bedrooms.toString(), property.adress)
 
-        for (i in 0..3) {
+        for (i in 0..4) {
             cardviews[i].iconDetail.setImageResource(icons[i])
             cardviews[i].tvDetailTitle.text = getString(titles[i])
             cardviews[i].tvDetailData.text = datas[i]
 
         }
+
+        val fragmentManager: FragmentManager = childFragmentManager
+        val bundle = Bundle()
+        bundle.putString("adress", property.adress)
+
+        fragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
+            .add(R.id.map, MapsFragment::class.java, bundle)
+            .commit()
 
         // Inflate the layout for this fragment
         return binding.root
