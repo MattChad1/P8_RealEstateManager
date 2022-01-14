@@ -21,5 +21,13 @@
 
     </style>
 
+    <style name="field_add_property">
+<item name="android:layout_marginTop">15dp</item>
+    </style>
+
+    <style name="field_add_reu_edittext">
+
+    </style>
+
 
 </resources>

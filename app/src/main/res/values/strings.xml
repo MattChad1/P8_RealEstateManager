@@ -1,15 +1,27 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
 
-
-// Detail Fragment
-
-    <string name="description">Dscription</string>
+// General
     <string name="surface">Surface</string>
     <string name="surface_data">%.2f sq m</string>
     <string name="num_rooms">Number of rooms</string>
     <string name="num_bathrooms">Number of bathrooms</string>
     <string name="num_bedrooms">Number of bedrooms</string>
+
+
+
+    // Detail Fragment
+    <string name="description">Description</string>
     <string name="location">Location</string>
+
+
+    // Add Property Activity
+    <string name="title_activity_add_property">AddProperty</string>
+<string name="form_description">Property description</string>
+<string name="form_adress">Adress</string>
+<string name="form_price">Sale price</string>
+<string name="form_submit">Submit</string>
+
+
 
 </resources>
