@@ -1,29 +1,19 @@
-package com.openclassrooms.realestatemanager.datas.model
+package com.openclassrooms.realestatemanager.ui.list_properties
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
-import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
-import kotlinx.serialization.Serializable
+import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 
-@Serializable
-@Entity
-data class Property(
-    @PrimaryKey(autoGenerate = true)
+data class PropertyViewStateItem (
     var id: Long,
-    var type: Int? = null,
-    var agent: Int? = null,
+    var type: String? = null,
     var price: Int? = null,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,
     var bathrooms: Int? = 0,
     var description: String? = null,
-//    @Embedded
     var photos: MutableList<ImageRoom>? = null,
     var adress: String? = null,
     var proximity: MutableList<ProximityEnum>? = null,
-    var available: Boolean = false,
     var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
-    var dateSold: String? = null, // idem
-)
+        )

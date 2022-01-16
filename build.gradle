@@ -6,7 +6,7 @@ buildscript {
     ext{
         activityVersion = '1.4.0'
         lifecycleVersion = '2.4.0'
-        room_version = '2.4.0'
+        room_version = '2.4.1'
     }
 
     repositories {

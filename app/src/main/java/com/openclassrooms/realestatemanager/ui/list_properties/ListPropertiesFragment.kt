@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
 import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
@@ -21,9 +22,9 @@ import kotlinx.serialization.json.Json
 class ListPropertiesFragment : Fragment(), ItemClickListener {
 
 
-    var properties: MutableList<Property> = emptyList<Property>().toMutableList()
+    var properties: MutableList<PropertyViewStateItem> = mutableListOf()
     private val viewModel: ListPropertiesViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository,MyApplication.instance.typeOfPropertyRepository)
     }
     var itemSelected: Long? = null
 
@@ -49,16 +50,10 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 //                }
 //
 //            }
-
-            properties.let {
-                properties.clear()
-                if (newProperties != null) {
-                    for (p in newProperties) {
-                        if (p!=null) properties.add(p)
-                    }
-                }
+            properties.clear()
+            properties.addAll(newProperties)
                 adapter.notifyDataSetChanged() }
-        }
+
 
 
         return binding.root
@@ -69,19 +64,17 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemAdapterClickListener(position: Int) {
-
-
-        sendNewDetails(properties[position])
+        sendNewDetails(properties[position].id)
 
     }
 
-    fun sendNewDetails (property: Property) {
-        itemSelected = property.id
+    fun sendNewDetails (id: Long) {
+
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()
-        val json = Json.encodeToString(property)
-        args.putString("property", json)
+//        val json = Json.encodeToString(property)
+        args.putLong("idProperty", id)
         newFragment.arguments = args
 
         if (resources.getBoolean(R.bool.isTablet)==false) transaction?.replace(R.id.main_fragment, newFragment)

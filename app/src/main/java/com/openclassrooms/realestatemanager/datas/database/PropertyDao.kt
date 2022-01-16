@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.Flow
 interface PropertyDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(property: Property?): Long
+    suspend fun insert(property: Property?): Long
 
     @Update
-    fun update(property: Property?)
+    suspend fun update(property: Property?)
 
     @Query("SELECT * FROM Property")
     fun getAll(): Flow<List<Property?>?>
 
     @Query("SELECT * FROM Property WHERE id=:id")
-    fun getPropertyById(id: Long): Property
+    suspend fun getPropertyById(id: Long): Property
 
 
 }

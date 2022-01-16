@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
-import com.openclassrooms.realestatemanager.ui.add_property.AddProperty
-import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
+import com.openclassrooms.realestatemanager.ui.add_property.AddPropertyActivity
 import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 
 class MainActivity : AppCompatActivity() {
@@ -60,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         when (item.itemId) {
             R.id.toolbar_add -> {
-                startActivity(Intent (this,AddProperty::class.java ))
+                startActivity(Intent (this,AddPropertyActivity::class.java ))
             }
 
 

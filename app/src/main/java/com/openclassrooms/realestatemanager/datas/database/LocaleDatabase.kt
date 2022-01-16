@@ -9,19 +9,18 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
 import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
-import com.openclassrooms.realestatemanager.datas.model.Agent
-import com.openclassrooms.realestatemanager.datas.model.Converters
-import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.datas.model.Property
+import com.openclassrooms.realestatemanager.datas.model.*
+import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Property::class, Agent::class/*, ImageRoom::class*/], version = 1, exportSchema = true)
+@Database(entities = [Property::class, Agent::class, TypeOfProperty::class/*, ImageRoom::class*/], version = 1)
 @TypeConverters(Converters::class)
 abstract class LocaleDatabase : RoomDatabase() {
 
     abstract fun propertyDao(): PropertyDao
     abstract fun agentDao(): AgentDao
+    abstract fun typeOfPropertyDao(): TypeOfPropertyDao
 //    abstract fun imageRoomDao(): ImageRoomDao
 
     companion object {
@@ -64,20 +63,28 @@ abstract class LocaleDatabase : RoomDatabase() {
                 super.onCreate(db)
                 INSTANCE?.let { database ->
                     scope.launch {
-                        populateDatabase(database.propertyDao(), database.agentDao())
+                        populateDatabase(database.propertyDao(), database.agentDao(), database.typeOfPropertyDao())
                     }
                 }
             }
 
-            suspend fun populateDatabase(propertyDao: PropertyDao, agentDao: AgentDao) {
+            suspend fun populateDatabase(propertyDao: PropertyDao, agentDao: AgentDao, typeOfPropertyDao: TypeOfPropertyDao) {
                 agentDao.insert(Agent(0, "Mike Money"))
                 agentDao.insert(Agent(0, "Melissa BigDollars"))
+
+
+                typeOfPropertyDao.insert(TypeOfProperty(0, "Condo"))
+                typeOfPropertyDao.insert(TypeOfProperty(0, "Loft"))
+                typeOfPropertyDao.insert(TypeOfProperty(0, "Mansion"))
+                typeOfPropertyDao.insert(TypeOfProperty(0, "Single Family House"))
+
+
 
 
                 propertyDao.insert(
                     Property(
                         0,
-                        TypeEnum.LOFT,
+                        1,
                         1,
                         1500000,
                         300.00,
@@ -97,7 +104,7 @@ abstract class LocaleDatabase : RoomDatabase() {
                 propertyDao.insert(
                     Property(
                         0,
-                        TypeEnum.LOFT,
+                        2,
                         1,
                         999000,
                         100.00,

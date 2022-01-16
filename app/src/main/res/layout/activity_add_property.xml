@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.add_property.AddProperty"
+    tools:context=".ui.add_property.AddPropertyActivity"
     android:orientation="vertical"
     >
 
@@ -29,12 +29,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="6dp"
         android:orientation="vertical"
         >
+
+
+
 
     <TextView
         android:id="@+id/tv_add_property_title"
@@ -49,6 +54,13 @@
         android:textColor="@color/colorPrimary"
         android:text="Ajouter une nouvelle annonce"
         />
+
+        <Spinner
+            android:id="@+id/form_type_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/form_type"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_description"

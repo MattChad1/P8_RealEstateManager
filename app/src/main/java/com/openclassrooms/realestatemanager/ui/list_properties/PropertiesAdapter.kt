@@ -14,7 +14,7 @@ import com.openclassrooms.realestatemanager.ui.ItemClickListener
 
 class PropertiesAdapter(
     private val context: Context,
-    private val properties: MutableList<Property>,
+    private val properties: MutableList<PropertyViewStateItem>,
     private val clickListener: ItemClickListener
 ) :
     RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
@@ -64,7 +64,7 @@ class PropertiesAdapter(
 
 
 
-        viewHolder.type.text = properties[position].type?.str
+        viewHolder.type.text = properties[position].type
 //        viewHolder.neighborhood.text = properties[position].description
         //TODO : A changer pour le vrai quartier
         viewHolder.neighborhood.text = "Manhattan"

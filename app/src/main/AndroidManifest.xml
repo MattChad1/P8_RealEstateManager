@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RealEstateManager">
         <activity
-            android:name=".ui.add_property.AddProperty"
+            android:name=".ui.add_property.AddPropertyActivity"
             android:exported="false"
             android:label="@string/title_activity_add_property"
             android:theme="@style/Theme.RealEstateManager.NoActionBar" />
