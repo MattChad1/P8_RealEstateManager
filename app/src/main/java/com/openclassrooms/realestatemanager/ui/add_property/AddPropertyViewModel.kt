@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
 import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
@@ -10,7 +9,6 @@ import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 class AddPropertyViewModel (private val propertyRepository: PropertyRepository, private val typeOfPropertyRepository: TypeOfPropertyRepository) : ViewModel() {
 
@@ -38,7 +36,7 @@ class AddPropertyViewModel (private val propertyRepository: PropertyRepository, 
           var list : List<String> = emptyList()
           viewModelScope.launch {
               val li: List<TypeOfProperty>? = typeOfPropertyRepository.getAllTypes()
-              if (li != null) list = li.map { it.name }
+              if (li != null) list = li.map { it.nameType }
           }
           return list
     }

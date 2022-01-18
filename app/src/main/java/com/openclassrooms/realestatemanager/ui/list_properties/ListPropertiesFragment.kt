@@ -13,11 +13,8 @@ import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
-import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
 import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class ListPropertiesFragment : Fragment(), ItemClickListener {
 

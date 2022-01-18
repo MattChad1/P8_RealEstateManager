@@ -1,18 +1,13 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.MyApplication
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.ActivityAddPropertyBinding
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesViewModel
-import kotlinx.coroutines.launch
 
 class AddPropertyActivity : AppCompatActivity() {
 

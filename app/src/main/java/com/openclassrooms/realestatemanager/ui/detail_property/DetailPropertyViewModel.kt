@@ -1,19 +1,17 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import kotlinx.coroutines.launch
 
-class DetailPropertyViewModel (private val repository: PropertyRepository,
-                               private val typeOfPropertyRepository: TypeOfPropertyRepository) :
+class DetailPropertyViewModel(
+    private val repository: PropertyRepository,
+    private val typeOfPropertyRepository: TypeOfPropertyRepository
+) :
     ViewModel() {
-
-
 
 
     fun getPropertyById(id: Long): MutableLiveData<DetailPropertyViewState?> {
@@ -22,27 +20,25 @@ class DetailPropertyViewModel (private val repository: PropertyRepository,
 
         viewModelScope.launch {
 
-            val property = repository.getPropertyById(id)
-            val allTypes: List<TypeOfProperty>? = typeOfPropertyRepository.getAllTypes()
+            val property = repository.getPropertyCompleteById(id)
 
 
             valueReturn = DetailPropertyViewState(
-                property.id,
-                allTypes?.first { it.id == property.id }?.name,
-                100,
-                property.squareFeet,
-                property.rooms,
-                property.bedrooms,
-                property.bathrooms,
-                property.description,
-                property.photos,
-                property.adress
+                property.property.idProperty,
+                property.typeOfProperty?.nameType,
+                property.property.price,
+                property.property.squareFeet,
+                property.property.rooms,
+                property.property.bedrooms,
+                property.property.bathrooms,
+                property.property.description,
+                property.property.photos,
+                property.property.adress,
+                if (property.proximities == null) null else property.proximities?.map { it.idProximity }
             )
             result.postValue(valueReturn)
         }
-
-
-                return result
+        return result
     }
 
 

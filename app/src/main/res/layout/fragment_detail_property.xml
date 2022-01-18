@@ -106,16 +106,16 @@
             />
 
 
-<!--        <fragment-->
-<!--            app:layout_constraintTop_toBottomOf="@id/cardview_location"-->
-<!--            android:id="@+id/fragment_maps"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            />-->
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/cardview_location"
+                android:id="@+id/test_proximity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
         <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
             android:id="@+id/map"
-            app:layout_constraintTop_toBottomOf="@id/cardview_location"
+            app:layout_constraintTop_toBottomOf="@id/test_proximity"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="@dimen/imageViewPager"

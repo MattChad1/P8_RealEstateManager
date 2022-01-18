@@ -1,18 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.list_properties
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
-import com.google.android.material.tabs.TabLayoutMediator
-import com.openclassrooms.realestatemanager.databinding.CardDatasDetailsBinding
-import com.openclassrooms.realestatemanager.datas.model.Property
+import com.openclassrooms.realestatemanager.datas.model.PropertyComplete
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
-import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyViewState
-import com.openclassrooms.realestatemanager.ui.detail_property.ImagePropertyAdapter
 import kotlinx.coroutines.launch
 
 class ListPropertiesViewModel(
@@ -20,40 +12,36 @@ class ListPropertiesViewModel(
     private val typeOfPropertyRepository: TypeOfPropertyRepository
 ) : ViewModel() {
 
-//    val allTypes = mutableListOf<TypeOfProperty>()
-//    init {
-//        viewModelScope.launch {
-//            val allTypes: List<TypeOfProperty>? = typeOfPropertyRepository.getAllTypes()
-//        }
-//    }
+    val allTypes = mutableListOf<TypeOfProperty>()
+    init {
+        viewModelScope.launch {
+            typeOfPropertyRepository.getAllTypes()?.let { allTypes.addAll(it) }
+        }
+    }
 
     val allProperties: LiveData<List<PropertyViewStateItem>> =
-        Transformations.map(repository.allProperties.asLiveData(), ::displayProperty)
+        Transformations.map(repository.allPropertiesComplete.asLiveData(), ::displayProperty)
 
 
-    private fun displayProperty(properties: List<Property?>?): List<PropertyViewStateItem> {
+    private fun displayProperty(properties: List<PropertyComplete>?): List<PropertyViewStateItem> {
         var propertiesToReturn = mutableListOf<PropertyViewStateItem>()
-        if (properties == null) return listOf<PropertyViewStateItem>()
+        if (properties == null) return listOf()
         for (property in properties) {
-            if (property != null) {
                 propertiesToReturn.add(
                     PropertyViewStateItem(
-                        property.id,
-//                        typeOfPropertyRepository.getAllTypes()?.first { it.id == property.id }?.name,
-                        "",
-                        100,
-                        property.squareFeet,
-                        property.rooms,
-                        property.bedrooms,
-                        property.bathrooms,
-                        property.description,
-                        property.photos,
-                        property.adress
+                        property.property.idProperty,
+//                        allTypes.first { it.idType == property.idProperty }?.name,
+                        property.typeOfProperty?.nameType,
+                        property.property.price,
+                        property.property.squareFeet,
+                        property.property.rooms,
+                        property.property.bedrooms,
+                        property.property.bathrooms,
+                        property.property.description,
+                        property.property.photos,
+                        property.property.adress
                     )
-
                 )
-
-            }
         }
         return propertiesToReturn
     }

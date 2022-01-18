@@ -10,16 +10,16 @@ import com.openclassrooms.realestatemanager.datas.model.Agent
 interface AgentDao {
 
     @Insert
-    fun insert(agent: Agent?): Long
+    suspend fun insert(agent: Agent?): Long
 
     @Update
-    fun update(Agent: Agent?)
+    suspend fun update(Agent: Agent?)
 
     @Query("SELECT * FROM Agent")
-    fun getAll(): List<Agent?>?
+    suspend fun getAll(): List<Agent?>?
 
-    @Query("SELECT * FROM Agent WHERE id=:id")
-    fun getAgentById(id: Long): Agent
+    @Query("SELECT * FROM Agent WHERE idAgent=:id")
+    suspend fun getAgentById(id: Long): Agent
 
 
 }

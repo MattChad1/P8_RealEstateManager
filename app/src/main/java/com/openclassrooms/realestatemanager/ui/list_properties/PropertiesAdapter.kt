@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
-import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
 
 class PropertiesAdapter(

@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Proximity (
-    @PrimaryKey
-    val id: Int,
-    val name: String
+    @PrimaryKey(autoGenerate = false)
+    var idProximity: Int,
+    var nameProximity: String
 )
+

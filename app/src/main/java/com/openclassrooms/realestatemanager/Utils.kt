@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat

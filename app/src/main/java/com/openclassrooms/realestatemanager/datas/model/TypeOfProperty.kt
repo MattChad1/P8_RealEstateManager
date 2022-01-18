@@ -6,10 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class TypeOfProperty (
-    @PrimaryKey(autoGenerate = true)
-    var id: Long,
-    var name: String,
+    @PrimaryKey(autoGenerate = false)
+    var idType: Long,
+    var nameType: String,
 
-
-
-        )
+    )

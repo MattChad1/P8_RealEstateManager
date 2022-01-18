@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,10 +16,6 @@ import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.CardDatasDetailsBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailPropertyBinding
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.datas.model.Property
-import com.openclassrooms.realestatemanager.ui.add_property.AddPropertyViewModel
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 
 class DetailPropertyFragment : Fragment() {
@@ -102,6 +97,8 @@ class DetailPropertyFragment : Fragment() {
                     cardviews[i].tvDetailData.text = datas[i]
 
                 }
+
+                binding.testProximity.text = property.proximity.toString()
 
                 val fragmentManager: FragmentManager = childFragmentManager
                 val bundle = Bundle()
