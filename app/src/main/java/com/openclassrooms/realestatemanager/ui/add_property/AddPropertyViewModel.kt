@@ -1,20 +1,29 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
-import com.openclassrooms.realestatemanager.datas.enumClass.TypeEnum
+import android.util.Log
+import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
+import com.openclassrooms.realestatemanager.ui.list_properties.PropertyViewStateItem
 import kotlinx.coroutines.launch
 
 class AddPropertyViewModel (private val propertyRepository: PropertyRepository, private val typeOfPropertyRepository: TypeOfPropertyRepository) : ViewModel() {
 
-    fun addNewProperty(type: TypeEnum? = null,
+    val TAG = "MyLog AddPropertyVM"
+    var typesProperty : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+//    init {
+//        viewModelScope.launch {
+//
+//        }
+//    }
+
+
+
+    fun addNewProperty(type: TypeOfProperty,
                        agent: Int? = null,
-                       price: Int? = null,
+                       price: Double? = null,
                        squareFeet: Double? = null,
                        rooms: Int? = 0,
                        bedrooms: Int? = 0,
@@ -22,25 +31,35 @@ class AddPropertyViewModel (private val propertyRepository: PropertyRepository, 
                        description: String? = null,
                        photos: MutableList<ImageRoom>? = null,
                        adress: String? = null,
-                       proximity: MutableList<ProximityEnum>? = null,
                        available: Boolean = false,
                        dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
-                       dateSold: String? = null,) {
+                       dateSold: String? = null,
+    ) {
 
 
 
     }
 
+    val allTypes : LiveData<List<TypeOfProperty>> = typeOfPropertyRepository.allTypes.asLiveData()
+//        Transformations.map(typeOfPropertyRepository.allTypes.asLiveData())
+//        {it.map {it.nameType }}
 
-      fun getTypes(): List<String> {
-          var list : List<String> = emptyList()
-          viewModelScope.launch {
-              val li: List<TypeOfProperty>? = typeOfPropertyRepository.getAllTypes()
-              if (li != null) list = li.map { it.nameType }
-          }
-          return list
-    }
-
+//      fun getTypes(): LiveData<List<TypeOfProperty>> {
+//          return typeOfPropertyRepository.allTypes.asLiveData()
+//          viewModelScope.launch {
+//              val allTypes = mutableListOf<String>()
+//
+//              typeOfPropertyRepository.allTypes.asLiveData().value?.let { Log.i(TAG, "getTypes: $it") }
+//
+//
+//              typeOfPropertyRepository.allTypes.asLiveData().value?.forEach {
+//                  allTypes.add(it.nameType)
+//                  Log.i(TAG, "getTypes: " + it.nameType)
+//              }
+//              typesProperty.value = allTypes
+//          }
+////          return typesProperty
+//    }
 
 
 }

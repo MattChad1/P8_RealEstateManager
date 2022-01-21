@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.ui.list_properties
 
-import com.openclassrooms.realestatemanager.datas.enumClass.ProximityEnum
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 
 data class PropertyViewStateItem (
@@ -14,6 +13,6 @@ data class PropertyViewStateItem (
     var description: String? = null,
     var photos: MutableList<ImageRoom>? = null,
     var adress: String? = null,
-    var proximity: MutableList<ProximityEnum>? = null,
+    var proximity: MutableList<Int>? = null,
     var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
         )

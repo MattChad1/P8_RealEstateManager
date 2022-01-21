@@ -10,4 +10,9 @@ data class TypeOfProperty (
     var idType: Long,
     var nameType: String,
 
-    )
+    ) {
+
+    override fun toString(): String {
+        return nameType
+    }
+}

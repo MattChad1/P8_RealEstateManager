@@ -12,10 +12,11 @@ class ListPropertiesViewModel(
     private val typeOfPropertyRepository: TypeOfPropertyRepository
 ) : ViewModel() {
 
-    val allTypes = mutableListOf<TypeOfProperty>()
+    private val types = mutableListOf<TypeOfProperty>()
+
     init {
         viewModelScope.launch {
-            typeOfPropertyRepository.getAllTypes()?.let { allTypes.addAll(it) }
+            typeOfPropertyRepository.allTypes.asLiveData().value?.let { types.addAll(it) }
         }
     }
 
@@ -30,8 +31,7 @@ class ListPropertiesViewModel(
                 propertiesToReturn.add(
                     PropertyViewStateItem(
                         property.property.idProperty,
-//                        allTypes.first { it.idType == property.idProperty }?.name,
-                        property.typeOfProperty?.nameType,
+                        property.typeOfProperty.nameType,
                         property.property.price,
                         property.property.squareFeet,
                         property.property.rooms,
