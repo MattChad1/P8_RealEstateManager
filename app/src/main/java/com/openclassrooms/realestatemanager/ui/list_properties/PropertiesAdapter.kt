@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.Utils
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
 
 class PropertiesAdapter(
@@ -18,7 +18,7 @@ class PropertiesAdapter(
 ) :
     RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
-    private var itemSelected: Long? = null
+    private var itemSelected: Int? = null
     var viewSelected: View? = null
 
 

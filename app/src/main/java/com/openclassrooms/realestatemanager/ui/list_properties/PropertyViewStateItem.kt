@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.ui.list_properties
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 
 data class PropertyViewStateItem (
-    var id: Long,
+    var id: Int,
     var type: String? = null,
     var price: Int? = null,
     var squareFeet: Double? = null,

@@ -1,14 +1,6 @@
 package com.openclassrooms.realestatemanager
 
-import org.junit.runner.RunWith
-
-import kotlin.Throws
-
-import android.net.wifi.WifiManager
-
-import android.widget.TextView
-import android.os.Bundle
-import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.utils.Utils
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Assert

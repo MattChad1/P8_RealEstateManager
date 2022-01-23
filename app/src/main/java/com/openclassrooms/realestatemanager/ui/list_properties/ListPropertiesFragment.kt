@@ -65,13 +65,13 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 
     }
 
-    fun sendNewDetails (id: Long) {
+    fun sendNewDetails (id: Int) {
 
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()
 //        val json = Json.encodeToString(property)
-        args.putLong("idProperty", id)
+        args.putInt("idProperty", id)
         newFragment.arguments = args
 
         if (resources.getBoolean(R.bool.isTablet)==false) transaction?.replace(R.id.main_fragment, newFragment)

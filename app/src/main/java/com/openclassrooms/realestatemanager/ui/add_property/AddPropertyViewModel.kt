@@ -3,6 +3,8 @@ package com.openclassrooms.realestatemanager.ui.add_property
 import android.util.Log
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
+import com.openclassrooms.realestatemanager.datas.model.InternalStoragePhoto
+import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
@@ -12,18 +14,15 @@ import kotlinx.coroutines.launch
 class AddPropertyViewModel (private val propertyRepository: PropertyRepository, private val typeOfPropertyRepository: TypeOfPropertyRepository) : ViewModel() {
 
     val TAG = "MyLog AddPropertyVM"
-    var typesProperty : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
-//    init {
-//        viewModelScope.launch {
-//
-//        }
-//    }
 
-
+    val allTypes : LiveData<List<TypeOfProperty>> = typeOfPropertyRepository.allTypes.asLiveData()
+    var validAdress: MutableLiveData<String?> = MutableLiveData()
+    var validPrice: MutableLiveData<String?> = MutableLiveData()
+    var imagesPrev: MutableList<ImageRoom> = mutableListOf()
 
     fun addNewProperty(type: TypeOfProperty,
                        agent: Int? = null,
-                       price: Double? = null,
+                       price: Int? = null,
                        squareFeet: Double? = null,
                        rooms: Int? = 0,
                        bedrooms: Int? = 0,
@@ -31,35 +30,47 @@ class AddPropertyViewModel (private val propertyRepository: PropertyRepository, 
                        description: String? = null,
                        photos: MutableList<ImageRoom>? = null,
                        adress: String? = null,
-                       available: Boolean = false,
                        dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
                        dateSold: String? = null,
     ) {
 
 
+        validAdress.value = if (adress.isNullOrEmpty()) "Vous devez indiquer une adresse" else null
+        validPrice.value = if (price == null) "Vous devez indiquer un prix" else null
+
+        if (validAdress.value==null && validPrice.value==null) {
+            viewModelScope.launch {
+                val idInsert = propertyRepository.insert(
+                    Property(
+                        0,
+                        type.idType,
+                        adress!!,
+                        description,
+                        agent,
+                        price,
+                        squareFeet,
+                        rooms,
+                        bedrooms,
+                        bathrooms,
+                        photos,
+                        dateStartSell,
+                        dateSold
+                    )
+                )
+                for (i in imagesPrev) {
+                    propertyRepository.addPhoto(idInsert.toInt(), i.nameFile, i.legende)
+                }
+            }
+            }
+        }
+
+    fun addPhoto(nameFile: String, legende: String ) {
+        imagesPrev.add(ImageRoom(0, 0, nameFile, legende))
 
     }
 
-    val allTypes : LiveData<List<TypeOfProperty>> = typeOfPropertyRepository.allTypes.asLiveData()
-//        Transformations.map(typeOfPropertyRepository.allTypes.asLiveData())
-//        {it.map {it.nameType }}
 
-//      fun getTypes(): LiveData<List<TypeOfProperty>> {
-//          return typeOfPropertyRepository.allTypes.asLiveData()
-//          viewModelScope.launch {
-//              val allTypes = mutableListOf<String>()
-//
-//              typeOfPropertyRepository.allTypes.asLiveData().value?.let { Log.i(TAG, "getTypes: $it") }
-//
-//
-//              typeOfPropertyRepository.allTypes.asLiveData().value?.forEach {
-//                  allTypes.add(it.nameType)
-//                  Log.i(TAG, "getTypes: " + it.nameType)
-//              }
-//              typesProperty.value = allTypes
-//          }
-////          return typesProperty
-//    }
+
 
 
 }

@@ -16,6 +16,14 @@ data class PropertyComplete (
     )
     var typeOfProperty: TypeOfProperty,
 
+    @Relation(
+        parentColumn = "idProperty",
+        entityColumn = "idProperty",
+        entity = ImageRoom::class
+
+    )
+    var photos: List<ImageRoom>,
+
 
     @Relation(
         parentColumn = "idProperty",

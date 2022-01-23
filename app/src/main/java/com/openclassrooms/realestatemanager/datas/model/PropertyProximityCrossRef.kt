@@ -4,6 +4,6 @@ import androidx.room.Entity
 
 @Entity(primaryKeys = ["idProperty", "idProximity"])
 data class PropertyProximityCrossRef(
-    var idProperty: Long,
+    var idProperty: Int,
     var idProximity: Int
 )

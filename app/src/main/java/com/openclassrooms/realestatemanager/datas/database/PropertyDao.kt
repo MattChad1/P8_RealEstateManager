@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.datas.database
 
 import androidx.room.*
+import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.datas.model.PropertyComplete
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface PropertyDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(property: Property?): Long
+    suspend fun insert(property: Property): Long
 
     @Update
     suspend fun update(property: Property?)
@@ -34,6 +35,9 @@ interface PropertyDao {
     @Transaction
     @Query("SELECT * FROM Property WHERE idProperty=:id")
     suspend fun getPropertyCompleteById(id: Long): PropertyComplete
+
+    @Insert
+    fun addPhoto(imageRoom: ImageRoom)
 
 
 }

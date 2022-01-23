@@ -10,7 +10,7 @@ import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 interface ImageRoomDao {
 
     @Insert
-    fun insert(imageRoom: ImageRoom?): Long
+    suspend fun insert(imageRoom: ImageRoom?): Long
 
     @Insert
     fun insertAll(images: List<ImageRoom>?)

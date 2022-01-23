@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.utils
 
 import java.text.DateFormat
 import java.text.NumberFormat

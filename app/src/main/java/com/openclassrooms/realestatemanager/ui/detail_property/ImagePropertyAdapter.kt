@@ -13,7 +13,7 @@ class ImagePropertyAdapter(activity: AppCompatActivity, val images: MutableList<
     }
 
     override fun createFragment(position: Int): Fragment {
-        return ImagesFragment.getInstance(position, images[position].src, images[position].legende)
+        return ImagesFragment.getInstance(position, images[position].nameFile, images[position].legende)
     }
 
 }

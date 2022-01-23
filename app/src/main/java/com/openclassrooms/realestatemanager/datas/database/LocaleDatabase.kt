@@ -10,7 +10,7 @@ import com.openclassrooms.realestatemanager.datas.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Property::class, Agent::class, TypeOfProperty::class, Proximity::class, PropertyProximityCrossRef::class/*, ImageRoom::class*/], version = 1)
+@Database(entities = [Property::class, Agent::class, TypeOfProperty::class, Proximity::class, PropertyProximityCrossRef::class, ImageRoom::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class LocaleDatabase : RoomDatabase() {
 
@@ -19,7 +19,7 @@ abstract class LocaleDatabase : RoomDatabase() {
     abstract fun typeOfPropertyDao(): TypeOfPropertyDao
     abstract fun proximityDao(): ProximityDao
     abstract fun propertyProximityCrossRefDao(): PropertyProximityCrossRefDao
-//    abstract fun imageRoomDao(): ImageRoomDao
+    abstract fun imageRoomDao(): ImageRoomDao
 
     companion object {
         @Volatile
@@ -81,17 +81,18 @@ abstract class LocaleDatabase : RoomDatabase() {
                 Property(
                     0,
                     1,
+                    "386 Woolley Ave, Staten Island, NY 10314",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
                     1,
                     1500000,
                     300.00,
                     6,
                     4,
                     2,
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
-                    mutableListOf<ImageRoom>(ImageRoom(0, 0, "flat1", "Salon"), ImageRoom(0, 0, "flat2", "Autre pièce")),
-                    "386 Woolley Ave, Staten Island, NY 10314",
+                    mutableListOf<ImageRoom>(ImageRoom(0, 0, "flat1", "Salon"),
+                        ImageRoom(0, 0, "flat2", "Autre pièce")),
+
 //                    mutableListOf<ProximityEnum>(ProximityEnum.PARK, ProximityEnum.SCHOOL),
-                    true,
                     "2022-01-01",
                     null
                 )
@@ -101,17 +102,17 @@ abstract class LocaleDatabase : RoomDatabase() {
                 Property(
                     0,
                     2,
+                    "2071 Victory Blvd, Staten Island, NY 10314",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
                     1,
                     999000,
                     100.00,
                     4,
                     3,
                     1,
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
                     mutableListOf<ImageRoom>(ImageRoom(0, 0, "flat2", "Autre pièce")),
-                    "2071 Victory Blvd, Staten Island, NY 10314",
+
 //                    mutableListOf<ProximityEnum>(ProximityEnum.PARK, ProximityEnum.PUBLIC_TRANSPORTS),
-                    true,
                     "2022-01-01",
                     null
                 )
