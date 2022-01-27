@@ -18,7 +18,6 @@ data class Property(
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,
     var bathrooms: Int? = 0,
-    var photos: MutableList<ImageRoom>? = null,
     var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
     var dateSold: String? = null, // idem
 )

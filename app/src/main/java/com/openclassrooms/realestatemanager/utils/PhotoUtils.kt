@@ -28,10 +28,10 @@ companion object {
     }
 
 
-    suspend fun loadPhotosFromInternalStorage(): List<InternalStoragePhoto> {
+    suspend fun loadPhotosFromInternalStorage(prefix: String = ""): List<InternalStoragePhoto> {
         return withContext(Dispatchers.IO) {
             val files = MyApplication.instance.filesDir.listFiles()
-            files?.filter { it.canRead() && it.isFile && it.name.endsWith(".jpg") }?.map {
+            files?.filter { it.canRead() && it.isFile && it.name.endsWith(".jpg") && it.name.startsWith(prefix) }?.map {
                 val bytes = it.readBytes()
                 val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 InternalStoragePhoto(it.name, bmp)

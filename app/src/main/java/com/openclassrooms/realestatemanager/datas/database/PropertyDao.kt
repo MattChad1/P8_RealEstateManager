@@ -34,10 +34,13 @@ interface PropertyDao {
 
     @Transaction
     @Query("SELECT * FROM Property WHERE idProperty=:id")
-    suspend fun getPropertyCompleteById(id: Long): PropertyComplete
+    suspend fun getPropertyCompleteById(id: Int): PropertyComplete
 
     @Insert
     fun addPhoto(imageRoom: ImageRoom)
+
+    @Query("SELECT idProperty FROM Property ORDER BY idProperty DESC LIMIT 1")
+    suspend fun getMaxId(): Int
 
 
 }

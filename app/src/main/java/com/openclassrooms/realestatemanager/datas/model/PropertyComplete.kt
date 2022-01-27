@@ -22,7 +22,7 @@ data class PropertyComplete (
         entity = ImageRoom::class
 
     )
-    var photos: List<ImageRoom>,
+    var photos: MutableList<ImageRoom>?,
 
 
     @Relation(

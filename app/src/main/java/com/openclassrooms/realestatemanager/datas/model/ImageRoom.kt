@@ -1,14 +1,16 @@
 package com.openclassrooms.realestatemanager.datas.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
-@Serializable
+//@Serializable
 //@Entity (foreignKeys = [
 //    ForeignKey(
 //        entity = Property::class,
-//        parentColumns = arrayOf("id"),
+//        parentColumns = arrayOf("idProperty"),
 //        childColumns = arrayOf("idProperty"),
 //        onDelete = ForeignKey.CASCADE
 //    )],

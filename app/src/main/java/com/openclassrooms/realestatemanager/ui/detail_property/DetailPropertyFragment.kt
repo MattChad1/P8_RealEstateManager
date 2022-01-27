@@ -40,7 +40,7 @@ class DetailPropertyFragment : Fragment() {
 
         binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
 
-        val idProperty = arguments!!.getLong("idProperty")
+        val idProperty = arguments!!.getInt("idProperty")
 
         viewModel.getPropertyById(idProperty).observe(this) { property ->
             if (property!=null) {

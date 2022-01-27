@@ -14,7 +14,7 @@ class DetailPropertyViewModel(
     ViewModel() {
 
 
-    fun getPropertyById(id: Long): MutableLiveData<DetailPropertyViewState?> {
+    fun getPropertyById(id: Int): MutableLiveData<DetailPropertyViewState?> {
         var valueReturn: DetailPropertyViewState? = null
         val result = MutableLiveData<DetailPropertyViewState?>()
 
@@ -25,14 +25,14 @@ class DetailPropertyViewModel(
 
             valueReturn = DetailPropertyViewState(
                 property.property.idProperty,
-                property.typeOfProperty?.nameType,
+                property.typeOfProperty.nameType,
                 property.property.price,
                 property.property.squareFeet,
                 property.property.rooms,
                 property.property.bedrooms,
                 property.property.bathrooms,
                 property.property.description,
-                property.property.photos,
+                property.photos,
                 property.property.adress,
                 if (property.proximities == null) null else property.proximities?.map { it.idProximity }
             )

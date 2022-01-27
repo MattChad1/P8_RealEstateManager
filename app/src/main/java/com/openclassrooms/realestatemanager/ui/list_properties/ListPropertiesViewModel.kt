@@ -38,7 +38,7 @@ class ListPropertiesViewModel(
                         property.property.bedrooms,
                         property.property.bathrooms,
                         property.property.description,
-                        property.property.photos,
+                        property.photos,
                         property.property.adress
                     )
                 )

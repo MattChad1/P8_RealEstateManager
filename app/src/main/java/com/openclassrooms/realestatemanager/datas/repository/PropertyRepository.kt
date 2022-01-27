@@ -22,11 +22,13 @@ class PropertyRepository (private val propertyDao: PropertyDao, private val imag
 
     suspend fun getPropertyById(id: Long): Property = propertyDao.getPropertyById(id)
 
-    suspend fun getPropertyCompleteById(id: Long): PropertyComplete = propertyDao.getPropertyCompleteById(id)
+    suspend fun getPropertyCompleteById(id: Int): PropertyComplete = propertyDao.getPropertyCompleteById(id)
 
     suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String ) {
         imageRoomDao.insert (ImageRoom(0, idProperty, nameFile, legende))
     }
+
+    suspend fun getMaxId(): Int = propertyDao.getMaxId()
 
 
 }

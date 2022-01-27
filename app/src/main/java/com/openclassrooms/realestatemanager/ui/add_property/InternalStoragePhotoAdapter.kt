@@ -39,6 +39,7 @@ class InternalStoragePhotoAdapter(
         val photo = currentList[position]
         holder.binding.apply {
             ivPhoto.setImageBitmap(photo.bmp)
+            tvItemPhotoLegend.text = photo.legend
 
             val aspectRatio = photo.bmp.width.toFloat() / photo.bmp.height.toFloat()
             ConstraintSet().apply {

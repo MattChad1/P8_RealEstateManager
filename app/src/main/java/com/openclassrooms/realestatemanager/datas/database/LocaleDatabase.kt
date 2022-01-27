@@ -61,12 +61,12 @@ abstract class LocaleDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.propertyDao(), database.agentDao(), database.typeOfPropertyDao(), database.proximityDao(), database.propertyProximityCrossRefDao())
+                    populateDatabase(database.propertyDao(), database.agentDao(), database.typeOfPropertyDao(), database.proximityDao(), database.propertyProximityCrossRefDao(), database.imageRoomDao())
                 }
             }
         }
 
-        suspend fun populateDatabase(propertyDao: PropertyDao, agentDao: AgentDao, typeOfPropertyDao: TypeOfPropertyDao, proximityDao: ProximityDao, propertyProximityCrossRefDao: PropertyProximityCrossRefDao) {
+        suspend fun populateDatabase(propertyDao: PropertyDao, agentDao: AgentDao, typeOfPropertyDao: TypeOfPropertyDao, proximityDao: ProximityDao, propertyProximityCrossRefDao: PropertyProximityCrossRefDao, imageRoomDao: ImageRoomDao) {
             agentDao.insert(Agent(0, "Mike Money"))
             agentDao.insert(Agent(0, "Melissa BigDollars"))
 
@@ -75,6 +75,10 @@ abstract class LocaleDatabase : RoomDatabase() {
             typeOfPropertyDao.insert(TypeOfProperty(2, "Loft"))
             typeOfPropertyDao.insert(TypeOfProperty(3, "Mansion"))
             typeOfPropertyDao.insert(TypeOfProperty(4, "Single Family House"))
+
+            imageRoomDao.insert(ImageRoom(0, 1, "flat1", "Salon"))
+            imageRoomDao.insert(ImageRoom(0, 2, "flat2", "Chambre"))
+            imageRoomDao.insert(ImageRoom(0, 1, "flat2", "Chambre"))
 
 
             propertyDao.insert(
@@ -89,10 +93,6 @@ abstract class LocaleDatabase : RoomDatabase() {
                     6,
                     4,
                     2,
-                    mutableListOf<ImageRoom>(ImageRoom(0, 0, "flat1", "Salon"),
-                        ImageRoom(0, 0, "flat2", "Autre pièce")),
-
-//                    mutableListOf<ProximityEnum>(ProximityEnum.PARK, ProximityEnum.SCHOOL),
                     "2022-01-01",
                     null
                 )
@@ -110,9 +110,6 @@ abstract class LocaleDatabase : RoomDatabase() {
                     4,
                     3,
                     1,
-                    mutableListOf<ImageRoom>(ImageRoom(0, 0, "flat2", "Autre pièce")),
-
-//                    mutableListOf<ProximityEnum>(ProximityEnum.PARK, ProximityEnum.PUBLIC_TRANSPORTS),
                     "2022-01-01",
                     null
                 )

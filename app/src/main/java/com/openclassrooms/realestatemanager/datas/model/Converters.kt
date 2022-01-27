@@ -81,19 +81,19 @@ class Converters {
 //        return null
 //    }
 
-    @TypeConverter
-    fun getStringFromPhotos(list: List<ImageRoom>?): String? {
-        if (list == null) return null
-        else return Json.encodeToString(list)
-
-    }
-
-    @TypeConverter
-    fun getPhotosFromString(str: String?): List<ImageRoom>? {
-        if (str == null) return null
-        else return Json.decodeFromString<List<ImageRoom>>(str)
-
-    }
+//    @TypeConverter
+//    fun getStringFromPhotos(list: List<ImageRoom>?): String? {
+//        if (list == null) return null
+//        else return Json.encodeToString(list)
+//
+//    }
+//
+//    @TypeConverter
+//    fun getPhotosFromString(str: String?): List<ImageRoom>? {
+//        if (str == null) return null
+//        else return Json.decodeFromString<List<ImageRoom>>(str)
+//
+//    }
 
 }
 
