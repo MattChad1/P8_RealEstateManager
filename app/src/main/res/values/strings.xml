@@ -13,6 +13,13 @@
     // Detail Fragment
     <string name="description">Description</string>
     <string name="location">Location</string>
+    <string name="proximity_school">School</string>
+    <string name="proximity_stores">Stores</string>
+    <string name="proximity_transports">Transports</string>
+    <string name="proximity_park">Park</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="strenghts">Strenghts</string>
+    <string name="map">Map</string>
 
 
     // Add Property Activity

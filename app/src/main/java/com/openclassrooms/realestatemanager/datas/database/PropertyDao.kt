@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.datas.database
 import androidx.room.*
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.Property
-import com.openclassrooms.realestatemanager.datas.model.PropertyComplete
+import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,7 +23,7 @@ interface PropertyDao {
 
     @Transaction
     @Query("SELECT * FROM Property")
-    fun getPropertiesComplete(): Flow<List<PropertyComplete>?>
+    fun getPropertiesComplete(): Flow<List<PropertyWithProximity>?>
 
 //    @Transaction
 //    @Query("SELECT * FROM Property " +
@@ -34,7 +34,7 @@ interface PropertyDao {
 
     @Transaction
     @Query("SELECT * FROM Property WHERE idProperty=:id")
-    suspend fun getPropertyCompleteById(id: Int): PropertyComplete
+    suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
 
     @Insert
     fun addPhoto(imageRoom: ImageRoom)

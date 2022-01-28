@@ -34,7 +34,7 @@ class DetailPropertyViewModel(
                 property.property.description,
                 property.photos,
                 property.property.adress,
-                if (property.proximities == null) null else property.proximities?.map { it.idProximity }
+                property.proximities
             )
             result.postValue(valueReturn)
         }

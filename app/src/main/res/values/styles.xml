@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
 
@@ -11,7 +12,7 @@
 
     </style>
 
-    <style name="tv">
+    <style name="tv_detail">
         <item name="android:paddingStart">6dp</item>
         <item name="android:paddingEnd">6dp</item>
     </style>
@@ -27,6 +28,13 @@
 
     <style name="field_add_reu_edittext">
 
+    </style>
+
+    <style name="icon_proximity">
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:height">50px</item>
     </style>
 
 

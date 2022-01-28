@@ -8,4 +8,6 @@
     <dimen name="imageViewPager">300dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="icon_proximity">16dp</dimen>
+
 </resources>

@@ -18,8 +18,8 @@
         />
 
     <TextView
-        android:id="@+id/tv_detail_title"
-        style="@style/tv"
+        android:id="@+id/tv_description_title"
+        style="@style/tv_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,10 +30,10 @@
 
     <TextView
         android:id="@+id/tv_detail_data"
-        style="@style/tv"
+        style="@style/tv_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_description_title"
         app:layout_constraintLeft_toRightOf="@id/icon_detail"
         tools:text="750 sq m"
         />

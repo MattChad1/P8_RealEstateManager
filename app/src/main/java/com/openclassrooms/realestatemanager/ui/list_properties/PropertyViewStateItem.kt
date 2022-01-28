@@ -13,6 +13,5 @@ data class PropertyViewStateItem (
     var description: String? = null,
     var photos: MutableList<ImageRoom>? = null,
     var adress: String? = null,
-    var proximity: MutableList<Int>? = null,
     var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
         )

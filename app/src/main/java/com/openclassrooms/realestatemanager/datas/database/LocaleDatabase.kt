@@ -117,16 +117,19 @@ abstract class LocaleDatabase : RoomDatabase() {
 
             proximityDao.insertAll(
                 listOf(
-                    Proximity(1, "School"),
-                    Proximity(2, "Stores"),
-                    Proximity(3, "Public transports"),
-                    Proximity(4, "Park")
+                    Proximity(1, "School", "icon_proximity_school", "proximity_school"),
+                    Proximity(2, "Stores", "icon_proximity_stores", "proximity_stores"),
+                    Proximity(3, "Public transports", "icon_proximity_transports", "proximity_transports"),
+                    Proximity(4, "Park", "icon_proximity_park", "proximity_park")
                 )
             )
 
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,1))
             propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,2))
             propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,3))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2,2))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,4))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2,1))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2,3))
 
 
 
