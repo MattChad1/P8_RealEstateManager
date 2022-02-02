@@ -1,26 +1,28 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
 import android.Manifest
+import android.app.Application
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.textfield.TextInputEditText
+import com.openclassrooms.realestatemanager.MainActivity
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
@@ -29,6 +31,7 @@ import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.deletePhotoFromInternalStorage
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.loadPhotosFromInternalStorage
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.savePhotoToInternalStorage
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.util.*
@@ -53,6 +56,12 @@ class AddPropertyActivity : AppCompatActivity() {
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val toolbar = binding.topAppBar
+        toolbar.title = "Add new property"
+        toolbar.menu.removeItem(0)
+        toolbar.menu.removeItem(1)
+        toolbar.menu.removeItem(2)
+
         permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             readPermissionGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: readPermissionGranted
 
@@ -66,9 +75,11 @@ class AddPropertyActivity : AppCompatActivity() {
         val spinner: Spinner = binding.formTypeProperty
 
         viewModel.allTypes.observe(this) { types ->
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, types)
+            val adapter = CustomDropDownAdapter(this, types)
             spinner.adapter = adapter
         }
+
+
 
         binding.btnSubmit.setOnClickListener {
 
@@ -109,6 +120,11 @@ class AddPropertyActivity : AppCompatActivity() {
 
         viewModel.imagesPrevLiveData.observe(this) { images ->
             internalStoragePhotoAdapter.submitList(images)
+
+            if (viewModel.validAdress==null && viewModel.validImage==null && viewModel.validPrice==null) {
+                Toast.makeText(this, R.string.add_property_conf, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, MainActivity::class.java))
+            }
 
         }
 

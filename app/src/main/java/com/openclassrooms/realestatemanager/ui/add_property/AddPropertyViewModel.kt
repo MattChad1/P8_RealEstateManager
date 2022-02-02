@@ -67,7 +67,11 @@ class AddPropertyViewModel (private val propertyRepository: PropertyRepository, 
                 for (i in imagesPrevLiveData.value!!) {
                     propertyRepository.addPhoto(idInsert.toInt(), i.name, i.legend)
                 }
+
+
             }
+
+
             }
         }
 

@@ -28,6 +28,7 @@ class ListPropertiesViewModel(
         var propertiesToReturn = mutableListOf<PropertyViewStateItem>()
         if (properties == null) return listOf()
         for (property in properties) {
+            if (property.property.dateSold == null) {
                 propertiesToReturn.add(
                     PropertyViewStateItem(
                         property.property.idProperty,
@@ -42,6 +43,7 @@ class ListPropertiesViewModel(
                         property.property.adress
                     )
                 )
+            }
         }
         return propertiesToReturn
     }

@@ -51,8 +51,6 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
             properties.addAll(newProperties)
                 adapter.notifyDataSetChanged() }
 
-
-
         return binding.root
     }
 
@@ -70,7 +68,6 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()
-//        val json = Json.encodeToString(property)
         args.putInt("idProperty", id)
         newFragment.arguments = args
 

@@ -17,7 +17,6 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_name_file_input"
-            style="@style/field_add_reu_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />

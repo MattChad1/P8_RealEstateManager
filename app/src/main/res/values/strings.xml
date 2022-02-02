@@ -4,9 +4,9 @@
 // General
     <string name="surface">Surface</string>
     <string name="surface_data">%.2f sq m</string>
-    <string name="num_rooms">Number of rooms</string>
-    <string name="num_bathrooms">Number of bathrooms</string>
-    <string name="num_bedrooms">Number of bedrooms</string>
+    <string name="num_rooms">Total number of rooms</string>
+    <string name="num_bathrooms">Bathrooms</string>
+    <string name="num_bedrooms">Bedrooms</string>
 
 
 
@@ -29,6 +29,7 @@
 <string name="form_price">Sale price</string>
 <string name="form_submit">Submit</string>
 <string name="form_type">Type of property</string>
+    <string name="add_property_conf">The property has been added successfully</string>
 
 
 

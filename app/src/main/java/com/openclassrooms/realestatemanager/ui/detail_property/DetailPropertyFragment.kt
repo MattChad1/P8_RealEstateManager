@@ -8,16 +8,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
+import com.openclassrooms.realestatemanager.IOnBackPressed
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailPropertyBinding
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
+import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 
 
 class DetailPropertyFragment : Fragment() {
@@ -53,8 +56,7 @@ class DetailPropertyFragment : Fragment() {
                     binding.viewpagerRooms.adapter = imagePropertyAdapter
                     if (allImages.size <= 1) binding.tabLayout.visibility = View.GONE
                     else {
-                        //tabLayout.width= allImages.size * 40 problème val cannot be reassigned
-                        TabLayoutMediator(binding.tabLayout, binding.viewpagerRooms) { tab, position ->
+                       TabLayoutMediator(binding.tabLayout, binding.viewpagerRooms) { tab, position ->
                             tab.text = ""
                         }.attach()
                     }
@@ -124,9 +126,14 @@ class DetailPropertyFragment : Fragment() {
         }
 
 
+
+
         // Inflate the layout for this fragment
         return binding.root
     }
+
+
+
 
 
 }
