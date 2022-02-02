@@ -18,7 +18,7 @@ class PropertyRepository (private val propertyDao: PropertyDao, private val imag
         return propertyDao.insert(property)
     }
 
-    suspend fun getPropertyById(id: Long): Property = propertyDao.getPropertyById(id)
+    suspend fun getPropertyById(id: Int): PropertyWithProximity = propertyDao.getPropertyCompleteById(id)
 
     suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity = propertyDao.getPropertyCompleteById(id)
 

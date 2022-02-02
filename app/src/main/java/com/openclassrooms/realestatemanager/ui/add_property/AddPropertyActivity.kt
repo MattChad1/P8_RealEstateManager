@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -39,6 +40,10 @@ import java.util.*
 
 class AddPropertyActivity : AppCompatActivity() {
 
+    companion object {
+        val EDIT_ID = "EDIT_ID"
+    }
+
     lateinit var binding: ActivityAddPropertyBinding
     private lateinit var internalStoragePhotoAdapter: InternalStoragePhotoAdapter
 
@@ -55,6 +60,10 @@ class AddPropertyActivity : AppCompatActivity() {
 
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val idEdit = intent.getIntExtra(EDIT_ID, 0)
+
+
 
         val toolbar = binding.topAppBar
         toolbar.title = "Add new property"
@@ -129,7 +138,6 @@ class AddPropertyActivity : AppCompatActivity() {
         }
 
         setupInternalStorageRecyclerView()
-        //loadPhotosFromInternalStorageIntoRecyclerView()
 
         val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
             if (it != null) {
@@ -192,9 +200,22 @@ class AddPropertyActivity : AppCompatActivity() {
 
         binding.btnTakePhotoGallery.setOnClickListener { openGallery.launch("image/*") }
 
+
+        if (idEdit!=0) {
+            viewModel.getPropertyById(idEdit.toInt()).observe(this) {property ->
+                binding.editAdressInput.setText(property?.adress)
+                binding.editDescriptionInput.setText(property?.description)
+                property?.bathrooms?.let { binding.editNumBathroomsInput.setText(it.toString()) }
+                property?.bedrooms?.let { binding.editNumBedroomsInput.setText(it.toString()) }
+                property?.rooms?.let { binding.editNumRoomsInput.setText(it.toString()) }
+                property?.price?.let { binding.editPriceInput.setText(it.toString()) }
+                binding.editSurfaceInput.setText(property?.squareFeet.toString())
+                spinner.setSelection(property?.type!!.idType)
+            }
+        }
     }
 
-    fun TextInputEditText.getInput(): String? = if (this.text.isNullOrEmpty()) null else this.text.toString()
+    private fun TextInputEditText.getInput(): String? = if (this.text.isNullOrEmpty()) null else this.text.toString()
 
 
     private fun loadPhotosFromInternalStorageIntoRecyclerView() {

@@ -45,9 +45,9 @@ class DetailPropertyFragment : Fragment() {
 
         binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
 
-        val idProperty = arguments!!.getInt("idProperty")
+        val idProperty = requireArguments().getInt("idProperty")
 
-        viewModel.getPropertyById(idProperty).observe(this) { property ->
+        viewModel.getPropertyById(idProperty).observe(viewLifecycleOwner) { property ->
             if (property != null) {
                 property.photos?.let {
                     allImages.addAll(property.photos!!)

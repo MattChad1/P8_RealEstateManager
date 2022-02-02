@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
@@ -20,6 +19,10 @@ class MainActivity : AppCompatActivity() {
 
     val TAG = "MyLog MainActivity"
 
+    companion object {
+        var lastProperty: Int? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,31 +33,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
-          if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.main_fragment, ListPropertiesFragment::class.java, null)
                 .commit()
         }
 
-//        var secondFragment = supportFragmentManager.findFragmentById(R.id.second_fragment);
-//
-//            //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
-//            if (secondFragment == null && binding.secondFragment != null) {
-//                secondFragment = DetailPropertyFragment()
-//                supportFragmentManager.beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .add(R.id.second_fragment, DetailPropertyFragment::class.java, null)
-//                    .commit()
-//            }
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.menu_toolbar,menu)
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
         return true
     }
 
@@ -62,13 +52,15 @@ class MainActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         when (item.itemId) {
             R.id.toolbar_add -> {
-                startActivity(Intent (this,AddPropertyActivity::class.java ))
+                val intent = Intent(this, AddPropertyActivity::class.java)
+                startActivity(intent)
             }
-
-
+            R.id.toolbar_edit -> {
+                val intent = Intent(this, AddPropertyActivity::class.java)
+                intent.putExtra(AddPropertyActivity.EDIT_ID, lastProperty)
+                startActivity(intent)
+            }
         }
-
-
         return true
     }
 
@@ -76,16 +68,9 @@ class MainActivity : AppCompatActivity() {
         if (!resources.getBoolean(R.bool.isTablet) && supportFragmentManager.findFragmentByTag("fragment_detail") != null && (supportFragmentManager.findFragmentByTag("fragment_detail") as DetailPropertyFragment).isVisible) {
             Log.i(TAG, "onBackPressed: ")
 
-        }
-else super.onBackPressed()
+        } else super.onBackPressed()
 
     }
-
-
-
-
-
-
 
 
 }

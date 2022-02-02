@@ -25,13 +25,6 @@ interface PropertyDao {
     @Query("SELECT * FROM Property")
     fun getPropertiesComplete(): Flow<List<PropertyWithProximity>?>
 
-//    @Transaction
-//    @Query("SELECT * FROM Property " +
-//            "JOIN TypeOfProperty ON Property.idProperty = TypeOfProperty.idType " +
-//            "JOIN PropertyProximityCrossRef ON Property.idProperty= PropertyProximityCrossRef.idProperty " +
-//            "JOIN Proximity ON PropertyProximityCrossRef.idProximity = Proximity.idProximity")
-//    fun getPropertiesComplete(): Flow<List<PropertyComplete>?>
-
     @Transaction
     @Query("SELECT * FROM Property WHERE idProperty=:id")
     suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity

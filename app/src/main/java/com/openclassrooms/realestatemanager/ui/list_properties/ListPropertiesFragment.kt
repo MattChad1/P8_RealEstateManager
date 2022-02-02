@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.openclassrooms.realestatemanager.MainActivity
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
@@ -38,7 +39,7 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         val adapter = PropertiesAdapter(requireActivity(), properties, this)
         rv.adapter = adapter
 
-        viewModel.allProperties.observe(this) { newProperties ->
+        viewModel.allProperties.observe(viewLifecycleOwner) { newProperties ->
 
             // Check if list is launched for the 1st time, then display details of the 1st item
 //            if (properties.isEmpty() && newProperties!= null && newProperties.isNotEmpty()) {
@@ -68,6 +69,7 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()
+        MainActivity.lastProperty = id
         args.putInt("idProperty", id)
         newFragment.arguments = args
 
