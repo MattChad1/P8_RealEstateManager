@@ -109,6 +109,26 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_date_start_sale"
+                style="@style/field_add_property"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sale starting the..."
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_date_start_sale_input"
+                    style="@style/edittext_add_property"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    tools:ignore="KeyboardInaccessibleWidget" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 style="@style/titre2"
@@ -256,6 +276,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp" />
+
+
+            <TextView
+                android:id="@+id/title_property_sold"
+                style="@style/titre2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Already sold?"
+                android:visibility="gone"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_date_sold"
+                style="@style/field_add_property"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of the sale"
+                android:visibility="gone"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_date_sold_input"
+                    style="@style/edittext_add_property"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button

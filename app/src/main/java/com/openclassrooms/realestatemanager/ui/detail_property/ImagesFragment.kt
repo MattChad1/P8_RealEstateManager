@@ -1,12 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.databinding.FragmentImagesBinding
+import java.io.File
 
 
 class ImagesFragment : Fragment() {
@@ -40,13 +44,25 @@ class ImagesFragment : Fragment() {
         val position = requireArguments().getInt(ARG_POSITION)
         val imageFilePath = requireArguments().getString(ARG_SRC)
         val legendeImage = requireArguments().getString(ARG_LEGENDE)
-        setImageFromAssetsFile(requireContext(), imageFilePath, legendeImage)
+        imageFilePath?.let{binding.imageRoom.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, imageFilePath + ".jpg")))}
+//        setImageFromAssetsFile(requireContext(), imageFilePath, legendeImage)
+
+        if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility=View.GONE
+        else {
+            binding.legendeViewpager.visibility=View.VISIBLE
+            binding.legendeViewpager.text = legendeImage
+        }
     }
     /**
      * Gets the file from assets, converts it into a bitmap and sets it on the ImageView
      * @param context a Context instance
      * @param filePath relative path of the file
      */
+
+    private fun setImageFromInternalStorage (  ) {
+
+    }
+
     private fun setImageFromAssetsFile(context: Context, filePath: String?, legendeImage: String?) {
 
         if (filePath !=null) {

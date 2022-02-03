@@ -1,5 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,19 +11,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import com.openclassrooms.realestatemanager.IOnBackPressed
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailPropertyBinding
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 
 
 class DetailPropertyFragment : Fragment() {
@@ -30,12 +34,23 @@ class DetailPropertyFragment : Fragment() {
     lateinit var binding: FragmentDetailPropertyBinding
     var property: DetailPropertyViewState? = null
 
+    private var readPermissionGranted = false
+    private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
+
     private val viewModel: DetailPropertyViewModel by viewModels() {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.typeOfPropertyRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            readPermissionGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: readPermissionGranted
+
+            if (!readPermissionGranted) {
+                Toast.makeText(requireActivity(), "Can't read files without permission.", Toast.LENGTH_LONG).show()
+            }
+        }
+        updateOrRequestPermissions()
     }
 
     override fun onCreateView(
@@ -52,11 +67,11 @@ class DetailPropertyFragment : Fragment() {
                 property.photos?.let {
                     allImages.addAll(property.photos!!)
                     val imagePropertyAdapter = ImagePropertyAdapter(requireActivity() as AppCompatActivity, allImages)
-
                     binding.viewpagerRooms.adapter = imagePropertyAdapter
+
                     if (allImages.size <= 1) binding.tabLayout.visibility = View.GONE
                     else {
-                       TabLayoutMediator(binding.tabLayout, binding.viewpagerRooms) { tab, position ->
+                        TabLayoutMediator(binding.tabLayout, binding.viewpagerRooms) { tab, position ->
                             tab.text = ""
                         }.attach()
                     }
@@ -126,14 +141,31 @@ class DetailPropertyFragment : Fragment() {
         }
 
 
-
-
-        // Inflate the layout for this fragment
         return binding.root
     }
 
+    private fun updateOrRequestPermissions() {
+        val hasReadPermission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+        val hasWritePermission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+
+        readPermissionGranted = hasReadPermission
 
 
+        val permissionsToRequest = mutableListOf<String>()
+        if (!readPermissionGranted) {
+            permissionsToRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (permissionsToRequest.isNotEmpty()) {
+            permissionsLauncher.launch(permissionsToRequest.toTypedArray())
+        }
+    }
 
 
 }

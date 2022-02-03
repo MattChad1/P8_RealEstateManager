@@ -23,7 +23,7 @@ class ViewModelFactory (private val propertyRepository: PropertyRepository, priv
 
         else if (modelClass.isAssignableFrom(DetailPropertyViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return DetailPropertyViewModel(propertyRepository, typeOfPropertyRepository) as T
+            return DetailPropertyViewModel(propertyRepository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

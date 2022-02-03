@@ -39,6 +39,18 @@ object Utils {
         return dateFormat.format(Date())
     }
 
+    fun formatDateYearBefore(date: String?): String? {
+        if (date==null) return null
+        val split = date.split("/")
+        return split[2] + "-" + split[1]  + "-" + split[0]
+    }
+
+    fun formatDateDayBefore(date: String?): String? {
+        if (date==null) return null
+        val split = date.split("-")
+        return split[2] + "/" + split[1]  + "/" + split[0]
+    }
+
     fun formatPrice (price: Int?): String {
         return if (price==null) "" else "$" + NumberFormat.getNumberInstance(Locale.US).format(price)
     }

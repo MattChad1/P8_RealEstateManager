@@ -13,7 +13,7 @@ import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 class CustomDropDownAdapter(val context: Context, var dataSource: List<TypeOfProperty>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
+    private val listViews = arrayListOf<View>()
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -29,6 +29,7 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<TypeOfPro
             vh = view.tag as ItemHolder
         }
         vh.label.text = dataSource[position].toString()
+        listViews.add(view)
         return view
     }
 
@@ -43,6 +44,7 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<TypeOfPro
     override fun getItemId(position: Int): Long {
         return position.toLong();
     }
+
 
     private class ItemHolder(row: View) {
         val label: TextView

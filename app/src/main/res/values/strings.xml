@@ -30,6 +30,7 @@
 <string name="form_submit">Submit</string>
 <string name="form_type">Type of property</string>
     <string name="add_property_conf">The property has been added successfully</string>
+    <string name="date_for_datePicker">%1$02d/%2$02d/%3$d</string>
 
 
 

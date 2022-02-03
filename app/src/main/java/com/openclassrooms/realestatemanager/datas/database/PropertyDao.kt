@@ -30,7 +30,10 @@ interface PropertyDao {
     suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
 
     @Insert
-    fun addPhoto(imageRoom: ImageRoom)
+    suspend fun addPhoto(imageRoom: ImageRoom)
+
+    @Query("DELETE FROM ImageRoom WHERE idProperty=:idProperty")
+    suspend fun deletePhoto(idProperty: Int)
 
     @Query("SELECT idProperty FROM Property ORDER BY idProperty DESC LIMIT 1")
     suspend fun getMaxId(): Int

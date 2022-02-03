@@ -8,8 +8,7 @@ import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepos
 import kotlinx.coroutines.launch
 
 class DetailPropertyViewModel(
-    private val repository: PropertyRepository,
-    private val typeOfPropertyRepository: TypeOfPropertyRepository
+    private val repository: PropertyRepository
 ) :
     ViewModel() {
 
