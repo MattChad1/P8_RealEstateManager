@@ -15,7 +15,7 @@ data class EditPropertyViewState(
     var description: String? = null,
     var photos: MutableList<ImageRoom>? = null,
     var adress: String? = null,
-    var proximities: List<Proximity>? = null,
+    var proximities: List<Int>? = null,
     var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
     var dateSold: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
 )

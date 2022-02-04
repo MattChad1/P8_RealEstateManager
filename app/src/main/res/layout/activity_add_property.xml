@@ -32,6 +32,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/layout_form_content_addproperty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -230,6 +231,22 @@
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/titre2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Proximity" />
+
+
+            <GridLayout
+                android:id="@+id/layout_for_proximities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="auto_fit"
+                >
+
+            </GridLayout>
 
 
             <TextView

@@ -3,9 +3,7 @@ package com.openclassrooms.realestatemanager.datas.repository
 import androidx.annotation.WorkerThread
 import com.openclassrooms.realestatemanager.datas.database.ImageRoomDao
 import com.openclassrooms.realestatemanager.datas.database.PropertyDao
-import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.datas.model.Property
-import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
+import com.openclassrooms.realestatemanager.datas.model.*
 import kotlinx.coroutines.flow.Flow
 
 class PropertyRepository (private val propertyDao: PropertyDao, private val imageRoomDao: ImageRoomDao) {
@@ -28,9 +26,16 @@ class PropertyRepository (private val propertyDao: PropertyDao, private val imag
         imageRoomDao.insert (ImageRoom(0, idProperty, nameFile, legende))
     }
 
+    suspend fun insertPropertyProximityCrossRef(crossRef: PropertyProximityCrossRef) {
+        propertyDao.insertPropertyProximityCrossRef (crossRef)
+    }
+
     suspend fun deletePhoto(idProperty: Int) {propertyDao.deletePhoto(idProperty)}
+    suspend fun deleteProximityForProperty(idProperty: Int) {propertyDao.deleteProximtyForProperty(idProperty)}
 
     suspend fun getMaxId(): Int = propertyDao.getMaxId()
+
+    suspend fun getAllProximities(): List<Proximity> {return propertyDao.getAllProximities()}
 
 
 }

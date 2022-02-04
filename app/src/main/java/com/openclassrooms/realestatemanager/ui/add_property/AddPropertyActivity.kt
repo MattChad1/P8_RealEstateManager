@@ -10,9 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.DatePicker
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -29,9 +27,9 @@ import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.ActivityAddPropertyBinding
+import com.openclassrooms.realestatemanager.datas.model.Proximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.deletePhotoFromInternalStorage
-import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.loadPhotosFromInternalStorage
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.savePhotoToInternalStorage
 import kotlinx.coroutines.launch
 import java.io.InputStream
@@ -54,6 +52,8 @@ class AddPropertyActivity : AppCompatActivity() {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.typeOfPropertyRepository)
     }
 
+    var proximityCheckboxes: MutableList<CheckBox> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +61,7 @@ class AddPropertyActivity : AppCompatActivity() {
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val ctx = this
         viewModel.idEdit = intent.getIntExtra(EDIT_ID, 0)
 
 
@@ -82,7 +83,24 @@ class AddPropertyActivity : AppCompatActivity() {
         }
         updateOrRequestPermissions()
 
-        /*DatePickerDialog */
+        // Checkbox for proximities
+        lifecycleScope.launch() {
+            val proximities = viewModel.getAllProximities()
+            val layout = binding.layoutForProximities
+
+            proximities.forEach { p ->
+                val checkbox = CheckBox(ctx)
+                checkbox.text = getString(ctx.resources.getIdentifier(p.refLegend, "string", ctx.packageName))
+                checkbox.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                checkbox.tag = p.idProximity
+                proximityCheckboxes.add(checkbox)
+                layout.addView(checkbox)
+            }
+
+        }
 
 
 
@@ -226,6 +244,10 @@ class AddPropertyActivity : AppCompatActivity() {
                 binding.editSurfaceInput.setText(property?.squareFeet.toString())
                 binding.editDateStartSaleInput.setText(property?.dateStartSell)
                 spinner.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
+
+                for (c in proximityCheckboxes) {
+                    if (property.proximities?.contains (c.tag) == true) c.isChecked= true
+                }
 //                loadPhotosFromInternalStorageIntoRecyclerView(property.id)
 
 
@@ -239,6 +261,13 @@ class AddPropertyActivity : AppCompatActivity() {
 
         // if form is submited
         binding.btnSubmit.setOnClickListener {
+
+            val proximitiesSelected: MutableList<Int> = mutableListOf()
+           proximityCheckboxes.forEach {
+                if (it.isChecked) proximitiesSelected.add(it.tag as Int)
+           }
+
+
             viewModel.addNewProperty(
                 spinner.selectedItem as TypeOfProperty,
                 null,
@@ -249,6 +278,7 @@ class AddPropertyActivity : AppCompatActivity() {
                 binding.editNumBathroomsInput.getInput()?.toInt(),
                 binding.editDescriptionInput.getInput(),
                 binding.editAdressInput.getInput(),
+                proximitiesSelected,
                 binding.editDateStartSaleInput.getInput(),
                 binding.editDateSoldInput.getInput()
             )

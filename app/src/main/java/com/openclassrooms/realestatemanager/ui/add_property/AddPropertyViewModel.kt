@@ -5,10 +5,7 @@ import android.graphics.BitmapFactory
 import android.provider.MediaStore
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.MyApplication
-import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.datas.model.InternalStoragePhoto
-import com.openclassrooms.realestatemanager.datas.model.Property
-import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
+import com.openclassrooms.realestatemanager.datas.model.*
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -31,10 +28,13 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
     var imagesPrevLiveData: MutableLiveData<MutableList<InternalStoragePhoto>> = MutableLiveData()
     var maxId: Int = 0
     var idEdit = 0
+    var allProximities: MutableList<Proximity> = mutableListOf()
 
     init {
         viewModelScope.launch {
             maxId = propertyRepository.getMaxId() + 1
+//            allProximities = propertyRepository.getAllProximities()
+
         }
     }
 
@@ -48,12 +48,20 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         bathrooms: Int? = 0,
         description: String? = null,
         adress: String? = null,
+        proximitiesSelected: List<Int>? = null,
         dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
         dateSold: String? = null,
     ) {
         var idProperty = idEdit
         val dateStartSellFormatRoom = formatDateYearBefore(dateStartSell)
         val currentDate = formatDateYearBefore(getTodayDate())
+
+        var proximitiesForRoom = mutableListOf<Proximity>()
+        if (!proximitiesSelected.isNullOrEmpty()) {
+            proximitiesForRoom.addAll(allProximities.filter { proximitiesSelected.contains(it.idProximity)})
+        }
+
+
         validAdress.value = if (adress.isNullOrEmpty()) "Vous devez indiquer une adresse" else null
         validPrice.value = if (price == null) "Vous devez indiquer un prix" else null
         validImage.value = if (imagesPrevLiveData.value.isNullOrEmpty()) "Vous devez choisir au moins une image" else null
@@ -75,22 +83,30 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     formatDateYearBefore(dateStartSell),
                     formatDateYearBefore(dateSold)
                 )
+                val images: MutableList<ImageRoom> = mutableListOf()
+
                 if (idEdit != 0) {
-                    propertyRepository.updateProperty(newProperty)
+//                    propertyRepository.updateProperty(newProperty)
                     propertyRepository.deletePhoto(idProperty)
-
-
-                } else {
-                    idProperty = propertyRepository.insert(
-                        newProperty
-                    )
+                    propertyRepository.deleteProximityForProperty(idProperty)
                 }
+//                else {
+//                    idProperty = propertyRepository.insert(
+//                        newProperty
+//                    )
+//                }
 
-
+                idProperty = propertyRepository.insert(newProperty)
+                for (p in proximitiesForRoom) {
+                    propertyRepository.insertPropertyProximityCrossRef(PropertyProximityCrossRef(idProperty, p.idProximity))
+                }
 
                 for (i in imagesPrevLiveData.value!!) {
-                    propertyRepository.addPhoto(idProperty, i.name, i.legend)
+                    images.add(ImageRoom(0, idProperty, i.name, i.legend))
+                  propertyRepository.addPhoto(idProperty, i.name, i.legend)
                 }
+
+
             }
 
         }
@@ -105,7 +121,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
     fun addPhotoFromBase(img: ImageRoom) {
         val photos = imagesPrevLiveData.value ?: mutableListOf()
 
-        val f = File(MyApplication.instance.filesDir, img.nameFile)
+        val f = File(MyApplication.instance.filesDir, img.nameFile + ".jpg")
         val b = BitmapFactory.decodeStream(FileInputStream(f))
 
         val imgInStorage: InternalStoragePhoto = InternalStoragePhoto(
@@ -145,7 +161,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     property.property.description,
                     property.photos,
                     property.property.adress,
-                    property.proximities,
+                    property.proximities.map { it -> it.idProximity },
                     Utils.formatDateDayBefore(property.property.dateStartSell),
                     Utils.formatDateDayBefore(property.property.dateSold)
                 )
@@ -163,6 +179,13 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         maxId = propertyRepository.getMaxId() + 1
         return maxId
     }
+
+    suspend fun getAllProximities() :MutableList<Proximity> {
+        allProximities = propertyRepository.getAllProximities().toMutableList()
+        return allProximities
+    }
+
+
 
 
 }

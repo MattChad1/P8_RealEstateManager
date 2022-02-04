@@ -1,15 +1,13 @@
 package com.openclassrooms.realestatemanager.datas.database
 
 import androidx.room.*
-import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.datas.model.Property
-import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
+import com.openclassrooms.realestatemanager.datas.model.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PropertyDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(property: Property): Long
 
     @Update
@@ -32,11 +30,20 @@ interface PropertyDao {
     @Insert
     suspend fun addPhoto(imageRoom: ImageRoom)
 
+    @Insert
+    suspend fun insertPropertyProximityCrossRef(crossRef: PropertyProximityCrossRef)
+
     @Query("DELETE FROM ImageRoom WHERE idProperty=:idProperty")
     suspend fun deletePhoto(idProperty: Int)
 
+    @Query("DELETE FROM PropertyProximityCrossRef WHERE idProperty=:idProperty")
+    suspend fun deleteProximtyForProperty(idProperty: Int)
+
     @Query("SELECT idProperty FROM Property ORDER BY idProperty DESC LIMIT 1")
     suspend fun getMaxId(): Int
+
+    @Query("SELECT * FROM Proximity")
+    suspend fun getAllProximities(): List<Proximity>
 
 
 }
