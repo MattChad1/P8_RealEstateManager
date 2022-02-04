@@ -96,7 +96,7 @@ class AddPropertyActivity : AppCompatActivity() {
         }
 
 
-        loadPhotosFromInternalStorageIntoRecyclerView()
+//        loadPhotosFromInternalStorageIntoRecyclerView()
 
         /* 2 DatePickerDialog */
         val currentDate = Calendar.getInstance()
@@ -145,7 +145,7 @@ class AddPropertyActivity : AppCompatActivity() {
         internalStoragePhotoAdapter = InternalStoragePhotoAdapter {
             val isDeletionSuccessful = deletePhotoFromInternalStorage(it.name)
             if (isDeletionSuccessful) {
-                loadPhotosFromInternalStorageIntoRecyclerView()
+//                loadPhotosFromInternalStorageIntoRecyclerView()
                 Toast.makeText(this, "Photo successfully deleted", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Failed to delete photo", Toast.LENGTH_SHORT).show()
@@ -154,7 +154,7 @@ class AddPropertyActivity : AppCompatActivity() {
 
         viewModel.imagesPrevLiveData.observe(this) { images ->
             internalStoragePhotoAdapter.submitList(images)
-
+            internalStoragePhotoAdapter.notifyDataSetChanged()
         }
         setupInternalStorageRecyclerView()
 
@@ -172,10 +172,9 @@ class AddPropertyActivity : AppCompatActivity() {
                     if (!legend.isNullOrEmpty()) {
                         val nameFile = viewModel.maxId.toString() + "-" + UUID.randomUUID().toString()
                         val isSavedSuccessfully = savePhotoToInternalStorage(nameFile, it)
-
                         if (isSavedSuccessfully) {
                             viewModel.addPhoto(nameFile, it, legend)
-                            loadPhotosFromInternalStorageIntoRecyclerView()
+//                            loadPhotosFromInternalStorageIntoRecyclerView()
                             Toast.makeText(this, "Photo saved successfully", Toast.LENGTH_SHORT).show()
                         }
                     } else {
@@ -201,7 +200,7 @@ class AddPropertyActivity : AppCompatActivity() {
                         val inputStream: InputStream? = contentResolver.openInputStream(it)
                         inputStream?.copyTo(MyApplication.instance.openFileOutput("$nameFile.jpg", MODE_PRIVATE))
                         viewModel.addPhoto(nameFile, MediaStore.Images.Media.getBitmap(this.getContentResolver(), it), legend)
-                        loadPhotosFromInternalStorageIntoRecyclerView()
+//                        loadPhotosFromInternalStorageIntoRecyclerView()
                         Toast.makeText(this, "Photo saved successfully", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Failed to save photo", Toast.LENGTH_SHORT).show()
@@ -227,7 +226,9 @@ class AddPropertyActivity : AppCompatActivity() {
                 binding.editSurfaceInput.setText(property?.squareFeet.toString())
                 binding.editDateStartSaleInput.setText(property?.dateStartSell)
                 spinner.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
-                loadPhotosFromInternalStorageIntoRecyclerView(property.id)
+//                loadPhotosFromInternalStorageIntoRecyclerView(property.id)
+
+
 
                 // In case the sale is done, set visibility of the fields where to put the date of the sale
                 binding.titlePropertySold.visibility = View.VISIBLE
@@ -262,13 +263,23 @@ class AddPropertyActivity : AppCompatActivity() {
 
     private fun TextInputEditText.getInput(): String? = if (this.text.isNullOrEmpty()) null else this.text.toString()
 
-    private fun loadPhotosFromInternalStorageIntoRecyclerView(id: Int? = null) {
+    fun loadPhotosFromInternalStorageIntoRecyclerView() {
         lifecycleScope.launch {
-            var prefix = id ?: viewModel.getMaxId()
-            val photos = loadPhotosFromInternalStorage("${prefix}-")
-            viewModel.checkLiveDataPhotos(photos)
+            val photos = viewModel.imagesPrevLiveData
+
+
         }
+
     }
+
+//    private fun loadPhotosFromInternalStorageIntoRecyclerView() {
+//        lifecycleScope.launch {
+//            val photos = viewModel.imagesPrevLiveData.value
+////            var prefix = id ?: viewModel.getMaxId()
+//            val photos = loadPhotosFromInternalStorage("${prefix}-")
+//            viewModel.checkLiveDataPhotos(photos)
+//        }
+//    }
 
     private fun setupInternalStorageRecyclerView() = binding.rvPrivatePhotos.apply {
         adapter = internalStoragePhotoAdapter

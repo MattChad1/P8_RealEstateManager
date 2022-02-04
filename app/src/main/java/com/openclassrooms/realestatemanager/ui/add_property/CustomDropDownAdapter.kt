@@ -17,7 +17,6 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<TypeOfPro
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-
         val view: View
         val vh: ItemHolder
         if (convertView == null) {

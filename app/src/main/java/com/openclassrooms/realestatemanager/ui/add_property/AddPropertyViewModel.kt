@@ -1,7 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.provider.MediaStore
 import androidx.lifecycle.*
+import com.openclassrooms.realestatemanager.MyApplication
+import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.InternalStoragePhoto
 import com.openclassrooms.realestatemanager.datas.model.Property
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
@@ -11,7 +15,9 @@ import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.formatDateYearBefore
 import com.openclassrooms.realestatemanager.utils.Utils.getTodayDate
 import kotlinx.coroutines.launch
-import java.time.LocalDate
+import java.io.File
+import java.io.FileInputStream
+
 
 class AddPropertyViewModel(private val propertyRepository: PropertyRepository, private val typeOfPropertyRepository: TypeOfPropertyRepository) : ViewModel() {
 
@@ -66,8 +72,8 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     rooms,
                     bedrooms,
                     bathrooms,
-                    dateStartSell,
-                    dateSold
+                    formatDateYearBefore(dateStartSell),
+                    formatDateYearBefore(dateSold)
                 )
                 if (idEdit != 0) {
                     propertyRepository.updateProperty(newProperty)
@@ -92,9 +98,27 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
 
     fun addPhoto(nameFile: String, bmp: Bitmap, legend: String) {
         val photos = imagesPrevLiveData.value ?: mutableListOf()
-        photos.add(InternalStoragePhoto(nameFile, bmp, legend))
+        if (InternalStoragePhoto(nameFile, bmp, legend) !in photos) photos.add(InternalStoragePhoto(nameFile, bmp, legend))
         imagesPrevLiveData.value = photos
     }
+
+    fun addPhotoFromBase(img: ImageRoom) {
+        val photos = imagesPrevLiveData.value ?: mutableListOf()
+
+        val f = File(MyApplication.instance.filesDir, img.nameFile)
+        val b = BitmapFactory.decodeStream(FileInputStream(f))
+
+        val imgInStorage: InternalStoragePhoto = InternalStoragePhoto(
+            img.nameFile,
+            b,
+            img.legende
+        )
+
+        if (imgInStorage !in photos) photos.add(imgInStorage)
+        imagesPrevLiveData.value = photos
+
+    }
+
 
     fun checkLiveDataPhotos(photos: List<InternalStoragePhoto>) {
         val photosLiveData = imagesPrevLiveData.value ?: mutableListOf()
@@ -103,6 +127,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         }
         imagesPrevLiveData.value = photosLiveData
     }
+
 
     fun getPropertyById(id: Int): MutableLiveData<EditPropertyViewState?> {
         val result = MutableLiveData<EditPropertyViewState?>()
@@ -125,6 +150,11 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     Utils.formatDateDayBefore(property.property.dateSold)
                 )
             )
+            property.photos?.forEach { p ->
+                addPhotoFromBase(p)
+
+            }
+
         }
         return result
     }

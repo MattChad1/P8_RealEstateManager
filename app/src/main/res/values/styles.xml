@@ -34,7 +34,6 @@
         <item name="boxBackgroundColor">@color/colorSecondaryLight</item>
 
 
-
     </style>
 
     <style name="edittext_add_property">
@@ -43,9 +42,7 @@
 
 
     <style name="hint_form">
-
         <item name="android:textColor">@color/colorSecondaryDark</item>
-
         <item name="android:textSize">22sp</item>
     </style>
 
@@ -55,7 +52,11 @@
         <item name="android:paddingStart">20dp</item>
         <item name="android:layout_width">100dp</item>
         <item name="android:height">50px</item>
+    </style>
 
+    <style name="filter_button">
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
     </style>
 
 

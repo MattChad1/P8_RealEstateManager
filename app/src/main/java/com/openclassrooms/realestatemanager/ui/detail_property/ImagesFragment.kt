@@ -45,7 +45,6 @@ class ImagesFragment : Fragment() {
         val imageFilePath = requireArguments().getString(ARG_SRC)
         val legendeImage = requireArguments().getString(ARG_LEGENDE)
         imageFilePath?.let{binding.imageRoom.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, imageFilePath + ".jpg")))}
-//        setImageFromAssetsFile(requireContext(), imageFilePath, legendeImage)
 
         if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility=View.GONE
         else {
@@ -59,39 +58,5 @@ class ImagesFragment : Fragment() {
      * @param filePath relative path of the file
      */
 
-    private fun setImageFromInternalStorage (  ) {
 
-    }
-
-    private fun setImageFromAssetsFile(context: Context, filePath: String?, legendeImage: String?) {
-
-        if (filePath !=null) {
-//            val assets = context.resources.assets
-//            val srcImg = if (filePath.indexOf(".") > 0) filePath else filePath + ".jpg"
-//            try {
-//                val ims: InputStream = assets.open("images/" + srcImg)
-//                binding.imageRoom.setImageDrawable(Drawable.createFromStream(ims, null))
-//
-//                if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility=View.GONE
-//                else {
-//                    binding.legendeViewpager.visibility=View.VISIBLE
-//                    binding.legendeViewpager.text = legendeImage
-//                }
-//            } catch (ex: IOException) {
-//                Log.d(TAG, "Erreur image : " + "images/" + srcImg)
-//            }
-
-
-            val resourceId: Int = resources.getIdentifier(
-                filePath, "drawable",
-                context.packageName
-            )
-            binding.imageRoom.setImageResource(resourceId)
-            if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility=View.GONE
-                else {
-                    binding.legendeViewpager.visibility=View.VISIBLE
-                    binding.legendeViewpager.text = legendeImage
-                }
-        }
-    }
 }

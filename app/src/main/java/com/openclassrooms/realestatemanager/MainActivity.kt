@@ -11,6 +11,7 @@ import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
 import com.openclassrooms.realestatemanager.ui.add_property.AddPropertyActivity
 import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
 import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
+import com.openclassrooms.realestatemanager.ui.search_activity.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +59,11 @@ class MainActivity : AppCompatActivity() {
             R.id.toolbar_edit -> {
                 val intent = Intent(this, AddPropertyActivity::class.java)
                 intent.putExtra(AddPropertyActivity.EDIT_ID, lastProperty)
+                startActivity(intent)
+            }
+
+            R.id.toolbar_search -> {
+                val intent = Intent(this, SearchActivity::class.java)
                 startActivity(intent)
             }
         }

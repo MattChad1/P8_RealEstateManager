@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_low_range"
+        style="@style/field_add_property"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="From">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_low_range_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_high_range"
+        style="@style/field_add_property"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="To">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_high_range_input"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</LinearLayout>

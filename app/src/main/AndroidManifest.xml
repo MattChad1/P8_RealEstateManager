@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RealEstateManager">
         <activity
+            android:name=".ui.search_activity.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search_activity.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.add_property.AddPropertyActivity"
             android:exported="false"
             android:label="@string/title_activity_add_property"

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.utils
 
+import android.util.Log
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
