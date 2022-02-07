@@ -1,12 +1,17 @@
 package com.openclassrooms.realestatemanager.datas.database
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.openclassrooms.realestatemanager.MyApplication
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.datas.model.*
+import com.openclassrooms.realestatemanager.utils.PhotoUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -90,9 +95,10 @@ abstract class LocaleDatabase : RoomDatabase() {
             typeOfPropertyDao.insert(TypeOfProperty(3, "Mansion"))
             typeOfPropertyDao.insert(TypeOfProperty(4, "Single Family House"))
 
-            imageRoomDao.insert(ImageRoom(0, 1, "flat1", "Salon"))
-            imageRoomDao.insert(ImageRoom(0, 2, "flat2", "Chambre"))
-            imageRoomDao.insert(ImageRoom(0, 1, "flat2", "Chambre"))
+            imageRoomDao.insert(ImageRoom(0, 1, "flat1", "Living-room"))
+            imageRoomDao.insert(ImageRoom(0, 2, "flat2", "A room"))
+            imageRoomDao.insert(ImageRoom(0, 1, "flat2", "Another room"))
+            imageRoomDao.insert(ImageRoom(0, 3, "flat3", "Living-room"))
 
 
             propertyDao.insert(
@@ -161,6 +167,10 @@ abstract class LocaleDatabase : RoomDatabase() {
             propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 4))
             propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2, 1))
             propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2, 3))
+
+            PhotoUtils.savePhotoToInternalStorage("flat1", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat1))
+            PhotoUtils.savePhotoToInternalStorage("flat2", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat2))
+            PhotoUtils.savePhotoToInternalStorage("flat3", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat3))
 
 
         }

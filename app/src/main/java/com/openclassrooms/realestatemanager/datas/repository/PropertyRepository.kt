@@ -1,11 +1,17 @@
 package com.openclassrooms.realestatemanager.datas.repository
 
+import android.R
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import androidx.annotation.WorkerThread
+import androidx.multidex.BuildConfig
+import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.datas.database.ImageRoomDao
 import com.openclassrooms.realestatemanager.datas.database.PropertyDao
 import com.openclassrooms.realestatemanager.datas.database.TypeOfPropertyDao
 import com.openclassrooms.realestatemanager.datas.model.*
 import kotlinx.coroutines.flow.Flow
+
 
 class PropertyRepository(private val propertyDao: PropertyDao, private val imageRoomDao: ImageRoomDao, private val typeOfPropertyDao: TypeOfPropertyDao) {
 

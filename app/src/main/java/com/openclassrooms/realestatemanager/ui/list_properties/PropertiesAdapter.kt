@@ -1,15 +1,22 @@
 package com.openclassrooms.realestatemanager.ui.list_properties
 
 import android.content.Context
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
 import com.openclassrooms.realestatemanager.utils.Utils
+import java.io.File
+import java.io.IOException
+import javax.security.auth.login.LoginException
 
 class PropertiesAdapter(
     private val context: Context,
@@ -26,11 +33,8 @@ class PropertiesAdapter(
         val type: TextView = view.findViewById(R.id.item_property_tv_type)
         val neighborhood: TextView = view.findViewById(R.id.item_property_tv_neighborhood)
         val price: TextView = view.findViewById(R.id.item_property_tv_price)
+        val image: ImageView = view.findViewById(R.id.item_property_image)
 
-
-        init {
-            // Define click listener for the ViewHolder's View.
-        }
     }
 
     // Create new views (invoked by the layout manager)
@@ -60,8 +64,13 @@ class PropertiesAdapter(
             )
         )
 
+        try {
+            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo.nameFile + ".jpg")))
+        }
+        catch (e: IOException) {
+            e.printStackTrace()
 
-
+        }
         viewHolder.type.text = properties[position].type
 //        viewHolder.neighborhood.text = properties[position].description
         //TODO : A changer pour le vrai quartier

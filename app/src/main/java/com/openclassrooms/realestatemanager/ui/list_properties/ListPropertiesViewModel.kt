@@ -57,7 +57,7 @@ class ListPropertiesViewModel(
                         property.property.description,
                         property.photos[0],
                         property.property.adress,
-                    property.property.dateStartSell,
+                        property.property.dateStartSell,
                         property.property.dateSold
                     )
                 )
