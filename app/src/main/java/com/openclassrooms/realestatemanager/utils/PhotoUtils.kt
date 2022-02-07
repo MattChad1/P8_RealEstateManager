@@ -15,7 +15,7 @@ class PhotoUtils {
         fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
             return try {
                 MyApplication.instance.openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
-                    if (!bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream)) {
+                    if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream)) {
                         throw IOException("Couldn't save bitmap.")
                     }
                 }

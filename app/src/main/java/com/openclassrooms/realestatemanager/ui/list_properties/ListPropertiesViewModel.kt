@@ -6,6 +6,7 @@ import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.FilterSearchRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
+import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.coroutines.launch
 
 class ListPropertiesViewModel(
@@ -44,7 +45,6 @@ class ListPropertiesViewModel(
         var propertiesToReturn = mutableListOf<PropertyViewStateItem>()
         if (properties == null) return listOf()
         for (property in properties) {
-            if (property.property.dateSold == null) {
                 propertiesToReturn.add(
                     PropertyViewStateItem(
                         property.property.idProperty,
@@ -58,10 +58,10 @@ class ListPropertiesViewModel(
                         property.photos[0],
                         property.property.adress,
                         property.property.dateStartSell,
-                        property.property.dateSold
+                        property.property.dateSold != null
                     )
                 )
-            }
+
         }
         return propertiesToReturn
     }

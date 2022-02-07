@@ -8,7 +8,7 @@
     <color name="colorSecondaryDark">#c2c2c2</color>
     <color name="colorSecondaryLight">#ffffff</color>
 
-    <color name="colorAccent">#c2c2c2</color>
+    <color name="colorAccent">@color/colorPrimaryDark</color>
 
     <color name="white">#FFFFFF</color>
 </resources>

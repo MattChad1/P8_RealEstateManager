@@ -34,6 +34,7 @@ class PropertiesAdapter(
         val neighborhood: TextView = view.findViewById(R.id.item_property_tv_neighborhood)
         val price: TextView = view.findViewById(R.id.item_property_tv_price)
         val image: ImageView = view.findViewById(R.id.item_property_image)
+        val tvSold: TextView = view.findViewById(R.id.item_property_tv_sold)
 
     }
 
@@ -76,6 +77,9 @@ class PropertiesAdapter(
         //TODO : A changer pour le vrai quartier
         viewHolder.neighborhood.text = "Manhattan"
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
+        if (properties[position].sold) {
+            viewHolder.tvSold.visibility=View.VISIBLE
+        }
         viewHolder.itemView.setOnClickListener {
             clickListener.onItemAdapterClickListener(position)
             noSelectItem(viewSelected)
