@@ -3,10 +3,11 @@ package com.openclassrooms.realestatemanager.datas.repository
 import androidx.annotation.WorkerThread
 import com.openclassrooms.realestatemanager.datas.database.ImageRoomDao
 import com.openclassrooms.realestatemanager.datas.database.PropertyDao
+import com.openclassrooms.realestatemanager.datas.database.TypeOfPropertyDao
 import com.openclassrooms.realestatemanager.datas.model.*
 import kotlinx.coroutines.flow.Flow
 
-class PropertyRepository (private val propertyDao: PropertyDao, private val imageRoomDao: ImageRoomDao) {
+class PropertyRepository(private val propertyDao: PropertyDao, private val imageRoomDao: ImageRoomDao, private val typeOfPropertyDao: TypeOfPropertyDao) {
 
     val allPropertiesComplete: Flow<List<PropertyWithProximity>?> = propertyDao.getPropertiesComplete()
 
@@ -22,20 +23,29 @@ class PropertyRepository (private val propertyDao: PropertyDao, private val imag
 
     suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity = propertyDao.getPropertyCompleteById(id)
 
-    suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String ) {
-        imageRoomDao.insert (ImageRoom(0, idProperty, nameFile, legende))
+    suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String) {
+        imageRoomDao.insert(ImageRoom(0, idProperty, nameFile, legende))
     }
 
     suspend fun insertPropertyProximityCrossRef(crossRef: PropertyProximityCrossRef) {
-        propertyDao.insertPropertyProximityCrossRef (crossRef)
+        propertyDao.insertPropertyProximityCrossRef(crossRef)
     }
 
-    suspend fun deletePhoto(idProperty: Int) {propertyDao.deletePhoto(idProperty)}
-    suspend fun deleteProximityForProperty(idProperty: Int) {propertyDao.deleteProximtyForProperty(idProperty)}
+    suspend fun deletePhoto(idProperty: Int) {
+        propertyDao.deletePhoto(idProperty)
+    }
+
+    suspend fun deleteProximityForProperty(idProperty: Int) {
+        propertyDao.deleteProximtyForProperty(idProperty)
+    }
 
     suspend fun getMaxId(): Int = propertyDao.getMaxId()
 
-    suspend fun getAllProximities(): List<Proximity> {return propertyDao.getAllProximities()}
+    suspend fun getAllProximities(): List<Proximity> {
+        return propertyDao.getAllProximities()
+    }
+
+    val allTypes: Flow<List<TypeOfProperty>> = typeOfPropertyDao.getAll()
 
 
 }

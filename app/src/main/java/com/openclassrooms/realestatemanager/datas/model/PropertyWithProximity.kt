@@ -15,19 +15,19 @@ data class PropertyWithProximity(
     var proximities: List<Proximity>,
 
     @Relation(
-parentColumn = "type",
-entityColumn = "idType",
-entity = TypeOfProperty::class
+        parentColumn = "type",
+        entityColumn = "idType",
+        entity = TypeOfProperty::class
 
-)
-var typeOfProperty: TypeOfProperty,
+    )
+    var typeOfProperty: TypeOfProperty,
 
-@Relation(
-    parentColumn = "idProperty",
-    entityColumn = "idProperty",
-    entity = ImageRoom::class
+    @Relation(
+        parentColumn = "idProperty",
+        entityColumn = "idProperty",
+        entity = ImageRoom::class
 
-)
-var photos: MutableList<ImageRoom>?
+    )
+    var photos: MutableList<ImageRoom>
 
 )

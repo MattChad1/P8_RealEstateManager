@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:tag="fragment_search"
+    tools:context=".ui.add_property.AddPropertyActivity">
+
+    <TextView
+        android:id="@+id/title_search_criteria"
+        style="@style/titre2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:text="Your search criteria"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_price"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorSecondaryDark"
+        android:text="Price"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_surface"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Surface"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_rooms"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Num. rooms"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_bedrooms"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Num. bedrooms"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_bathrooms"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Num. bathrooms"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_proximity"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proximity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_date_start_sale"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="In sale since"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_date_end_sale"
+        style="@style/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sold since"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        app:constraint_referenced_ids="btn_price, btn_rooms, btn_bedrooms, btn_bathrooms, btn_surface, btn_proximity, btn_date_start_sale,btn_date_end_sale"
+        app:flow_horizontalGap="5dp"
+        app:flow_horizontalStyle="spread"
+        app:flow_verticalGap="10dp"
+        app:flow_verticalStyle="spread"
+        app:flow_wrapMode="chain"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
+
+    <TextView
+        android:id="@+id/tv_num_match"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="En attente..."
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flowView"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

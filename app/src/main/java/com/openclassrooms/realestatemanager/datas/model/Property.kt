@@ -13,7 +13,7 @@ data class Property(
     var adress: String,
     var description: String? = null,
     var agent: Int? = null,
-    var price: Int? = null,
+    var price: Long,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,

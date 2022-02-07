@@ -38,7 +38,7 @@ class MapsFragment : Fragment() {
 
         if (adress != null) {
             val marker = getLocationByAddress(requireActivity(), adress);
-            if (marker!=null) {
+            if (marker != null) {
                 googleMap.addMarker(MarkerOptions().position(marker))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15f))
             }
@@ -70,7 +70,8 @@ class MapsFragment : Fragment() {
             val address = coder.getFromLocationName(strAddress, 5) ?: return null
             val location = address.first()
             return LatLng(location.latitude, location.longitude)
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             Log.w("Maps Fragment", "getLocationByAddress: $e")
         }
         return null

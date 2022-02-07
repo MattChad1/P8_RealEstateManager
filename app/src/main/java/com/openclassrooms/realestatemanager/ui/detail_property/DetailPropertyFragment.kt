@@ -38,7 +38,7 @@ class DetailPropertyFragment : Fragment() {
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
 
     private val viewModel: DetailPropertyViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.typeOfPropertyRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

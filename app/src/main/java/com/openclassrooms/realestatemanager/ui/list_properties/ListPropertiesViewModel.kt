@@ -1,27 +1,43 @@
 package com.openclassrooms.realestatemanager.ui.list_properties
 
 import androidx.lifecycle.*
+import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
+import com.openclassrooms.realestatemanager.datas.repository.FilterSearchRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import kotlinx.coroutines.launch
 
 class ListPropertiesViewModel(
     private val repository: PropertyRepository,
-    private val typeOfPropertyRepository: TypeOfPropertyRepository
+    private val filterSearchRepository: FilterSearchRepository
 ) : ViewModel() {
 
     private val types = mutableListOf<TypeOfProperty>()
 
+    val allPropertiesLiveData: LiveData<List<PropertyViewStateItem>> =
+        Transformations.map(repository.allPropertiesComplete.asLiveData(), ::displayProperty)
+
+    val filterLiveData = filterSearchRepository.filterLiveData
+
+    val mediatorLiveData: MediatorLiveData<List<PropertyViewStateItem>> = MediatorLiveData()
+
     init {
         viewModelScope.launch {
-            typeOfPropertyRepository.allTypes.asLiveData().value?.let { types.addAll(it) }
+            repository.allTypes.asLiveData().value?.let { types.addAll(it) }
+            mediatorLiveData.addSource(allPropertiesLiveData) { value ->
+                mediatorLiveData.setValue(
+                    filterListProperties(
+                        allPropertiesLiveData.value,
+                        filterLiveData.value
+                    )
+                )
+            }
+            mediatorLiveData.addSource(filterLiveData) { filter ->
+                mediatorLiveData.setValue(filterListProperties(mediatorLiveData.value, filter))
+            }
         }
     }
-
-    val allProperties: LiveData<List<PropertyViewStateItem>> =
-        Transformations.map(repository.allPropertiesComplete.asLiveData(), ::displayProperty)
 
 
     private fun displayProperty(properties: List<PropertyWithProximity>?): List<PropertyViewStateItem> {
@@ -39,13 +55,57 @@ class ListPropertiesViewModel(
                         property.property.bedrooms,
                         property.property.bathrooms,
                         property.property.description,
-                        property.photos,
-                        property.property.adress
+                        property.photos[0],
+                        property.property.adress,
+                    property.property.dateStartSell,
+                        property.property.dateSold
                     )
                 )
             }
         }
         return propertiesToReturn
+    }
+
+    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?): List<PropertyViewStateItem>? {
+        if (properties == null) return listOf<PropertyViewStateItem>()
+        if (filter == null) return properties
+        val newList = mutableListOf<PropertyViewStateItem>()
+        properties?.forEach {
+            if (filter.price.first != null) {
+                if (it.price < filter.price.first!!) return@forEach
+            }
+            if (filter.price.second != null) {
+                if (it.price > filter.price.second!!) return@forEach
+            }
+            if (filter.numRooms.first != null) {
+                if (it.rooms == null && it.rooms!! < filter.numRooms.first!!) return@forEach
+            }
+            if (filter.numRooms.second != null) {
+                if (it.rooms == null && it.rooms!! > filter.numRooms.second!!) return@forEach
+            }
+            if (filter.numBedrooms.first != null) {
+                if (it.bedrooms == null && it.bedrooms!! < filter.numBedrooms.first!!) return@forEach
+            }
+            if (filter.numBedrooms.second != null) {
+                if (it.bedrooms == null && it.bedrooms!! > filter.numBedrooms.second!!) return@forEach
+            }
+            if (filter.numBathrooms.first != null) {
+                if (it.bathrooms == null && it.bathrooms!! < filter.numBathrooms.first!!) return@forEach
+            }
+            if (filter.numBathrooms.second != null) {
+                if (it.bathrooms == null && it.bathrooms!! > filter.numBathrooms.second!!) return@forEach
+            }
+            if (filter.surface.first != null) {
+                if (it.squareFeet == null && it.squareFeet!! < filter.surface.first!!) return@forEach
+            }
+            if (filter.surface.second != null) {
+                if (it.squareFeet == null && it.squareFeet!! > filter.surface.second!!) return@forEach
+            }
+
+            newList.add(it)
+
+        }
+        return newList
     }
 
 

@@ -3,10 +3,10 @@ package com.openclassrooms.realestatemanager.ui.detail_property
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.Proximity
 
-data class DetailPropertyViewState (
+data class DetailPropertyViewState(
     var id: Int,
     var type: String? = null,
-    var price: Int? = null,
+    var price: Long? = null,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,

@@ -1,9 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,11 +42,11 @@ class ImagesFragment : Fragment() {
         val position = requireArguments().getInt(ARG_POSITION)
         val imageFilePath = requireArguments().getString(ARG_SRC)
         val legendeImage = requireArguments().getString(ARG_LEGENDE)
-        imageFilePath?.let{binding.imageRoom.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, imageFilePath + ".jpg")))}
+        imageFilePath?.let { binding.imageRoom.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, imageFilePath + ".jpg"))) }
 
-        if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility=View.GONE
+        if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility = View.GONE
         else {
-            binding.legendeViewpager.visibility=View.VISIBLE
+            binding.legendeViewpager.visibility = View.VISIBLE
             binding.legendeViewpager.text = legendeImage
         }
     }

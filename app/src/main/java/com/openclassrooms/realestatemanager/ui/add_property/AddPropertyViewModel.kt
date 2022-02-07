@@ -2,12 +2,10 @@ package com.openclassrooms.realestatemanager.ui.add_property
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.provider.MediaStore
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.datas.model.*
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.formatDateYearBefore
 import com.openclassrooms.realestatemanager.utils.Utils.getTodayDate
@@ -16,11 +14,11 @@ import java.io.File
 import java.io.FileInputStream
 
 
-class AddPropertyViewModel(private val propertyRepository: PropertyRepository, private val typeOfPropertyRepository: TypeOfPropertyRepository) : ViewModel() {
+class AddPropertyViewModel(private val propertyRepository: PropertyRepository) : ViewModel() {
 
     val TAG = "MyLog AddPropertyVM"
 
-    val allTypes: LiveData<List<TypeOfProperty>> = typeOfPropertyRepository.allTypes.asLiveData()
+    val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.allTypes.asLiveData()
     var validAdress: MutableLiveData<String?> = MutableLiveData()
     var validPrice: MutableLiveData<String?> = MutableLiveData()
     var validImage: MutableLiveData<String?> = MutableLiveData()
@@ -41,7 +39,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
     fun addNewProperty(
         type: TypeOfProperty,
         agent: Int? = null,
-        price: Int? = null,
+        price: Long? = null,
         squareFeet: Double? = null,
         rooms: Int? = 0,
         bedrooms: Int? = 0,
@@ -58,14 +56,14 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
 
         var proximitiesForRoom = mutableListOf<Proximity>()
         if (!proximitiesSelected.isNullOrEmpty()) {
-            proximitiesForRoom.addAll(allProximities.filter { proximitiesSelected.contains(it.idProximity)})
+            proximitiesForRoom.addAll(allProximities.filter { proximitiesSelected.contains(it.idProximity) })
         }
 
 
         validAdress.value = if (adress.isNullOrEmpty()) "Vous devez indiquer une adresse" else null
         validPrice.value = if (price == null) "Vous devez indiquer un prix" else null
         validImage.value = if (imagesPrevLiveData.value.isNullOrEmpty()) "Vous devez choisir au moins une image" else null
-        validDateStartSell.value = if (dateStartSellFormatRoom==null) "Vous devez saisir une date" else null
+        validDateStartSell.value = if (dateStartSellFormatRoom == null) "Vous devez saisir une date" else null
 
         if (validAdress.value == null && validPrice.value == null && validImage.value == null) {
             viewModelScope.launch {
@@ -75,7 +73,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     adress!!,
                     description,
                     agent,
-                    price,
+                    price!!,
                     squareFeet,
                     rooms,
                     bedrooms,
@@ -103,7 +101,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
 
                 for (i in imagesPrevLiveData.value!!) {
                     images.add(ImageRoom(0, idProperty, i.name, i.legend))
-                  propertyRepository.addPhoto(idProperty, i.name, i.legend)
+                    propertyRepository.addPhoto(idProperty, i.name, i.legend)
                 }
 
 
@@ -180,12 +178,10 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         return maxId
     }
 
-    suspend fun getAllProximities() :MutableList<Proximity> {
+    suspend fun getAllProximities(): MutableList<Proximity> {
         allProximities = propertyRepository.getAllProximities().toMutableList()
         return allProximities
     }
-
-
 
 
 }

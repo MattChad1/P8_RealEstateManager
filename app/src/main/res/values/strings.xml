@@ -33,5 +33,8 @@
     <string name="add_property_conf">The property has been added successfully</string>
     <string name="date_for_datePicker">%1$02d/%2$02d/%3$d</string>
 
+    //Search
+    <string name="number_match">%d properties match your criteria</string>
+
 
 </resources>

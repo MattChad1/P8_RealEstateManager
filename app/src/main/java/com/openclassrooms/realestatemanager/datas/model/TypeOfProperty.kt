@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity
-data class TypeOfProperty (
+data class TypeOfProperty(
     @PrimaryKey(autoGenerate = false)
     var idType: Int,
     var nameType: String,

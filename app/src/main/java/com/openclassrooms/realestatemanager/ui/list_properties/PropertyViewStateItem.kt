@@ -2,16 +2,17 @@ package com.openclassrooms.realestatemanager.ui.list_properties
 
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 
-data class PropertyViewStateItem (
+data class PropertyViewStateItem(
     var id: Int,
-    var type: String? = null,
-    var price: Int? = null,
+    var type: String,
+    var price: Long,
     var squareFeet: Double? = null,
-    var rooms: Int? = 0,
-    var bedrooms: Int? = 0,
-    var bathrooms: Int? = 0,
+    var rooms: Int? = null,
+    var bedrooms: Int? = null,
+    var bathrooms: Int? = null,
     var description: String? = null,
-    var photos: MutableList<ImageRoom>? = null,
+    var photo: ImageRoom,
     var adress: String? = null,
-    var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
-        )
+    var dateStartSale: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
+    var dateSold: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
+)

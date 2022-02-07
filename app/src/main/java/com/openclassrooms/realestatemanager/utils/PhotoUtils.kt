@@ -11,47 +11,44 @@ import java.io.IOException
 
 class PhotoUtils {
 
-companion object {
-    fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
-        return try {
-            MyApplication.instance.openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
-                if (!bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream)) {
-                    throw IOException("Couldn't save bitmap.")
+    companion object {
+        fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
+            return try {
+                MyApplication.instance.openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
+                    if (!bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream)) {
+                        throw IOException("Couldn't save bitmap.")
+                    }
                 }
+                true
             }
-            true
+            catch (e: IOException) {
+                e.printStackTrace()
+                false
+            }
         }
-        catch (e: IOException) {
-            e.printStackTrace()
-            false
+
+
+        suspend fun loadPhotosFromInternalStorage(prefix: String = ""): List<InternalStoragePhoto> {
+            return withContext(Dispatchers.IO) {
+                val files = MyApplication.instance.filesDir.listFiles()
+                files?.filter { it.canRead() && it.isFile && it.name.endsWith(".jpg") && it.name.startsWith(prefix) }?.map {
+                    val bytes = it.readBytes()
+                    val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    InternalStoragePhoto(it.name, bmp)
+                } ?: listOf()
+            }
+        }
+
+        fun deletePhotoFromInternalStorage(filename: String): Boolean {
+            return try {
+                MyApplication.instance.deleteFile(filename)
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
         }
     }
-
-
-    suspend fun loadPhotosFromInternalStorage(prefix: String = ""): List<InternalStoragePhoto> {
-        return withContext(Dispatchers.IO) {
-            val files = MyApplication.instance.filesDir.listFiles()
-            files?.filter { it.canRead() && it.isFile && it.name.endsWith(".jpg") && it.name.startsWith(prefix) }?.map {
-                val bytes = it.readBytes()
-                val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                InternalStoragePhoto(it.name, bmp)
-            } ?: listOf()
-        }
-    }
-
-    fun deletePhotoFromInternalStorage(filename: String): Boolean {
-        return try {
-            MyApplication.instance.deleteFile(filename)
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-            false
-        }
-    }
-}
-
-
-
 
 
 }

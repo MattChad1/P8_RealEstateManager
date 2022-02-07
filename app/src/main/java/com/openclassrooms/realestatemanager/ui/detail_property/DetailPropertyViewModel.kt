@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import com.openclassrooms.realestatemanager.datas.repository.TypeOfPropertyRepository
 import kotlinx.coroutines.launch
 
 class DetailPropertyViewModel(

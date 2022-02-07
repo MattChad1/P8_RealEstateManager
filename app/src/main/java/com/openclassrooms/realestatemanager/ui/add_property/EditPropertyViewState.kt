@@ -1,13 +1,12 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
-import com.openclassrooms.realestatemanager.datas.model.Proximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 
 data class EditPropertyViewState(
     var id: Int,
     var type: TypeOfProperty,
-    var price: Int? = null,
+    var price: Long,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,

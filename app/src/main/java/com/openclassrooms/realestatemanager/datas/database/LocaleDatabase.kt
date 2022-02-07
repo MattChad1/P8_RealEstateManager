@@ -61,12 +61,26 @@ abstract class LocaleDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.propertyDao(), database.agentDao(), database.typeOfPropertyDao(), database.proximityDao(), database.propertyProximityCrossRefDao(), database.imageRoomDao())
+                    populateDatabase(
+                        database.propertyDao(),
+                        database.agentDao(),
+                        database.typeOfPropertyDao(),
+                        database.proximityDao(),
+                        database.propertyProximityCrossRefDao(),
+                        database.imageRoomDao()
+                    )
                 }
             }
         }
 
-        suspend fun populateDatabase(propertyDao: PropertyDao, agentDao: AgentDao, typeOfPropertyDao: TypeOfPropertyDao, proximityDao: ProximityDao, propertyProximityCrossRefDao: PropertyProximityCrossRefDao, imageRoomDao: ImageRoomDao) {
+        suspend fun populateDatabase(
+            propertyDao: PropertyDao,
+            agentDao: AgentDao,
+            typeOfPropertyDao: TypeOfPropertyDao,
+            proximityDao: ProximityDao,
+            propertyProximityCrossRefDao: PropertyProximityCrossRefDao,
+            imageRoomDao: ImageRoomDao
+        ) {
             agentDao.insert(Agent(0, "Mike Money"))
             agentDao.insert(Agent(0, "Melissa BigDollars"))
 
@@ -115,6 +129,23 @@ abstract class LocaleDatabase : RoomDatabase() {
                 )
             )
 
+            propertyDao.insert(
+                Property(
+                    0,
+                    2,
+                    "2075 Victory Blvd, Staten Island, NY 10314",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
+                    1,
+                    100000,
+                    30.00,
+                    2,
+                    1,
+                    1,
+                    "2022-01-01",
+                    null
+                )
+            )
+
             proximityDao.insertAll(
                 listOf(
                     Proximity(1, "School", "icon_proximity_school", "proximity_school"),
@@ -124,13 +155,12 @@ abstract class LocaleDatabase : RoomDatabase() {
                 )
             )
 
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,1))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,2))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,3))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1,4))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2,1))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2,3))
-
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 1))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 2))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 3))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 4))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2, 1))
+            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2, 3))
 
 
         }

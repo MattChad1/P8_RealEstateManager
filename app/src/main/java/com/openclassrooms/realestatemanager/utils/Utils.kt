@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.utils
 
-import android.util.Log
+import com.google.android.material.textfield.TextInputEditText
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -41,20 +41,22 @@ object Utils {
     }
 
     fun formatDateYearBefore(date: String?): String? {
-        if (date==null) return null
+        if (date == null) return null
         val split = date.split("/")
-        return split[2] + "-" + split[1]  + "-" + split[0]
+        return split[2] + "-" + split[1] + "-" + split[0]
     }
 
     fun formatDateDayBefore(date: String?): String? {
-        if (date==null) return null
+        if (date == null) return null
         val split = date.split("-")
-        return split[2] + "/" + split[1]  + "/" + split[0]
+        return split[2] + "/" + split[1] + "/" + split[0]
     }
 
-    fun formatPrice (price: Int?): String {
-        return if (price==null) "" else "$" + NumberFormat.getNumberInstance(Locale.US).format(price)
+    fun formatPrice(price: Long?): String {
+        return if (price == null) "" else "$" + NumberFormat.getNumberInstance(Locale.US).format(price)
     }
+
+    fun TextInputEditText.getInput(): String? = if (this.text.isNullOrEmpty()) null else this.text.toString()
 
     /**
      * Vérification de la connexion réseau

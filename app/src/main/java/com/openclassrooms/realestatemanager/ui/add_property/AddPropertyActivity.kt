@@ -22,15 +22,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.textfield.TextInputEditText
-import com.openclassrooms.realestatemanager.MainActivity
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.ActivityAddPropertyBinding
-import com.openclassrooms.realestatemanager.datas.model.Proximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
+import com.openclassrooms.realestatemanager.ui.main_activity.MainActivity
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.deletePhotoFromInternalStorage
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.savePhotoToInternalStorage
+import com.openclassrooms.realestatemanager.utils.Utils.getInput
 import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.util.*
@@ -49,7 +49,7 @@ class AddPropertyActivity : AppCompatActivity() {
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
 
     private val viewModel: AddPropertyViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.typeOfPropertyRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
     }
 
     var proximityCheckboxes: MutableList<CheckBox> = mutableListOf()
@@ -101,9 +101,6 @@ class AddPropertyActivity : AppCompatActivity() {
             }
 
         }
-
-
-
 
 
         // Spinner type of properties
@@ -246,10 +243,9 @@ class AddPropertyActivity : AppCompatActivity() {
                 spinner.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
 
                 for (c in proximityCheckboxes) {
-                    if (property.proximities?.contains (c.tag) == true) c.isChecked= true
+                    if (property.proximities?.contains(c.tag) == true) c.isChecked = true
                 }
 //                loadPhotosFromInternalStorageIntoRecyclerView(property.id)
-
 
 
                 // In case the sale is done, set visibility of the fields where to put the date of the sale
@@ -263,15 +259,15 @@ class AddPropertyActivity : AppCompatActivity() {
         binding.btnSubmit.setOnClickListener {
 
             val proximitiesSelected: MutableList<Int> = mutableListOf()
-           proximityCheckboxes.forEach {
+            proximityCheckboxes.forEach {
                 if (it.isChecked) proximitiesSelected.add(it.tag as Int)
-           }
+            }
 
 
             viewModel.addNewProperty(
                 spinner.selectedItem as TypeOfProperty,
                 null,
-                binding.editPriceInput.getInput()?.toInt(),
+                binding.editPriceInput.getInput()?.toLong(),
                 binding.editSurfaceInput.getInput()?.toDouble(),
                 binding.editNumRoomsInput.getInput()?.toInt(),
                 binding.editNumBedroomsInput.getInput()?.toInt(),
@@ -290,8 +286,6 @@ class AddPropertyActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun TextInputEditText.getInput(): String? = if (this.text.isNullOrEmpty()) null else this.text.toString()
 
     fun loadPhotosFromInternalStorageIntoRecyclerView() {
         lifecycleScope.launch {

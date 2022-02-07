@@ -9,25 +9,29 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.openclassrooms.realestatemanager.MainActivity
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
 import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
+import com.openclassrooms.realestatemanager.ui.main_activity.MainActivity
 
 class ListPropertiesFragment : Fragment(), ItemClickListener {
 
 
     var properties: MutableList<PropertyViewStateItem> = mutableListOf()
-    private val viewModel: ListPropertiesViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository,MyApplication.instance.typeOfPropertyRepository)
-    }
     var itemSelected: Long? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    private val viewModel: ListPropertiesViewModel by viewModels() {
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
 
         var binding: FragmentListPropertiesBinding = FragmentListPropertiesBinding.inflate(inflater, container, false)
@@ -39,18 +43,12 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         val adapter = PropertiesAdapter(requireActivity(), properties, this)
         rv.adapter = adapter
 
-        viewModel.allProperties.observe(viewLifecycleOwner) { newProperties ->
+        viewModel.mediatorLiveData.observe(viewLifecycleOwner) { newProperties ->
 
-            // Check if list is launched for the 1st time, then display details of the 1st item
-//            if (properties.isEmpty() && newProperties!= null && newProperties.isNotEmpty()) {
-//                newProperties[0]?.let {
-//                    sendNewDetails (it)
-//                }
-//
-//            }
             properties.clear()
             properties.addAll(newProperties)
-                adapter.notifyDataSetChanged() }
+            adapter.notifyDataSetChanged()
+        }
 
         return binding.root
     }
@@ -64,7 +62,7 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 
     }
 
-    fun sendNewDetails (id: Int) {
+    fun sendNewDetails(id: Int) {
 
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
@@ -73,7 +71,7 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         args.putInt("idProperty", id)
         newFragment.arguments = args
 
-        if (resources.getBoolean(R.bool.isTablet)==false) transaction?.replace(R.id.main_fragment, newFragment)
+        if (resources.getBoolean(R.bool.isTablet) == false) transaction?.replace(R.id.main_fragment, newFragment)
         else transaction?.replace(R.id.second_fragment, newFragment)
 
         transaction?.disallowAddToBackStack()

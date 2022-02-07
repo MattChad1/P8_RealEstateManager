@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
+import com.openclassrooms.realestatemanager.utils.Utils
 
 class PropertiesAdapter(
     private val context: Context,
@@ -53,8 +53,7 @@ class PropertiesAdapter(
                     R.color.colorAccent
                 )
             )
-        }
-        else viewHolder.itemView.setBackgroundColor(
+        } else viewHolder.itemView.setBackgroundColor(
             ContextCompat.getColor(
                 context,
                 R.color.white
@@ -79,12 +78,12 @@ class PropertiesAdapter(
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = properties.size
 
-    fun highlightItem (v: View?) {
+    fun highlightItem(v: View?) {
         v?.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
         v?.findViewById<TextView>(R.id.item_property_tv_price)?.setTextColor(ContextCompat.getColor(context, R.color.white))
     }
 
-    fun noSelectItem (v: View?) {
+    fun noSelectItem(v: View?) {
         v?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         v?.findViewById<TextView>(R.id.item_property_tv_price)?.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
     }
