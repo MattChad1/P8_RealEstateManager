@@ -57,8 +57,9 @@ class ListPropertiesViewModel(
                         property.property.description,
                         property.photos[0],
                         property.property.adress,
+                        property.proximities.map { it.idProximity },
                         property.property.dateStartSell,
-                        property.property.dateSold != null
+                        property.property.dateSold
                     )
                 )
 
@@ -70,36 +71,58 @@ class ListPropertiesViewModel(
         if (properties == null) return listOf<PropertyViewStateItem>()
         if (filter == null) return properties
         val newList = mutableListOf<PropertyViewStateItem>()
+
+
         properties?.forEach {
+            // Filter price, min and max
             if (filter.price.first != null) {
                 if (it.price < filter.price.first!!) return@forEach
             }
             if (filter.price.second != null) {
                 if (it.price > filter.price.second!!) return@forEach
             }
+
+            // Filter number of rooms, min and max
             if (filter.numRooms.first != null) {
-                if (it.rooms == null && it.rooms!! < filter.numRooms.first!!) return@forEach
+                if (it.rooms == null || it.rooms!! < filter.numRooms.first!!) return@forEach
             }
             if (filter.numRooms.second != null) {
-                if (it.rooms == null && it.rooms!! > filter.numRooms.second!!) return@forEach
+                if (it.rooms == null || it.rooms!! > filter.numRooms.second!!) return@forEach
             }
+
+            // Filter number of bedrooms, min and max
             if (filter.numBedrooms.first != null) {
-                if (it.bedrooms == null && it.bedrooms!! < filter.numBedrooms.first!!) return@forEach
+                if (it.bedrooms == null || it.bedrooms!! < filter.numBedrooms.first!!) return@forEach
             }
             if (filter.numBedrooms.second != null) {
-                if (it.bedrooms == null && it.bedrooms!! > filter.numBedrooms.second!!) return@forEach
+                if (it.bedrooms == null || it.bedrooms!! > filter.numBedrooms.second!!) return@forEach
             }
+
+            // Filter number of bathrooms, min and max
             if (filter.numBathrooms.first != null) {
-                if (it.bathrooms == null && it.bathrooms!! < filter.numBathrooms.first!!) return@forEach
+                if (it.bathrooms == null || it.bathrooms!! < filter.numBathrooms.first!!) return@forEach
             }
             if (filter.numBathrooms.second != null) {
-                if (it.bathrooms == null && it.bathrooms!! > filter.numBathrooms.second!!) return@forEach
+                if (it.bathrooms == null || it.bathrooms!! > filter.numBathrooms.second!!) return@forEach
             }
+
+            // Filter surface, min and max
             if (filter.surface.first != null) {
-                if (it.squareFeet == null && it.squareFeet!! < filter.surface.first!!) return@forEach
+                if (it.squareFeet == null || it.squareFeet!! < filter.surface.first!!) return@forEach
             }
             if (filter.surface.second != null) {
-                if (it.squareFeet == null && it.squareFeet!! > filter.surface.second!!) return@forEach
+                if (it.squareFeet == null || it.squareFeet!! > filter.surface.second!!) return@forEach
+            }
+
+            // Start sale, only min
+            if (filter.dateStartSale != null && it.dateStartSale!! < filter.dateStartSale!!) return@forEach
+
+            // End sale, only max
+            if (filter.dateSoldMax != null && it.dateSold !=null && it.dateSold!! > filter.dateSoldMax!!) return@forEach
+
+            // Proximities, contain
+            for (pSearch in filter.proximity) {
+                if (pSearch !in it.proximitiesIds) return@forEach
             }
 
             newList.add(it)

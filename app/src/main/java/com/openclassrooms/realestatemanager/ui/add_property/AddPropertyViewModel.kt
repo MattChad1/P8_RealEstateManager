@@ -37,7 +37,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         viewModelScope.launch {
             maxId = propertyRepository.getMaxId() + 1
             allAgents.value = propertyRepository.getAllAgents()
-            var test = allAgents.value
         }
     }
 

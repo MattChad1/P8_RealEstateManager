@@ -77,7 +77,7 @@ class PropertiesAdapter(
         //TODO : A changer pour le vrai quartier
         viewHolder.neighborhood.text = "Manhattan"
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
-        if (properties[position].sold) {
+        if (properties[position].dateSold!= null) {
             viewHolder.tvSold.visibility=View.VISIBLE
         }
         viewHolder.itemView.setOnClickListener {

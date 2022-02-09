@@ -139,8 +139,9 @@ class DetailPropertyFragment : Fragment() {
                     .commit()
 
                 // Contact infos
-                binding.tvContactInfo.text = this.getString(R.string.contact_info, property.agent.name, Utils.formatDateDayBefore(property.dateStartSell))
-
+                if (property.dateSold == null) binding.tvContactInfo.text =
+                    this.getString(R.string.contact_info, property.agent.name, Utils.formatDateDayBefore(property.dateStartSell))
+                else binding.tvContactInfo.text = this.getString(R.string.contact_info_sold, property.agent.name, Utils.formatDateDayBefore(property.dateSold))
 
             }
 

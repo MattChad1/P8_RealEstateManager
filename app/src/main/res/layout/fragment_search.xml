@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
         android:text="Your search criteria"
+        android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,7 +91,7 @@
         style="@style/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sold since"
+        android:text="Sold before"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
@@ -114,14 +115,28 @@
         android:id="@+id/tv_num_match"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="En attente..."
-
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/flowView"
         android:layout_marginTop="20dp"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_linkToListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="See the list"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_num_match"
+        android:visibility="gone"
         />
 
 

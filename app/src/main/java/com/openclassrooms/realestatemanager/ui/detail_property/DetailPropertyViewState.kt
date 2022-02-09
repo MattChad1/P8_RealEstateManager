@@ -18,4 +18,5 @@ data class DetailPropertyViewState(
     var adress: String? = null,
     var proximities: List<Proximity>? = null,
     var dateStartSell: String, // format yyyy-mm-dd for easy sorting in sqlite
+    var dateSold: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
 )

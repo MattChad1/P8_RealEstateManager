@@ -34,7 +34,8 @@ class DetailPropertyViewModel(
                 property.photos,
                 property.property.adress,
                 property.proximities,
-            property.property.dateStartSell
+                property.property.dateStartSell,
+                property.property.dateSold
             )
             result.postValue(valueReturn)
         }

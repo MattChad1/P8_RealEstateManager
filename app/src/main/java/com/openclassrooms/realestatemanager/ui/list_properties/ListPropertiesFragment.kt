@@ -48,7 +48,6 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
             properties.addAll(newProperties)
             adapter.notifyDataSetChanged()
         }
-
         return binding.root
     }
 
@@ -58,11 +57,9 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 
     override fun onItemAdapterClickListener(position: Int) {
         sendNewDetails(properties[position].id)
-
     }
 
     fun sendNewDetails(id: Int) {
-
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()

@@ -13,6 +13,7 @@ data class PropertyViewStateItem(
     var description: String? = null,
     var photo: ImageRoom,
     var adress: String? = null,
+    var proximitiesIds: List<Int>,
     var dateStartSale: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
-    var sold: Boolean = false, // format yyyy-mm-dd for easy sorting in sqlite
+    var dateSold: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
 )
