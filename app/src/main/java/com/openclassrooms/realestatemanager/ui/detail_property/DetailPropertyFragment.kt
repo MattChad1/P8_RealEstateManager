@@ -25,6 +25,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailPropertyBinding
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
+import com.openclassrooms.realestatemanager.utils.Utils
 
 
 class DetailPropertyFragment : Fragment() {
@@ -136,6 +137,11 @@ class DetailPropertyFragment : Fragment() {
                     .setReorderingAllowed(true)
                     .add(R.id.map, MapsFragment::class.java, bundle)
                     .commit()
+
+                // Contact infos
+                binding.tvContactInfo.text = this.getString(R.string.contact_info, property.agent.name, Utils.formatDateDayBefore(property.dateStartSell))
+
+
             }
 
         }

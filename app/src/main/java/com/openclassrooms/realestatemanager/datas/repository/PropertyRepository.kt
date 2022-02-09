@@ -53,5 +53,7 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val image
 
     val allTypes: Flow<List<TypeOfProperty>> = typeOfPropertyDao.getAll()
 
+    suspend fun getAllAgents(): List<Agent> = propertyDao.getAgents()
+
 
 }

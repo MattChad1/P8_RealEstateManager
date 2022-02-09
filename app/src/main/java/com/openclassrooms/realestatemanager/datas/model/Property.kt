@@ -12,12 +12,12 @@ data class Property(
     var type: Int,
     var adress: String,
     var description: String? = null,
-    var agent: Int? = null,
+    var agent: Int,
     var price: Long,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,
     var bathrooms: Int? = 0,
-    var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
+    var dateStartSell: String, // format yyyy-mm-dd for easy sorting in sqlite
     var dateSold: String? = null, // idem
 )

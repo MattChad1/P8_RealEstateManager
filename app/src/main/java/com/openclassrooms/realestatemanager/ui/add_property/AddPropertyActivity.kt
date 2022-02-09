@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.ActivityAddPropertyBinding
+import com.openclassrooms.realestatemanager.datas.model.Agent
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.ui.main_activity.MainActivity
 import com.openclassrooms.realestatemanager.utils.PhotoUtils.Companion.deletePhotoFromInternalStorage
@@ -37,6 +38,8 @@ import java.util.*
 
 
 class AddPropertyActivity : AppCompatActivity() {
+
+    var testAgents = listOf<Agent>()
 
     companion object {
         val EDIT_ID = "EDIT_ID"
@@ -103,12 +106,20 @@ class AddPropertyActivity : AppCompatActivity() {
         }
 
 
-        // Spinner type of properties
-        val spinner: Spinner = binding.formTypeProperty
+        // Add datas to spinners
+        val spinnerTypes: Spinner = binding.formTypeProperty
         viewModel.allTypes.observe(this) { types ->
             val adapter = CustomDropDownAdapter(this, types)
-            spinner.adapter = adapter
+            spinnerTypes.adapter = adapter
         }
+
+        val spinnerAgents: Spinner = binding.spinnerAgents
+        viewModel.allAgents.observe(this) { agents ->
+           testAgents = agents
+            val adapter = CustomDropDownAdapter(this, agents)
+            spinnerAgents.adapter = adapter
+        }
+
 
 
 //        loadPhotosFromInternalStorageIntoRecyclerView()
@@ -240,7 +251,7 @@ class AddPropertyActivity : AppCompatActivity() {
                 property?.price?.let { binding.editPriceInput.setText(it.toString()) }
                 binding.editSurfaceInput.setText(property?.squareFeet.toString())
                 binding.editDateStartSaleInput.setText(property?.dateStartSell)
-                spinner.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
+                spinnerTypes.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
 
                 for (c in proximityCheckboxes) {
                     if (property.proximities?.contains(c.tag) == true) c.isChecked = true
@@ -265,8 +276,8 @@ class AddPropertyActivity : AppCompatActivity() {
 
 
             viewModel.addNewProperty(
-                spinner.selectedItem as TypeOfProperty,
-                null,
+                spinnerTypes.selectedItem as TypeOfProperty,
+                spinnerAgents.selectedItem as Agent,
                 binding.editPriceInput.getInput()?.toLong(),
                 binding.editSurfaceInput.getInput()?.toDouble(),
                 binding.editNumRoomsInput.getInput()?.toInt(),

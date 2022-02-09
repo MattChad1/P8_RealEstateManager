@@ -14,6 +14,8 @@
     // Detail Fragment
     <string name="description">Description</string>
     <string name="location">Location</string>
+    <string name="contact">Agent</string>
+    <string name="contact_info">This sale is followed by %s since %s</string>
     <string name="proximity_school">School</string>
     <string name="proximity_stores">Stores</string>
     <string name="proximity_transports">Transports</string>

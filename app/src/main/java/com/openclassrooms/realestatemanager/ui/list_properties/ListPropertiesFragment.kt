@@ -44,7 +44,6 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         rv.adapter = adapter
 
         viewModel.mediatorLiveData.observe(viewLifecycleOwner) { newProperties ->
-
             properties.clear()
             properties.addAll(newProperties)
             adapter.notifyDataSetChanged()

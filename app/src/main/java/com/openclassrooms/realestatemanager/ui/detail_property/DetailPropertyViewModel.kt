@@ -24,6 +24,7 @@ class DetailPropertyViewModel(
             valueReturn = DetailPropertyViewState(
                 property.property.idProperty,
                 property.typeOfProperty.nameType,
+                property.agent,
                 property.property.price,
                 property.property.squareFeet,
                 property.property.rooms,
@@ -32,7 +33,8 @@ class DetailPropertyViewModel(
                 property.property.description,
                 property.photos,
                 property.property.adress,
-                property.proximities
+                property.proximities,
+            property.property.dateStartSell
             )
             result.postValue(valueReturn)
         }

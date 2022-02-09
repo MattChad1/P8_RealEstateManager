@@ -8,9 +8,10 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
+import java.util.*
 
 
-class CustomDropDownAdapter(val context: Context, var dataSource: List<TypeOfProperty>) : BaseAdapter() {
+class CustomDropDownAdapter(val context: Context, var dataSource: List<Any>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val listViews = arrayListOf<View>()

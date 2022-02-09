@@ -45,5 +45,8 @@ interface PropertyDao {
     @Query("SELECT * FROM Proximity")
     suspend fun getAllProximities(): List<Proximity>
 
+    @Query("SELECT * FROM Agent")
+    suspend fun getAgents(): List<Agent>
+
 
 }

@@ -49,7 +49,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="@string/description"
-
             />
 
         <TextView
@@ -183,6 +182,32 @@
             map:mapType="normal"
             map:liteMode="true"
             tools:context=".ui.detail_property.MapsFragment" />
+
+
+        <TextView
+            android:id="@+id/tv_contact_title"
+            style="@style/tv_detail"
+            app:layout_constraintTop_toBottomOf="@id/map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20sp"
+            android:text="@string/contact"
+            />
+
+        <TextView
+            android:id="@+id/tv_contact_info"
+            style="@style/tv_detail"
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="" />
+
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

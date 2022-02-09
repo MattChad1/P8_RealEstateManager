@@ -19,26 +19,31 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
     val TAG = "MyLog AddPropertyVM"
 
     val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.allTypes.asLiveData()
+
     var validAdress: MutableLiveData<String?> = MutableLiveData()
     var validPrice: MutableLiveData<String?> = MutableLiveData()
     var validImage: MutableLiveData<String?> = MutableLiveData()
     var validDateStartSell: MutableLiveData<String?> = MutableLiveData()
+    var validAgent: MutableLiveData<String?> = MutableLiveData()
+
+
     var imagesPrevLiveData: MutableLiveData<MutableList<InternalStoragePhoto>> = MutableLiveData()
     var maxId: Int = 0
     var idEdit = 0
     var allProximities: MutableList<Proximity> = mutableListOf()
+    var allAgents: MutableLiveData<List<Agent>> = MutableLiveData()
 
     init {
         viewModelScope.launch {
             maxId = propertyRepository.getMaxId() + 1
-//            allProximities = propertyRepository.getAllProximities()
-
+            allAgents.value = propertyRepository.getAllAgents()
+            var test = allAgents.value
         }
     }
 
     fun addNewProperty(
         type: TypeOfProperty,
-        agent: Int? = null,
+        agent: Agent? = null,
         price: Long? = null,
         squareFeet: Double? = null,
         rooms: Int? = 0,
@@ -54,7 +59,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         val dateStartSellFormatRoom = formatDateYearBefore(dateStartSell)
         val currentDate = formatDateYearBefore(getTodayDate())
 
-        var proximitiesForRoom = mutableListOf<Proximity>()
+        val proximitiesForRoom = mutableListOf<Proximity>()
         if (!proximitiesSelected.isNullOrEmpty()) {
             proximitiesForRoom.addAll(allProximities.filter { proximitiesSelected.contains(it.idProximity) })
         }
@@ -64,6 +69,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         validPrice.value = if (price == null) "Vous devez indiquer un prix" else null
         validImage.value = if (imagesPrevLiveData.value.isNullOrEmpty()) "Vous devez choisir au moins une image" else null
         validDateStartSell.value = if (dateStartSellFormatRoom == null) "Vous devez saisir une date" else null
+        validAgent.value = if (agent == null) "Indiquez l'agent en charge" else null
 
         if (validAdress.value == null && validPrice.value == null && validImage.value == null) {
             viewModelScope.launch {
@@ -72,13 +78,13 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                     type.idType,
                     adress!!,
                     description,
-                    agent,
+                    agent!!.idAgent,
                     price!!,
                     squareFeet,
                     rooms,
                     bedrooms,
                     bathrooms,
-                    formatDateYearBefore(dateStartSell),
+                    formatDateYearBefore(dateStartSell)!!,
                     formatDateYearBefore(dateSold)
                 )
                 val images: MutableList<ImageRoom> = mutableListOf()
@@ -88,11 +94,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                     propertyRepository.deletePhoto(idProperty)
                     propertyRepository.deleteProximityForProperty(idProperty)
                 }
-//                else {
-//                    idProperty = propertyRepository.insert(
-//                        newProperty
-//                    )
-//                }
 
                 idProperty = propertyRepository.insert(newProperty)
                 for (p in proximitiesForRoom) {
@@ -134,15 +135,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
     }
 
 
-    fun checkLiveDataPhotos(photos: List<InternalStoragePhoto>) {
-        val photosLiveData = imagesPrevLiveData.value ?: mutableListOf()
-        for (p in photos) {
-            if (p !in photosLiveData) photosLiveData.add(p)
-        }
-        imagesPrevLiveData.value = photosLiveData
-    }
-
-
     fun getPropertyById(id: Int): MutableLiveData<EditPropertyViewState?> {
         val result = MutableLiveData<EditPropertyViewState?>()
         viewModelScope.launch {
@@ -173,10 +165,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         return result
     }
 
-    suspend fun getMaxId(): Int {
-        maxId = propertyRepository.getMaxId() + 1
-        return maxId
-    }
 
     suspend fun getAllProximities(): MutableList<Proximity> {
         allProximities = propertyRepository.getAllProximities().toMutableList()

@@ -322,6 +322,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                style="@style/titre2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Other datas" />
+
+            <Spinner
+                android:id="@+id/spinner_agents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_spinner" />
+
 
             <Button
                 android:id="@+id/btn_submit"

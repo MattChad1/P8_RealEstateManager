@@ -1,12 +1,14 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
+import com.openclassrooms.realestatemanager.datas.model.Agent
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.datas.model.Proximity
 
 data class DetailPropertyViewState(
     var id: Int,
-    var type: String? = null,
-    var price: Long? = null,
+    var type: String,
+    var agent: Agent,
+    var price: Long,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,
@@ -15,5 +17,5 @@ data class DetailPropertyViewState(
     var photos: MutableList<ImageRoom>? = null,
     var adress: String? = null,
     var proximities: List<Proximity>? = null,
-    var dateStartSell: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
+    var dateStartSell: String, // format yyyy-mm-dd for easy sorting in sqlite
 )
