@@ -25,7 +25,7 @@ class PropertiesAdapter(
 ) :
     RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
-    private var itemSelected: Int? = null
+    var itemSelected: Int? = null
     var viewSelected: View? = null
 
 
@@ -46,24 +46,27 @@ class PropertiesAdapter(
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        // Get element from your dataset at this position and replace the
+        // Get element from the dataset at this position and replace the
         // contents of the view with that element
-        if (properties[position].id == itemSelected) {
-            viewHolder.itemView.setBackgroundColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.colorAccent
-                )
-            )
-        } else viewHolder.itemView.setBackgroundColor(
-            ContextCompat.getColor(
-                context,
-                R.color.white
-            )
-        )
+//        if (properties[position].id == itemSelected) {
+//            viewHolder.itemView.setBackgroundColor(
+//                ContextCompat.getColor(
+//                    context,
+//                    R.color.colorAccent
+//                )
+//            )
+//        } else viewHolder.itemView.setBackgroundColor(
+//            ContextCompat.getColor(
+//                context,
+//                R.color.white
+//            )
+//        )
+
+        if (properties[position].selected==true)  highlightItem(viewHolder.itemView)
+        else noSelectItem(viewHolder.itemView)
 
         try {
             viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo.nameFile + ".jpg")))
@@ -82,9 +85,9 @@ class PropertiesAdapter(
         }
         viewHolder.itemView.setOnClickListener {
             clickListener.onItemAdapterClickListener(position)
-            noSelectItem(viewSelected)
-            viewSelected = viewHolder.itemView
-            highlightItem(viewSelected)
+//            noSelectItem(viewSelected)
+//            viewSelected = viewHolder.itemView
+//            highlightItem(viewSelected)
         }
     }
 

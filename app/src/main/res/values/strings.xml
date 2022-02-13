@@ -10,6 +10,14 @@
     <string name="apply_button">Apply</string>
     <string name="cancel">Cancel</string>
 
+    //Toolbar
+    <string name="add_property">Add a property</string>
+    <string name="edit_property">Edit this property</string>
+    <string name="search">Search</string>
+
+    //List
+
+
 
     // Detail Fragment
     <string name="description">Description</string>
@@ -38,6 +46,8 @@
 
     //Search
     <string name="number_match">%d properties match your criteria</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
 
 
 </resources>

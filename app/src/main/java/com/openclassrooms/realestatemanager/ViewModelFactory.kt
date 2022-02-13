@@ -8,6 +8,7 @@ import com.openclassrooms.realestatemanager.ui.add_property.AddPropertyViewModel
 import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyViewModel
 import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesViewModel
 import com.openclassrooms.realestatemanager.ui.main_activity.MainActivityViewModel
+import com.openclassrooms.realestatemanager.ui.maps.MapsViewModel
 import com.openclassrooms.realestatemanager.ui.search.SearchViewModel
 
 class ViewModelFactory(private val propertyRepository: PropertyRepository, private val filterSearchRepository: FilterSearchRepository) : ViewModelProvider.Factory {
@@ -29,6 +30,10 @@ class ViewModelFactory(private val propertyRepository: PropertyRepository, priva
         } else if (modelClass.isAssignableFrom(DetailPropertyViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return DetailPropertyViewModel(propertyRepository) as T
+        }
+        else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MapsViewModel(propertyRepository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

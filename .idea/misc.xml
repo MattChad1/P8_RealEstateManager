@@ -8,6 +8,7 @@
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/border_spinner.xml" value="0.1005" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/dot_default.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-w600dp/activity_main.xml" value="0.24270833333333333" />
+        <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-w600dp/info_window.xml" value="0.1640625" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-w600dp/modal_bottom_sheet.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/activity_add_property.xml" value="0.29473684210526313" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/activity_main.xml" value="0.20260416666666667" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_list_properties.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_maps.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_search.xml" value="0.2" />
+        <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/info_window.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/item_photo.xml" value="0.3625" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/item_property.xml" value="0.25" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/item_proximity.xml" value="0.3625" />

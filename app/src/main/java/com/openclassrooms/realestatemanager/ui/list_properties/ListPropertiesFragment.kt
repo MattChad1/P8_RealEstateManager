@@ -47,7 +47,11 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
             properties.clear()
             properties.addAll(newProperties)
             adapter.notifyDataSetChanged()
+            if (resources.getBoolean(R.bool.isTablet) == true) viewModel.selectionLiveData.value?.let { sendNewDetails(it) }
         }
+
+
+
         return binding.root
     }
 
@@ -56,23 +60,24 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemAdapterClickListener(position: Int) {
-        sendNewDetails(properties[position].id)
+        if (!resources.getBoolean(R.bool.isTablet)) sendNewDetails(properties[position].id)
+        viewModel.changeSelection(properties[position].id)
     }
 
     fun sendNewDetails(id: Int) {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         val newFragment = DetailPropertyFragment()
         val args = Bundle()
-        MainActivity.lastProperty = id
+        val activity: MainActivity = getActivity() as MainActivity
+        if (activity.lastProperty2.lastOrNull()!=id) activity.lastProperty2.add(id)
         args.putInt("idProperty", id)
         newFragment.arguments = args
 
-        if (resources.getBoolean(R.bool.isTablet) == false) transaction?.replace(R.id.main_fragment, newFragment)
-        else transaction?.replace(R.id.second_fragment, newFragment)
+        if (resources.getBoolean(R.bool.isTablet) == false) transaction?.replace(R.id.main_fragment, newFragment, "detail_fragment")
+        else transaction?.replace(R.id.second_fragment, newFragment, "detail_fragment")
 
         transaction?.disallowAddToBackStack()
         transaction?.commit()
-
     }
 
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_mapwindow"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/flat1" />
+
+    <TextView
+        android:id="@+id/tv_mapwindow_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/iv_mapwindow"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Loft" />
+
+    <TextView
+        android:id="@+id/tv_mapwindow_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/iv_mapwindow"
+        app:layout_constraintTop_toBottomOf="@id/tv_mapwindow_title"
+        tools:text="579 Grand St" />
+
+    <TextView
+        android:id="@+id/tv_mapwindow_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/iv_mapwindow"
+        app:layout_constraintTop_toBottomOf="@id/tv_mapwindow_subtitle"
+        tools:text="$ 1 500 000" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

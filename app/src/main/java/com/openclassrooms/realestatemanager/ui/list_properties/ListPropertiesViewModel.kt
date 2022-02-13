@@ -20,22 +20,29 @@ class ListPropertiesViewModel(
         Transformations.map(repository.allPropertiesComplete.asLiveData(), ::displayProperty)
 
     val filterLiveData = filterSearchRepository.filterLiveData
+    var selectionLiveData = MutableLiveData<Int>()
 
     val mediatorLiveData: MediatorLiveData<List<PropertyViewStateItem>> = MediatorLiveData()
 
     init {
+
         viewModelScope.launch {
             repository.allTypes.asLiveData().value?.let { types.addAll(it) }
             mediatorLiveData.addSource(allPropertiesLiveData) { value ->
                 mediatorLiveData.setValue(
                     filterListProperties(
                         allPropertiesLiveData.value,
-                        filterLiveData.value
+                        filterLiveData.value,
+                        selectionLiveData.value?: 0
                     )
                 )
             }
             mediatorLiveData.addSource(filterLiveData) { filter ->
-                mediatorLiveData.setValue(filterListProperties(mediatorLiveData.value, filter))
+                mediatorLiveData.setValue(filterListProperties(mediatorLiveData.value, filter, selectionLiveData.value?:0))
+            }
+
+            mediatorLiveData.addSource(selectionLiveData) {id ->
+                mediatorLiveData.setValue(filterListProperties(mediatorLiveData.value, filterLiveData.value, selectionLiveData.value?:0))
             }
         }
     }
@@ -67,7 +74,7 @@ class ListPropertiesViewModel(
         return propertiesToReturn
     }
 
-    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?): List<PropertyViewStateItem>? {
+    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?, selection: Int): List<PropertyViewStateItem>? {
         if (properties == null) return listOf<PropertyViewStateItem>()
         if (filter == null) return properties
         val newList = mutableListOf<PropertyViewStateItem>()
@@ -125,10 +132,19 @@ class ListPropertiesViewModel(
                 if (pSearch !in it.proximitiesIds) return@forEach
             }
 
+            it.selected = it.id==selection
             newList.add(it)
 
         }
+        if (!newList.isEmpty() && newList.filter { it.selected }.isEmpty()) {
+            changeSelection(newList[0].id)
+            newList[0].selected=true
+        }
         return newList
+    }
+
+    fun changeSelection(id: Int) {
+        selectionLiveData.value = id
     }
 
 
