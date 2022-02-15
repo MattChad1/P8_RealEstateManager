@@ -9,15 +9,18 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentSearchBinding
 import com.openclassrooms.realestatemanager.datas.model.Filter
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
 import com.openclassrooms.realestatemanager.utils.Utils.getInput
 import kotlinx.coroutines.launch
 import java.util.*
@@ -26,8 +29,9 @@ import java.util.*
 class SearchFragment : Fragment() {
 
     lateinit var binding: FragmentSearchBinding
+    lateinit var navController: NavController
     private val viewModel: SearchViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
     var filter = Filter()
     var proximityCheckboxes = mutableListOf<CheckBox>()
@@ -38,7 +42,10 @@ class SearchFragment : Fragment() {
     ): View? {
 
         binding = FragmentSearchBinding.inflate(layoutInflater)
-
+        if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
+        }
+        navController = findNavController()
 
         binding.btnPrice.setOnClickListener { displayAlertRange(SearchViewModel.PRICE, filter.price) }
         binding.btnRooms.setOnClickListener { displayAlertRange(SearchViewModel.NUMROOMS, filter.numRooms) }
@@ -50,11 +57,15 @@ class SearchFragment : Fragment() {
         binding.btnProximity.setOnClickListener { displayAlertCheckbox(filter.proximity) }
 
         binding.tvLinkToListFragment.setOnClickListener {
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            val newFragment = ListPropertiesFragment()
-            transaction?.replace(R.id.main_fragment, newFragment)
-            transaction?.disallowAddToBackStack()
-            transaction?.commit()
+//            val transaction = activity?.supportFragmentManager?.beginTransaction()
+//            val newFragment = ListPropertiesFragment()
+//            transaction?.replace(R.id.main_fragment, newFragment)
+//            transaction?.disallowAddToBackStack()
+//            transaction?.commit()
+            val destination =  SearchFragmentDirections.actionSearchFragmentBackToMain()
+            navController.navigate(destination)
+
+
         }
 
         viewModel.filterLiveData.observe(viewLifecycleOwner) {

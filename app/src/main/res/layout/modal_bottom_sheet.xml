@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#f1f1f1"
     android:orientation="vertical"
-    tools:context=".ui.add_property.AddPropertyActivity">
+    tools:context=".ui.add_property.AddPropertyFragment">
 
 
     <com.google.android.material.button.MaterialButton

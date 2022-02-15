@@ -2,11 +2,12 @@ package com.openclassrooms.realestatemanager.ui.maps
 
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
+import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.ui.list_properties.PropertyViewStateItem
 import kotlinx.coroutines.launch
 
-class MapsViewModel (val propertyRepository: PropertyRepository): ViewModel() {
+class MapsViewModel (val propertyRepository: PropertyRepository, val navigationRepository: NavigationRepository): ViewModel() {
 
     var markers = MutableLiveData<MapsViewStateItem>()
     val allPropertiesLiveData: LiveData<List<MapsViewStateItem>> =
@@ -34,6 +35,10 @@ class MapsViewModel (val propertyRepository: PropertyRepository): ViewModel() {
 
         }
         return newList
+    }
+
+    fun changeSelection(id: Int) {
+        navigationRepository.newPropertyConsulted(id)
     }
 }
 

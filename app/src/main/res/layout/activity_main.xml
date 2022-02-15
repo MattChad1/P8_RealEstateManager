@@ -4,41 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.openclassrooms.realestatemanager.ui.main_activity.MainActivity"
     android:gravity="center"
-    >
+    android:orientation="vertical"
+    tools:context="com.openclassrooms.realestatemanager.ui.main_activity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/topAppBar"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:title="@string/app_name"
-        app:menu="@menu/menu_toolbar"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_toolbar"
+            app:title="@string/app_name" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main_fragment"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="?attr/actionBarSize"
+        app:defaultNavHost="true"
         app:layout_constrainedHeight="true"
-        tools:layout="@layout/fragment_list_properties"
-        />
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:navGraph="@navigation/shema_navigation"
+        tools:layout="@layout/fragment_list_properties" />
 
+    <!--    <androidx.fragment.app.FragmentContainerView-->
+    <!--        android:id="@+id/main_fragment"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/appbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:paddingBottom="?attr/actionBarSize"-->
+    <!--        app:layout_constrainedHeight="true"-->
+    <!--        tools:layout="@layout/fragment_list_properties"-->
+    <!--        />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

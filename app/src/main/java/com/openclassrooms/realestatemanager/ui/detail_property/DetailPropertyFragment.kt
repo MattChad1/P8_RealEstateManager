@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
@@ -39,7 +40,7 @@ class DetailPropertyFragment : Fragment() {
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
 
     private val viewModel: DetailPropertyViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +62,11 @@ class DetailPropertyFragment : Fragment() {
 
         binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
 
-        val idProperty = requireArguments().getInt("idProperty")
+        if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
+        }
 
-        viewModel.getPropertyById(idProperty).observe(viewLifecycleOwner) { property ->
+        viewModel.propertyLiveData.observe(viewLifecycleOwner) { property ->
             if (property != null) {
                 property.photos?.let {
                     allImages.addAll(property.photos!!)
@@ -134,8 +137,8 @@ class DetailPropertyFragment : Fragment() {
                 bundle.putString("adress", property.adress)
 
                 fragmentManager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.map, MapsFragment::class.java, bundle)
+                    .setReorderingAllowed(false)
+                    .add(R.id.map_in_detail, MapsFragmentInDetail::class.java, bundle)
                     .commit()
 
                 // Contact infos

@@ -30,28 +30,34 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main_fragment"
+        android:id="@+id/fragment_left_column"
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/second_fragment"
+        app:layout_constraintRight_toLeftOf="@id/nav_host_fragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintHorizontal_weight="40"
         android:paddingBottom="?attr/actionBarSize"
         app:layout_constrainedHeight="true"
+        android:name="com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment"
         tools:layout="@layout/fragment_list_properties"
         />
 
+
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/second_fragment"
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="?attr/actionBarSize"
-        app:layout_constrainedHeight="true"
         app:layout_constraintHorizontal_weight="60"
-        app:layout_constraintLeft_toRightOf="@id/main_fragment"
-        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="?attr/actionBarSize"
+        app:defaultNavHost="true"
+        app:layout_constrainedHeight="true"
         app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintLeft_toRightOf="@id/fragment_left_column"
+        app:layout_constraintRight_toRightOf="parent"
+        app:navGraph="@navigation/shema_navigation"
         tools:layout="@layout/fragment_detail_property" />
 
 

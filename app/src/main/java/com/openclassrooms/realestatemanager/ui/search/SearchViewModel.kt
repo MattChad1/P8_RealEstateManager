@@ -4,13 +4,13 @@ import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.Proximity
-import com.openclassrooms.realestatemanager.datas.repository.FilterSearchRepository
+import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 
-class SearchViewModel(private val propertyRepository: PropertyRepository, private val filterSearchRepository: FilterSearchRepository) : ViewModel() {
+class SearchViewModel(private val propertyRepository: PropertyRepository, private val navigationRepository: NavigationRepository) : ViewModel() {
 
-    val filterLiveData = filterSearchRepository.filterLiveData
+    val filterLiveData = navigationRepository.filterLiveData
 
     private var allPropertiesLiveData = propertyRepository.allPropertiesComplete.asLiveData()
     val mediatorLiveData = MediatorLiveData<Int>()
@@ -54,21 +54,21 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
 
         when (field) {
-            PRICE -> filterSearchRepository.filter.price = Pair(val1?.toLong(), val2?.toLong())
-            NUMROOMS -> filterSearchRepository.filter.numRooms = Pair(val1?.toInt(), val2?.toInt())
-            NUMBEDROOMS -> filterSearchRepository.filter.numBedrooms = Pair(val1?.toInt(), val2?.toInt())
-            NUMBATHROOMS -> filterSearchRepository.filter.numBathrooms = Pair(val1?.toInt(), val2?.toInt())
-            SURFACE -> filterSearchRepository.filter.surface = Pair(val1?.toInt(), val2?.toInt())
-            DATE_START_SALE -> filterSearchRepository.filter.dateStartSale = val1
-            DATE_END_SALE -> filterSearchRepository.filter.dateStartSale = val1
+            PRICE -> navigationRepository.filter.price = Pair(val1?.toLong(), val2?.toLong())
+            NUMROOMS -> navigationRepository.filter.numRooms = Pair(val1?.toInt(), val2?.toInt())
+            NUMBEDROOMS -> navigationRepository.filter.numBedrooms = Pair(val1?.toInt(), val2?.toInt())
+            NUMBATHROOMS -> navigationRepository.filter.numBathrooms = Pair(val1?.toInt(), val2?.toInt())
+            SURFACE -> navigationRepository.filter.surface = Pair(val1?.toInt(), val2?.toInt())
+            DATE_START_SALE -> navigationRepository.filter.dateStartSale = val1
+            DATE_END_SALE -> navigationRepository.filter.dateStartSale = val1
 
         }
-        filterSearchRepository.updateLiveData()
+        navigationRepository.updateLiveData()
 
     }
 
     fun updateFilterProximity(proximitiesInts: MutableList<Int>) {
-        filterSearchRepository.filter.proximity = proximitiesInts
+        navigationRepository.filter.proximity = proximitiesInts
         }
 
 

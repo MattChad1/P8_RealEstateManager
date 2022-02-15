@@ -33,11 +33,11 @@ class UtilsTest {
 
     @Test
     fun formatPrice() {
-        val tested: Int = 1000000
+        val tested: Long = 1000000
         val expected = "$1,000,000"
         assertEquals(expected, Utils.formatPrice(tested))
 
-        val tested2: Int = 999
+        val tested2: Long = 999
         val expected2 = "$999"
         assertEquals(expected2, Utils.formatPrice(tested2))
 

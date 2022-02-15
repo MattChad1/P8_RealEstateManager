@@ -1,14 +1,18 @@
 package com.openclassrooms.realestatemanager.ui.maps
 
 import android.content.Context
-import android.content.Intent
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,41 +23,53 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.ActivityMapsBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.databinding.InfoWindowBinding
-import com.openclassrooms.realestatemanager.ui.main_activity.MainActivity
 import com.openclassrooms.realestatemanager.utils.Utils
 import java.io.File
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.InfoWindowAdapter {
+class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.InfoWindowAdapter {
 
-    private lateinit var googleMap: GoogleMap
-    private lateinit var binding: ActivityMapsBinding
-
-    lateinit var allProperties: List<MapsViewStateItem>
+    private lateinit var binding: FragmentMapsBinding
+    private lateinit var allProperties: List<MapsViewStateItem>
+    private lateinit var navController: NavController
 
     private val viewModel: MapsViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        binding = ActivityMapsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentMapsBinding.inflate(layoutInflater)
+        if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
+        }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        navController = findNavController()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
     }
 
 
 
     override fun onMapReady(googleMap: GoogleMap) {
-
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(40.712784, -74.005941), 10f))
-//        googleMap.uiSettings.isMapToolbarEnabled = true;
         googleMap.uiSettings.isZoomControlsEnabled = true;
         googleMap.uiSettings.isScrollGesturesEnabled = true
         googleMap.uiSettings.isZoomGesturesEnabled = true
@@ -65,7 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
             allProperties = properties
             for (p in properties) {
                 if (p.adress != null) {
-                    val location = getLocationByAddress(this, p.adress);
+                    val location = getLocationByAddress(requireActivity(), p.adress);
                     if (location != null) {
                         val marker = googleMap.addMarker(MarkerOptions().position(location))
                         marker?.tag = properties.indexOf(p)
@@ -90,9 +106,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
     }
 
     override fun onInfoWindowClick(marker: Marker) {
-            val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("idProperty", allProperties[marker.tag as Int].id)
-        startActivity(intent)
+        viewModel.changeSelection(allProperties[marker.tag as Int].id)
+        val sendData = MapsFragmentDirections.actionMapsFragmentToDetailPropertyFragment()
+        navController.navigate(sendData)
     }
 
     override fun getInfoContents(marker: Marker): View? {

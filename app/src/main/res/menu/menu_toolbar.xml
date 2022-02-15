@@ -3,33 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toolbar_add"
+        android:id="@id/addFragment"
         android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/add_property"
         app:showAsAction="always" />
 
+<!--    <item-->
+<!--        android:id="@+id/toolbar_edit"-->
+<!--        android:icon="@drawable/ic_baseline_edit_24"-->
+<!--        android:title="@string/edit_property"-->
+<!--        app:showAsAction="always"-->
+<!--        />-->
+
     <item
-        android:id="@+id/toolbar_edit"
-        android:icon="@drawable/ic_baseline_edit_24"
-        android:title="@string/edit_property"
+        android:id="@id/searchFragment"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/search"
         app:showAsAction="always"
         />
 
     <item
-        android:id="@+id/toolbar_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="@string/search"
-        android:titleCondensed="Search"
-        android:tooltipText="Search"
-        app:showAsAction="ifRoom|withText"
-        />
-
-    <item
-        android:id="@+id/toolbar_map"
+        android:id="@id/mapsFragment"
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/map"
-        android:titleCondensed="Map"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom"
         />
 
 </menu>

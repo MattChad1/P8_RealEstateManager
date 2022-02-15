@@ -4,14 +4,13 @@ import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
-import com.openclassrooms.realestatemanager.datas.repository.FilterSearchRepository
+import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.coroutines.launch
 
 class ListPropertiesViewModel(
     private val repository: PropertyRepository,
-    private val filterSearchRepository: FilterSearchRepository
+    private val navigationRepository: NavigationRepository
 ) : ViewModel() {
 
     private val types = mutableListOf<TypeOfProperty>()
@@ -19,13 +18,11 @@ class ListPropertiesViewModel(
     val allPropertiesLiveData: LiveData<List<PropertyViewStateItem>> =
         Transformations.map(repository.allPropertiesComplete.asLiveData(), ::displayProperty)
 
-    val filterLiveData = filterSearchRepository.filterLiveData
-    var selectionLiveData = MutableLiveData<Int>()
+    val filterLiveData = navigationRepository.filterLiveData
 
     val mediatorLiveData: MediatorLiveData<List<PropertyViewStateItem>> = MediatorLiveData()
 
     init {
-
         viewModelScope.launch {
             repository.allTypes.asLiveData().value?.let { types.addAll(it) }
             mediatorLiveData.addSource(allPropertiesLiveData) { value ->
@@ -33,16 +30,16 @@ class ListPropertiesViewModel(
                     filterListProperties(
                         allPropertiesLiveData.value,
                         filterLiveData.value,
-                        selectionLiveData.value?: 0
+                        navigationRepository.propertiesConsultedIdsLiveData.value?.last()
                     )
                 )
             }
             mediatorLiveData.addSource(filterLiveData) { filter ->
-                mediatorLiveData.setValue(filterListProperties(mediatorLiveData.value, filter, selectionLiveData.value?:0))
+                mediatorLiveData.setValue(filterListProperties(allPropertiesLiveData.value, filter, navigationRepository.propertiesConsultedIdsLiveData.value?.last()))
             }
 
-            mediatorLiveData.addSource(selectionLiveData) {id ->
-                mediatorLiveData.setValue(filterListProperties(mediatorLiveData.value, filterLiveData.value, selectionLiveData.value?:0))
+            mediatorLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) {ids ->
+                mediatorLiveData.setValue(filterListProperties(allPropertiesLiveData.value, filterLiveData.value, ids.lastOrNull()))
             }
         }
     }
@@ -69,18 +66,17 @@ class ListPropertiesViewModel(
                         property.property.dateSold
                     )
                 )
-
         }
+
         return propertiesToReturn
     }
 
-    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?, selection: Int): List<PropertyViewStateItem>? {
+    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?, selection: Int?): List<PropertyViewStateItem>? {
         if (properties == null) return listOf<PropertyViewStateItem>()
         if (filter == null) return properties
         val newList = mutableListOf<PropertyViewStateItem>()
 
-
-        properties?.forEach {
+        properties.forEach {
             // Filter price, min and max
             if (filter.price.first != null) {
                 if (it.price < filter.price.first!!) return@forEach
@@ -144,7 +140,8 @@ class ListPropertiesViewModel(
     }
 
     fun changeSelection(id: Int) {
-        selectionLiveData.value = id
+//        selectionLiveData.value = id
+        navigationRepository.newPropertyConsulted(id)
     }
 
 

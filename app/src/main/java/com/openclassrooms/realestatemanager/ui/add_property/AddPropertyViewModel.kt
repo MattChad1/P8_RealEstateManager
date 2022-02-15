@@ -103,8 +103,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                     images.add(ImageRoom(0, idProperty, i.name, i.legend))
                     propertyRepository.addPhoto(idProperty, i.name, i.legend)
                 }
-
-
             }
 
         }

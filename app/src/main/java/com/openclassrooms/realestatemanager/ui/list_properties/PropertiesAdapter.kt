@@ -64,9 +64,10 @@ class PropertiesAdapter(
 //                R.color.white
 //            )
 //        )
-
-        if (properties[position].selected==true)  highlightItem(viewHolder.itemView)
-        else noSelectItem(viewHolder.itemView)
+        if (MyApplication.instance.resources.getBoolean(R.bool.isTablet)) {
+            if (properties[position].selected == true) highlightItem(viewHolder.itemView)
+            else noSelectItem(viewHolder.itemView)
+        }
 
         try {
             viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo.nameFile + ".jpg")))

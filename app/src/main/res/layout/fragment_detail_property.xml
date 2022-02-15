@@ -54,11 +54,12 @@
         <TextView
             android:id="@+id/tv_detail_description"
             style="@style/tv_detail"
-            app:layout_constraintTop_toBottomOf="@id/tv_description_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non." />
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non."
+            app:layout_constraintTop_toBottomOf="@id/tv_description_title"
+            tools:layout_editor_absoluteX="0dp" />
 
         <include
             android:id="@+id/cardview_square_meters"
@@ -169,8 +170,9 @@
             android:text="@string/map"
             />
 
-        <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/map"
+        <androidx.fragment.app.FragmentContainerView
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/map_in_detail"
             app:layout_constraintTop_toBottomOf="@id/tv_map_title"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
@@ -181,13 +183,13 @@
             android:layout_marginBottom="15dp"
             map:mapType="normal"
             map:liteMode="true"
-            tools:context=".ui.detail_property.MapsFragment" />
+            tools:context=".ui.detail_property.MapsFragmentInDetail" />
 
 
         <TextView
             android:id="@+id/tv_contact_title"
             style="@style/tv_detail"
-            app:layout_constraintTop_toBottomOf="@id/map"
+            app:layout_constraintTop_toBottomOf="@id/map_in_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"

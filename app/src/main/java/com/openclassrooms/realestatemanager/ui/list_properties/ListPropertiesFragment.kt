@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,11 +22,12 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 
 
     var properties: MutableList<PropertyViewStateItem> = mutableListOf()
-    var itemSelected: Long? = null
 
     private val viewModel: ListPropertiesViewModel by viewModels() {
-        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.filterSearchRepository)
+        ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
+
+    lateinit var navController: NavController
 
 
     override fun onCreateView(
@@ -47,37 +49,50 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
             properties.clear()
             properties.addAll(newProperties)
             adapter.notifyDataSetChanged()
-            if (resources.getBoolean(R.bool.isTablet) == true) viewModel.selectionLiveData.value?.let { sendNewDetails(it) }
         }
+
+
 
 
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-    }
 
     override fun onItemAdapterClickListener(position: Int) {
-        if (!resources.getBoolean(R.bool.isTablet)) sendNewDetails(properties[position].id)
+        sendNewDetails(properties[position].id)
         viewModel.changeSelection(properties[position].id)
     }
 
+//    fun sendNewDetails(id: Int) {
+//        val transaction = activity?.supportFragmentManager?.beginTransaction()
+//        val newFragment = DetailPropertyFragment()
+//        val args = Bundle()
+//        val activity: MainActivity = getActivity() as MainActivity
+//        if (activity.lastProperty2.lastOrNull() != id) activity.lastProperty2.add(id)
+//        args.putInt("idProperty", id)
+//        newFragment.arguments = args
+//
+//        if (resources.getBoolean(R.bool.isTablet) == false) transaction?.replace(R.id.main_fragment, newFragment, "detail_fragment")
+//        else transaction?.replace(R.id.second_fragment, newFragment, "detail_fragment")
+//
+//        transaction?.disallowAddToBackStack()
+//        transaction?.commit()
+//    }
+
     fun sendNewDetails(id: Int) {
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
-        val newFragment = DetailPropertyFragment()
-        val args = Bundle()
         val activity: MainActivity = getActivity() as MainActivity
-        if (activity.lastProperty2.lastOrNull()!=id) activity.lastProperty2.add(id)
-        args.putInt("idProperty", id)
-        newFragment.arguments = args
+//        if (activity.lastProperty2.lastOrNull() != id) activity.lastProperty2.add(id)
 
-        if (resources.getBoolean(R.bool.isTablet) == false) transaction?.replace(R.id.main_fragment, newFragment, "detail_fragment")
-        else transaction?.replace(R.id.second_fragment, newFragment, "detail_fragment")
+        if (resources.getBoolean(R.bool.isTablet) == false) {
+            val sendData = ListPropertiesFragmentDirections.actionListPropertiesFragmentToDetailPropertyFragment(id)
+            activity.navController.navigate(sendData)
+        }
+        else {
+            activity.navController.navigate(R.id.detailPropertyFragment)
 
-        transaction?.disallowAddToBackStack()
-        transaction?.commit()
+        }
+
     }
 
 
