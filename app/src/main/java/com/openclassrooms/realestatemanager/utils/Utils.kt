@@ -1,9 +1,12 @@
 package com.openclassrooms.realestatemanager.utils
 
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.Timestamp
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -39,6 +42,8 @@ object Utils {
         val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
         return dateFormat.format(Date())
     }
+
+
 
     fun formatDateYearBefore(date: String?): String? {
         if (date == null) return null

@@ -1,9 +1,13 @@
 package com.openclassrooms.realestatemanager.ui.main_activity
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
+import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 
-class MainActivityViewModel(private val navigationRepository: NavigationRepository) : ViewModel() {
+class MainActivityViewModel(private val repository: PropertyRepository, private val navigationRepository: NavigationRepository) : ViewModel() {
 
 
     fun getPreviousAdd(): Int? {
@@ -12,6 +16,12 @@ class MainActivityViewModel(private val navigationRepository: NavigationReposito
         history.removeLast()
         navigationRepository.propertiesConsultedIdsLiveData.value = history
         return history.last()
+    }
+
+    fun synchroniseWithFirestore() {
+        viewModelScope.launch(newSingleThreadContext("SynchroniseThread")) {
+            repository.synchroniseRoomToFirestore()
+        }
     }
 
 

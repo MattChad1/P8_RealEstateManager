@@ -28,5 +28,11 @@
         android:title="@string/map"
         app:showAsAction="ifRoom"
         />
+    <item
+        android:id="@+id/toolbar_sync"
+        android:icon="@drawable/ic_baseline_sync_alt_24"
+        android:title="Synchronise"
+        app:showAsAction="ifRoom"
+        />
 
 </menu>

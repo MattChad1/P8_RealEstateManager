@@ -2,9 +2,11 @@ package com.openclassrooms.realestatemanager.datas.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ServerTimestamp
 import kotlinx.serialization.Serializable
+import java.sql.Date
 
-@Serializable
 @Entity
 data class Property(
     @PrimaryKey(autoGenerate = true)
@@ -20,4 +22,7 @@ data class Property(
     var bathrooms: Int? = 0,
     var dateStartSell: String, // format yyyy-mm-dd for easy sorting in sqlite
     var dateSold: String? = null, // idem
-)
+    var lastUpdate: Long = System.currentTimeMillis()
+) {
+
+}

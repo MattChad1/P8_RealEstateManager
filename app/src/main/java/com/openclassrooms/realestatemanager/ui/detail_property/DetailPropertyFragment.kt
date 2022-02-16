@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
@@ -61,6 +62,7 @@ class DetailPropertyFragment : Fragment() {
     ): View? {
 
         binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
+        var navController = findNavController()
 
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
             requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
@@ -123,10 +125,10 @@ class DetailPropertyFragment : Fragment() {
                 val layoutProximity = binding.layoutProximityIcons
                 var i = 0
                 property.proximities?.forEach { proximity ->
-                    var root: LinearLayout = layoutInflater.inflate(R.layout.item_proximity, layoutProximity, false) as LinearLayout
-                    var imageView = root.findViewById<ImageView>(R.id.iv_item_proximity)
+                    val root: LinearLayout = layoutInflater.inflate(R.layout.item_proximity, layoutProximity, false) as LinearLayout
+                    val imageView = root.findViewById<ImageView>(R.id.iv_item_proximity)
                     imageView.setImageResource(this.resources.getIdentifier(proximity.icon, "drawable", activity?.packageName))
-                    var textView = root.findViewById<TextView>(R.id.tv_item_proximity)
+                    val textView = root.findViewById<TextView>(R.id.tv_item_proximity)
                     textView.text = activity?.getString(this.resources.getIdentifier(proximity.refLegend, "string", activity?.packageName))
 
                     layoutProximity.addView(root)
@@ -145,6 +147,13 @@ class DetailPropertyFragment : Fragment() {
                 if (property.dateSold == null) binding.tvContactInfo.text =
                     this.getString(R.string.contact_info, property.agent.name, Utils.formatDateDayBefore(property.dateStartSell))
                 else binding.tvContactInfo.text = this.getString(R.string.contact_info_sold, property.agent.name, Utils.formatDateDayBefore(property.dateSold))
+
+                binding.btnEdit.setOnClickListener {
+                    val destination = DetailPropertyFragmentDirections.actionDetailPropertyFragmentToAddFragment(property.id)
+                    navController.navigate(destination)
+
+                }
+
 
             }
 

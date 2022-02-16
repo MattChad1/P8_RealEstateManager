@@ -61,16 +61,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
-
-
-
-        // Check if the user come from a click in map, and then display details
-//        val idProperty = intent?.getIntExtra("idProperty", 0) ?: 0
-//        if (idProperty != 0) {
-//            sendNewDetails(idProperty)
-//        }
-        
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -84,7 +74,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val navController = findNavController(R.id.nav_host_fragment)
+        when (item.itemId) {
+            R.id.toolbar_sync -> {
+                viewModel.synchroniseWithFirestore()
+            }
+        }
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 

@@ -45,10 +45,6 @@ class AddPropertyFragment: Fragment() {
 
     var testAgents = listOf<Agent>()
 
-    companion object {
-        val EDIT_ID = "EDIT_ID"
-    }
-
     lateinit var binding: FragmentAddPropertyBinding
     lateinit var navController: NavController
     private lateinit var internalStoragePhotoAdapter: InternalStoragePhotoAdapter
@@ -77,7 +73,7 @@ class AddPropertyFragment: Fragment() {
 
 
         val ctx = requireActivity()
-        viewModel.idEdit = requireArguments().getInt(EDIT_ID)
+        viewModel.idEdit = requireArguments().getInt("idProperty")
 
 
         // Permissions to use internal storage (read only)

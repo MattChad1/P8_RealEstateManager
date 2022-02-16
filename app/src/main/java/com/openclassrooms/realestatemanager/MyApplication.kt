@@ -18,7 +18,7 @@ class MyApplication : Application() {
         super.onCreate()
         instance = this
         val database by lazy { LocaleDatabase.getInstance(this, applicationScope) }
-        propertyRepository = PropertyRepository(database.propertyDao(), database.imageRoomDao(), database.typeOfPropertyDao())
+        propertyRepository = PropertyRepository(database.propertyDao())
         navigationRepository = NavigationRepository()
 
     }

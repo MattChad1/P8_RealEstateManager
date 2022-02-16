@@ -1,12 +1,10 @@
 package com.openclassrooms.realestatemanager.datas.database
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
@@ -16,15 +14,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(entities = [Property::class, Agent::class, TypeOfProperty::class, Proximity::class, PropertyProximityCrossRef::class, ImageRoom::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+//@TypeConverters(Converters::class)
 abstract class LocaleDatabase : RoomDatabase() {
 
     abstract fun propertyDao(): PropertyDao
-    abstract fun agentDao(): AgentDao
-    abstract fun typeOfPropertyDao(): TypeOfPropertyDao
-    abstract fun proximityDao(): ProximityDao
-    abstract fun propertyProximityCrossRefDao(): PropertyProximityCrossRefDao
-    abstract fun imageRoomDao(): ImageRoomDao
 
     companion object {
         @Volatile
@@ -67,38 +60,28 @@ abstract class LocaleDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populateDatabase(
-                        database.propertyDao(),
-                        database.agentDao(),
-                        database.typeOfPropertyDao(),
-                        database.proximityDao(),
-                        database.propertyProximityCrossRefDao(),
-                        database.imageRoomDao()
+                        database.propertyDao()
                     )
                 }
             }
         }
 
         suspend fun populateDatabase(
-            propertyDao: PropertyDao,
-            agentDao: AgentDao,
-            typeOfPropertyDao: TypeOfPropertyDao,
-            proximityDao: ProximityDao,
-            propertyProximityCrossRefDao: PropertyProximityCrossRefDao,
-            imageRoomDao: ImageRoomDao
+            propertyDao: PropertyDao
         ) {
-            agentDao.insert(Agent(0, "Mike Money"))
-            agentDao.insert(Agent(0, "Melissa BigDollars"))
+            propertyDao.insertAgent(Agent(0, "Mike Money"))
+            propertyDao.insertAgent(Agent(0, "Melissa BigDollars"))
 
 
-            typeOfPropertyDao.insert(TypeOfProperty(1, "Condo"))
-            typeOfPropertyDao.insert(TypeOfProperty(2, "Loft"))
-            typeOfPropertyDao.insert(TypeOfProperty(3, "Mansion"))
-            typeOfPropertyDao.insert(TypeOfProperty(4, "Single Family House"))
+            propertyDao.insertType(TypeOfProperty(1, "Condo"))
+            propertyDao.insertType(TypeOfProperty(2, "Loft"))
+            propertyDao.insertType(TypeOfProperty(3, "Mansion"))
+            propertyDao.insertType(TypeOfProperty(4, "Single Family House"))
 
-            imageRoomDao.insert(ImageRoom(0, 1, "flat1", "Living-room"))
-            imageRoomDao.insert(ImageRoom(0, 2, "flat2", "A room"))
-            imageRoomDao.insert(ImageRoom(0, 1, "flat2", "Another room"))
-            imageRoomDao.insert(ImageRoom(0, 3, "flat3", "Living-room"))
+            propertyDao.addPhoto(ImageRoom(0, 1, "flat1", "Living-room"))
+            propertyDao.addPhoto(ImageRoom(0, 2, "flat2", "A room"))
+            propertyDao.addPhoto(ImageRoom(0, 1, "flat2", "Another room"))
+            propertyDao.addPhoto(ImageRoom(0, 3, "flat3", "Living-room"))
 
 
             propertyDao.insert(
@@ -152,7 +135,7 @@ abstract class LocaleDatabase : RoomDatabase() {
                 )
             )
 
-            proximityDao.insertAll(
+            propertyDao.insertAllProximities(
                 listOf(
                     Proximity(1, "School", "icon_proximity_school", "proximity_school"),
                     Proximity(2, "Stores", "icon_proximity_stores", "proximity_stores"),
@@ -161,12 +144,12 @@ abstract class LocaleDatabase : RoomDatabase() {
                 )
             )
 
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 1))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 2))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 3))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(1, 4))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2, 1))
-            propertyProximityCrossRefDao.insert(PropertyProximityCrossRef(2, 3))
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(1, 1))
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(1, 2))
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(1, 3))
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(1, 4))
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(2, 1))
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(2, 3))
 
             PhotoUtils.savePhotoToInternalStorage("flat1", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat1))
             PhotoUtils.savePhotoToInternalStorage("flat2", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat2))

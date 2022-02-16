@@ -17,7 +17,7 @@ class ViewModelFactory(private val propertyRepository: PropertyRepository, priva
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainActivityViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MainActivityViewModel(navigationRepository) as T
+            return MainActivityViewModel(propertyRepository, navigationRepository) as T
         } else if (modelClass.isAssignableFrom(ListPropertiesViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return ListPropertiesViewModel(propertyRepository, navigationRepository) as T
