@@ -291,10 +291,11 @@ class AddPropertyFragment: Fragment() {
 
             if (viewModel.validAdress.value == null && viewModel.validImage.value == null && viewModel.validPrice.value == null) {
                 Toast.makeText(ctx, R.string.add_property_conf, Toast.LENGTH_LONG).show()
-//                startActivity(Intent(ctx, MainActivity::class.java))
 
                 val destination = AddPropertyFragmentDirections.actionAddFragmentBackToMain()
-                navController.navigate(destination)
+                viewModel.formFinished.observe(ctx) {
+                    if (it) navController.navigate(destination)
+                }
 
             }
         }

@@ -25,6 +25,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
     var validImage: MutableLiveData<String?> = MutableLiveData()
     var validDateStartSell: MutableLiveData<String?> = MutableLiveData()
     var validAgent: MutableLiveData<String?> = MutableLiveData()
+    var formFinished = MutableLiveData<Boolean>()
 
 
     var imagesPrevLiveData: MutableLiveData<MutableList<InternalStoragePhoto>> = MutableLiveData()
@@ -55,6 +56,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         dateSold: String? = null,
     ) {
         var idProperty = idEdit
+        formFinished.value = false
         val dateStartSellFormatRoom = formatDateYearBefore(dateStartSell)
         val currentDate = formatDateYearBefore(getTodayDate())
 
@@ -71,7 +73,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         validAgent.value = if (agent == null) "Indiquez l'agent en charge" else null
 
         if (validAdress.value == null && validPrice.value == null && validImage.value == null) {
-            viewModelScope.launch {
+            val job = viewModelScope.launch {
                 val newProperty = Property(
                     idEdit,
                     type.idType,
@@ -86,23 +88,26 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                     formatDateYearBefore(dateStartSell)!!,
                     formatDateYearBefore(dateSold)
                 )
-                val images: MutableList<ImageRoom> = mutableListOf()
 
                 if (idEdit != 0) {
 //                    propertyRepository.updateProperty(newProperty)
-                    propertyRepository.deletePhoto(idProperty)
-                    propertyRepository.deleteProximityForProperty(idProperty)
+                    propertyRepository.deletePhoto(idEdit)
+                    propertyRepository.deleteProximityForProperty(idEdit)
                 }
 
                 idProperty = propertyRepository.insert(newProperty)
+
+                for (i in imagesPrevLiveData.value!!) {
+                    propertyRepository.addPhoto(idProperty, i.name, i.legend)
+                }
+
+
                 for (p in proximitiesForRoom) {
                     propertyRepository.insertPropertyProximityCrossRef(PropertyProximityCrossRef(idProperty, p.idProximity))
                 }
 
-                for (i in imagesPrevLiveData.value!!) {
-                    images.add(ImageRoom(0, idProperty, i.name, i.legend))
-                    propertyRepository.addPhoto(idProperty, i.name, i.legend)
-                }
+                formFinished.value = true
+
             }
 
         }

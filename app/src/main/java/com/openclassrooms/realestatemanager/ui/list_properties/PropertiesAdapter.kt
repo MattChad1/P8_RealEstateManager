@@ -70,7 +70,7 @@ class PropertiesAdapter(
         }
 
         try {
-            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo.nameFile + ".jpg")))
+            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo?.nameFile + ".jpg")))
         }
         catch (e: IOException) {
             e.printStackTrace()
