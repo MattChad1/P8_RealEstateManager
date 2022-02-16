@@ -24,5 +24,6 @@ data class Property(
     var dateSold: String? = null, // idem
     var lastUpdate: Long = System.currentTimeMillis()
 ) {
+    constructor() : this(0, 0, "", null, 0, 0, null, 0, 0, 0, "1970-01-01" )
 
 }

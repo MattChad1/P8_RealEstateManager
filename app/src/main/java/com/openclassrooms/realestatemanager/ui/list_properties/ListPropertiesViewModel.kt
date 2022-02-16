@@ -67,7 +67,6 @@ class ListPropertiesViewModel(
                     )
                 )
         }
-
         return propertiesToReturn
     }
 

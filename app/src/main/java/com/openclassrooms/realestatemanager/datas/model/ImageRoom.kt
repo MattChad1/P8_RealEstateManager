@@ -9,3 +9,6 @@ import java.sql.Date
 
 @Entity
 data class ImageRoom(@PrimaryKey(autoGenerate = true) var id: Int, var idProperty: Int = 0, var nameFile: String = "", var legende: String, var lastUpdate: Long = System.currentTimeMillis())
+{
+    constructor() : this(0, 0, "", "")
+}

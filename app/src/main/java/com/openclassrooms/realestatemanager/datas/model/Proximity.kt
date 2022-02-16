@@ -14,5 +14,8 @@ data class Proximity(
     var icon: String,
     var refLegend: String,
     var lastUpdate: Long = System.currentTimeMillis()
-)
+) {
+    constructor() : this(0, "", "", "")
+
+}
 
