@@ -1,7 +1,9 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,12 +17,19 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.keyframes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayoutMediator
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
@@ -30,7 +39,7 @@ import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 import com.openclassrooms.realestatemanager.utils.Utils
 
 
-class DetailPropertyFragment : Fragment() {
+class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
 
     var TAG = "MyLog DetailProperty"
     val allImages = mutableListOf<ImageRoom>()
@@ -43,6 +52,7 @@ class DetailPropertyFragment : Fragment() {
     private val viewModel: DetailPropertyViewModel by viewModels() {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
+    var adressForMap: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,14 +144,21 @@ class DetailPropertyFragment : Fragment() {
                     layoutProximity.addView(root)
                 }
 
-                val fragmentManager: FragmentManager = childFragmentManager
-                val bundle = Bundle()
-                bundle.putString("adress", property.adress)
+                // Get a handle to the fragment and register the callback.
 
-                fragmentManager.beginTransaction()
-                    .setReorderingAllowed(false)
-                    .add(R.id.map_in_detail, MapsFragmentInDetail::class.java, bundle)
-                    .commit()
+                // Get a handle to the fragment and register the callback.
+                adressForMap =  property.adress
+                val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map_in_detail) as SupportMapFragment
+                mapFragment.getMapAsync(this)
+
+//                val fragmentManager: FragmentManager = childFragmentManager
+//                val bundle = Bundle()
+//                bundle.putString("adress", property.adress)
+
+//                fragmentManager.beginTransaction()
+//                    .setReorderingAllowed(false)
+//                    .add(R.id.map_in_detail, MapsFragmentInDetail::class.java, bundle)
+//                    .commit()
 
                 // Contact infos
                 if (property.dateSold == null) binding.tvContactInfo.text =
@@ -184,6 +201,35 @@ class DetailPropertyFragment : Fragment() {
         if (permissionsToRequest.isNotEmpty()) {
             permissionsLauncher.launch(permissionsToRequest.toTypedArray())
         }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        googleMap.uiSettings.isMapToolbarEnabled = true;
+        googleMap.uiSettings.isZoomControlsEnabled = true;
+        googleMap.uiSettings.isScrollGesturesEnabled = false
+        googleMap.uiSettings.isZoomGesturesEnabled = false
+
+        if (adressForMap != null) {
+            val marker = getLocationByAddress(requireActivity(), adressForMap);
+            if (marker != null) {
+                googleMap.addMarker(MarkerOptions().position(marker))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15f))
+            }
+
+        }
+    }
+
+    fun getLocationByAddress(context: Context, strAddress: String?): LatLng? {
+        val coder = Geocoder(context)
+        try {
+            val address = coder.getFromLocationName(strAddress, 1) ?: return null
+            val location = address.first()
+            return LatLng(location.latitude, location.longitude)
+        }
+        catch (e: Exception) {
+            Log.w("Maps Fragment", "getLocationByAddress: $e")
+        }
+        return null
     }
 
 
