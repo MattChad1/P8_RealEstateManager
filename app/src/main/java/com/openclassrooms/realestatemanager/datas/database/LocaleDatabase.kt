@@ -13,7 +13,7 @@ import com.openclassrooms.realestatemanager.utils.PhotoUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Property::class, Agent::class, TypeOfProperty::class, Proximity::class, PropertyProximityCrossRef::class, ImageRoom::class], version = 1, exportSchema = false)
+@Database(entities = [Property::class, Agent::class, TypeOfProperty::class, Proximity::class, PropertyProximityCrossRef::class, ImageRoom::class, CrossRefInfosUpdate::class], version = 1, exportSchema = false)
 //@TypeConverters(Converters::class)
 abstract class LocaleDatabase : RoomDatabase() {
 

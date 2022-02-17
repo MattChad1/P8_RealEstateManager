@@ -9,10 +9,9 @@ import java.sql.Date
 @Entity(primaryKeys = ["idProperty", "idProximity"])
 data class PropertyProximityCrossRef(
     var idProperty: Int,
-    var idProximity: Int,
-    var lastUpdate: Long = System.currentTimeMillis()
+    var idProximity: Int
 ) {
-    constructor() : this(0, 0, 0)
+    constructor() : this(0, 0)
 
 
 }

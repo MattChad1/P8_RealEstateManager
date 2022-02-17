@@ -1,11 +1,20 @@
 package com.openclassrooms.realestatemanager.datas.repository
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.datas.database.PropertyDao
 import com.openclassrooms.realestatemanager.datas.model.*
+import com.openclassrooms.realestatemanager.utils.PhotoUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
+import java.io.*
 
 
 class PropertyRepository(private val propertyDao: PropertyDao) {
@@ -17,6 +26,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
     val imagesCollection = db.collection("ImageRoom")
     val agentCollection = db.collection("Agent")
     val crossRefCollection = db.collection("PropertyProximityCrossRef")
+    val crossRefInfosUpdateCollection = db.collection("CrossRefInfosUpdate")
 
 
     val allPropertiesComplete: Flow<List<PropertyWithProximity>?> = propertyDao.getPropertiesComplete()
@@ -37,17 +47,25 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
         propertyDao.addPhoto(ImageRoom(0, idProperty, nameFile, legende))
     }
 
-    suspend fun insertPropertyProximityCrossRef(crossRef: PropertyProximityCrossRef) {
-        propertyDao.insertPropertyProximityCrossRef(crossRef)
-    }
-
     suspend fun deletePhoto(idProperty: Int) {
         propertyDao.deletePhoto(idProperty)
     }
 
-    suspend fun deleteProximityForProperty(idProperty: Int) {
+    suspend fun updateProximityForProperty(idProperty: Int, proximityIds: List<Int>) {
         propertyDao.deleteProximtyForProperty(idProperty)
+        for (id in proximityIds) {
+            propertyDao.insertPropertyProximityCrossRef(PropertyProximityCrossRef(idProperty, id))
+        }
+        propertyDao.updateCrossRefInfosUpdate(CrossRefInfosUpdate(idProperty ))
     }
+
+//    suspend fun deleteProximityForProperty(idProperty: Int) {
+//        propertyDao.deleteProximtyForProperty(idProperty)
+//    }
+//    suspend fun insertPropertyProximityCrossRef(crossRef: PropertyProximityCrossRef) {
+//        propertyDao.insertPropertyProximityCrossRef(crossRef)
+//        propertyDao.updateCrossRefInfosUpdate(CrossRefInfosUpdate(crossRef.idProperty ))
+//    }
 
     suspend fun getMaxId(): Int = propertyDao.getMaxId()
 
@@ -67,7 +85,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
             for (roomItem in agentsInRoom) {
                 val firestoreItem = agentsInFirestore.firstOrNull { it.idAgent == roomItem.idAgent }
                 if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                    propertyCollection.document(roomItem.idAgent.toString()).set(roomItem)
+                    agentCollection.document(roomItem.idAgent.toString()).set(roomItem)
                     agentsInFirestore.remove(firestoreItem)
                 }
             }
@@ -82,7 +100,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
             for (roomItem in proximitiesInRoom) {
                 val firestoreItem = proximitiesInFirestore.firstOrNull { it.idProximity == roomItem.idProximity }
                 if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                    propertyCollection.document(roomItem.idProximity.toString()).set(roomItem)
+                    proximityCollection.document(roomItem.idProximity.toString()).set(roomItem)
                     proximitiesInFirestore.remove(firestoreItem)
                 }
             }
@@ -119,48 +137,92 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
     }
 
 
-
+        val storage = Firebase.storage
+        val storageRef = storage.reference
         val imagesInRoom = propertyDao.getAllImages()
+        val MAX_SIZE: Long = 1024 * 1024
         imagesCollection.get().addOnSuccessListener() {result ->
             var imagesInFirestore = result.toObjects(ImageRoom::class.java)
             for (roomItem in imagesInRoom) {
                 val firestoreItem = imagesInFirestore.firstOrNull { it.id == roomItem.id }
                 if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
                     imagesCollection.document(roomItem.id.toString()).set(roomItem)
+                    val file = File(MyApplication.instance.filesDir, roomItem.nameFile +".jpg")
+                    val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
+                    val baos = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+                    val imageRef: StorageReference = storageRef.child(file.name)
+                    val uploadTask = imageRef.putBytes(data)
+                    uploadTask.addOnFailureListener {
+                        Log.i("MyLog Firebase", "upload image success : " + file.name)
+                    }.addOnSuccessListener { taskSnapshot ->
+                        Log.i("MyLog Firebase", "upload image failed : " + file.name)
+                    }
                     imagesInFirestore.remove(firestoreItem)
                 }
             }
-            runBlocking { propertyDao.insertAllImages(imagesInFirestore) }
-        }
-
-//        val crossRefInRoom = propertyDao.getAllCrossRef()
-//        crossRefCollection.get().addOnSuccessListener() {result ->
-//            var crossRefInFirestore = result.toObjects(PropertyProximityCrossRef::class.java)
-//            for (roomItem in imagesInRoom) {
-//                val firestoreItem = crossRefInFirestore.firstOrNull { it.id == roomItem.id }
-//                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-//                    imagesCollection.document("${roomItem.idProperty}_${roomItem.idProximity}").set(roomItem)
-//                    imagesInFirestore.remove(firestoreItem)
-//                }
-//            }
-//            runBlocking { propertyDao.insertAllImages(imagesInFirestore) }
-//        }
-
-
-        propertyDao.getAllCrossRef().forEach { entry ->
-            val document = crossRefCollection.document("${entry.idProperty}_${entry.idProximity}")
-            document.get()
-                .addOnSuccessListener {
-                    if (it == null) {
-                        document.set((entry))
-                    } else {
-                        if (it.getLong("lastUpdate") == null || it.getLong("lastUpdate")!! < entry.lastUpdate) document.set((entry))
-                        else runBlocking<Unit> { propertyDao.insertPropertyProximityCrossRef(it.toObject(PropertyProximityCrossRef::class.java)!!) }
-
-
+            runBlocking {
+                propertyDao.insertAllImages(imagesInFirestore)
+                for (image in imagesInFirestore) {
+                    var imageRef = storageRef.child(image.nameFile + ".jpg")
+                    imageRef.getBytes(MAX_SIZE).addOnSuccessListener {
+                        val img = BitmapFactory.decodeByteArray(it,0,it.size)
+                        PhotoUtils.savePhotoToInternalStorage(image.nameFile, img)
+                    }.addOnFailureListener {
+                        Log.i("MyLog Firebase", "download image failed : " + image.nameFile)
                     }
                 }
+
+            }
         }
+
+        val infosUpdateCrossRefInRoom = propertyDao.getCrossRefInfosUpdate()
+        val crossRefsInRoom = propertyDao.getAllCrossRef()
+        crossRefInfosUpdateCollection.get().addOnSuccessListener() {result ->
+            var crossRefInfosUpdateInFirestore = result.toObjects(CrossRefInfosUpdate::class.java)
+            for (roomItem in infosUpdateCrossRefInRoom) {
+                val firestoreItem = crossRefInfosUpdateInFirestore.firstOrNull { it.idProperty == roomItem.idProperty }
+                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
+                    crossRefInfosUpdateCollection.document("${roomItem.idProperty}").set(roomItem)
+                    crossRefCollection.whereEqualTo("idProperty", roomItem.idProperty).get().addOnSuccessListener {snapshot ->
+                        snapshot.forEach { document->document.reference.delete() }
+                        crossRefsInRoom.filter{it.idProperty==roomItem.idProperty}.forEach {
+                            crossRefCollection.document("${it.idProperty}_${it.idProximity}").set(it)
+                        }
+                    }
+                    crossRefInfosUpdateInFirestore.remove(firestoreItem)
+                }
+            }
+
+            runBlocking {
+                for (item in crossRefInfosUpdateInFirestore) {
+                    propertyDao.updateCrossRefInfosUpdate(item)
+                    crossRefCollection.whereEqualTo("idProperty", item.idProperty).get().addOnSuccessListener {
+                        runBlocking {propertyDao.insertAllCrossRef(it.toObjects(PropertyProximityCrossRef::class.java))}
+                    }
+
+                }
+            }
+        }
+
+
+//        propertyDao.getAllCrossRef().forEach { entry ->
+//            val document = crossRefCollection.document("${entry.idProperty}_${entry.idProximity}")
+//            document.get()
+//                .addOnSuccessListener {
+//                    if (it == null) {
+//                        document.set((entry))
+//                    } else {
+//                        if (it.getLong("lastUpdate") == null || it.getLong("lastUpdate")!! < entry.lastUpdate) document.set((entry))
+//                        else runBlocking<Unit> { propertyDao.insertPropertyProximityCrossRef(it.toObject(PropertyProximityCrossRef::class.java)!!) }
+//
+//
+//                    }
+//                }
+//        }
+
+        PhotoUtils.synchronisePhotosWithFirebase()
 
     }
 

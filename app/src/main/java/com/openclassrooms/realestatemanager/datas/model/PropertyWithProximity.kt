@@ -34,7 +34,6 @@ data class PropertyWithProximity(
         parentColumn = "agent",
         entityColumn = "idAgent",
         entity = Agent::class
-
     )
     var agent: Agent
 

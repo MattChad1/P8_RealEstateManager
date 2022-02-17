@@ -60,9 +60,9 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         val dateStartSellFormatRoom = formatDateYearBefore(dateStartSell)
         val currentDate = formatDateYearBefore(getTodayDate())
 
-        val proximitiesForRoom = mutableListOf<Proximity>()
+        val proximitiesForRoom = mutableListOf<Int>()
         if (!proximitiesSelected.isNullOrEmpty()) {
-            proximitiesForRoom.addAll(allProximities.filter { proximitiesSelected.contains(it.idProximity) })
+            proximitiesForRoom.addAll(allProximities.filter { proximitiesSelected.contains(it.idProximity) }.map { it.idProximity })
         }
 
 
@@ -92,7 +92,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                 if (idEdit != 0) {
 //                    propertyRepository.updateProperty(newProperty)
                     propertyRepository.deletePhoto(idEdit)
-                    propertyRepository.deleteProximityForProperty(idEdit)
+//                    propertyRepository.deleteProximityForProperty(idEdit)
                 }
 
                 idProperty = propertyRepository.insert(newProperty)
@@ -101,10 +101,11 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                     propertyRepository.addPhoto(idProperty, i.name, i.legend)
                 }
 
+                propertyRepository.updateProximityForProperty(idProperty, proximitiesForRoom)
 
-                for (p in proximitiesForRoom) {
-                    propertyRepository.insertPropertyProximityCrossRef(PropertyProximityCrossRef(idProperty, p.idProximity))
-                }
+//                for (p in proximitiesForRoom) {
+//                    propertyRepository.insertPropertyProximityCrossRef(PropertyProximityCrossRef(idProperty, p.idProximity))
+//                }
 
                 formFinished.value = true
 

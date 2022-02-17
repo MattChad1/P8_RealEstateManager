@@ -45,8 +45,9 @@ interface PropertyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllTypes(types: List<TypeOfProperty>)
 
-
+    ///////////////
     // ImageRoom table
+    ///////////////
     @Insert
     suspend fun addPhoto(imageRoom: ImageRoom)
 
@@ -61,8 +62,9 @@ interface PropertyDao {
 
 
 
-
+    ///////////////
     // Proximity table
+    ///////////////
     @Query("SELECT * FROM Proximity")
     suspend fun getAllProximities(): List<Proximity>
 
@@ -73,8 +75,9 @@ interface PropertyDao {
     suspend fun insertAllProximities(proximities: List<Proximity>)
 
 
-
+    ///////////////
     // Agent table
+    ///////////////
     @Query("SELECT * FROM Agent")
     suspend fun getAllAgents(): List<Agent>
 
@@ -84,8 +87,9 @@ interface PropertyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllAgents(agents: List<Agent>)
 
-
+    ///////////////
     // Crossref
+    ///////////////
     @Query("DELETE FROM PropertyProximityCrossRef WHERE idProperty=:idProperty")
     suspend fun deleteProximtyForProperty(idProperty: Int)
 
@@ -95,13 +99,30 @@ interface PropertyDao {
     @Query("SELECT * FROM PropertyProximityCrossRef")
     suspend fun getAllCrossRef(): List<PropertyProximityCrossRef>
 
+//    @Query("SELECT * FROM PropertyProximityCrossRef GROUP BY idProperty")
+//    suspend fun getAllCrossRefGrouped(): List<List<PropertyProximityCrossRef>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllCrossRef(agents: List<PropertyProximityCrossRef>)
 
+    @Query("SELECT * FROM PropertyProximityCrossRef WHERE idProperty=:idProperty")
+    suspend fun getCrossRefForProperty(idProperty: Int): List<PropertyProximityCrossRef>
+
+    /////////
+    //InfosUpdateCrossRef
+    ////////
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateCrossRefInfosUpdate (data: CrossRefInfosUpdate)
+
+    @Query("SELECT * FROM CrossRefInfosUpdate")
+    suspend fun getCrossRefInfosUpdate(): List<CrossRefInfosUpdate>
 
 
 
+    ///////////////
     // Transactions
+    ///////////////
     @Transaction
     @Query("SELECT * FROM Property")
     fun getPropertiesComplete(): Flow<List<PropertyWithProximity>?>
@@ -109,6 +130,8 @@ interface PropertyDao {
     @Transaction
     @Query("SELECT * FROM Property WHERE idProperty=:id")
     suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
+
+
 
 
 }

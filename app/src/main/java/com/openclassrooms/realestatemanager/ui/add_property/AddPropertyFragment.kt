@@ -306,8 +306,6 @@ class AddPropertyFragment: Fragment() {
     fun loadPhotosFromInternalStorageIntoRecyclerView() {
         lifecycleScope.launch {
             val photos = viewModel.imagesPrevLiveData
-
-
         }
 
     }
