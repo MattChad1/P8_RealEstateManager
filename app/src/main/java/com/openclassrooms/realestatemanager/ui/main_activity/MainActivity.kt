@@ -1,34 +1,29 @@
 package com.openclassrooms.realestatemanager.ui.main_activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
-import com.openclassrooms.realestatemanager.ui.add_property.AddPropertyFragment
-import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragmentDirections
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesViewModel
-import com.openclassrooms.realestatemanager.ui.maps.MapsFragment
-import com.openclassrooms.realestatemanager.ui.search.SearchFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,9 +62,33 @@ class MainActivity : AppCompatActivity() {
         return navigateUp(navController,appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    @ExperimentalBadgeUtils
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_toolbar, menu)
+        val badge = BadgeDrawable.create(this)
+        viewModel.countFilterLiveData.observe(this) {
+            badge.number = it
+            if (it>0) {
+                BadgeUtils.attachBadgeDrawable(
+                    badge,
+                    toolbar,
+                    R.id.searchFragment
+                )
+            }
+            else BadgeUtils.detachBadgeDrawable(
+                badge,
+                toolbar,
+                R.id.searchFragment
+            )
+
+        }
+
+
+//        val badgeDrawable = BadgeDrawable.create(this)
+//        badgeDrawable.isVisible = true
+//        badgeDrawable.number = 3
+//        BadgeUtils.attachBadgeDrawable(badgeDrawable, menu.getItem(1) as View)
         return true
     }
 

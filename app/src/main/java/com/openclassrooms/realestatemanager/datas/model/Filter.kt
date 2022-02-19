@@ -9,7 +9,4 @@ data class Filter(
     var proximity: MutableList<Int> = mutableListOf(),
     var dateStartSale: String? = null,
     var dateSoldMax:  String? = null,
-
-
-
 )

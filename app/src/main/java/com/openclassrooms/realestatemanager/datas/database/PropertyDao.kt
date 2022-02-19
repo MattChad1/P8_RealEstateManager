@@ -99,11 +99,8 @@ interface PropertyDao {
     @Query("SELECT * FROM PropertyProximityCrossRef")
     suspend fun getAllCrossRef(): List<PropertyProximityCrossRef>
 
-//    @Query("SELECT * FROM PropertyProximityCrossRef GROUP BY idProperty")
-//    suspend fun getAllCrossRefGrouped(): List<List<PropertyProximityCrossRef>>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCrossRef(agents: List<PropertyProximityCrossRef>)
+    suspend fun insertAllCrossRef(crossRefs: List<PropertyProximityCrossRef>)
 
     @Query("SELECT * FROM PropertyProximityCrossRef WHERE idProperty=:idProperty")
     suspend fun getCrossRefForProperty(idProperty: Int): List<PropertyProximityCrossRef>
