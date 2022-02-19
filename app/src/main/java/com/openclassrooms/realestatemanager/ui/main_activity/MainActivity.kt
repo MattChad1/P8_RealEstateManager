@@ -81,14 +81,7 @@ class MainActivity : AppCompatActivity() {
                 toolbar,
                 R.id.searchFragment
             )
-
         }
-
-
-//        val badgeDrawable = BadgeDrawable.create(this)
-//        badgeDrawable.isVisible = true
-//        badgeDrawable.number = 3
-//        BadgeUtils.attachBadgeDrawable(badgeDrawable, menu.getItem(1) as View)
         return true
     }
 
@@ -100,62 +93,6 @@ class MainActivity : AppCompatActivity() {
         }
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        super.onOptionsItemSelected(item)
-//        when (item.itemId) {
-//            R.id.toolbar_add -> {
-//                val intent = Intent(this, AddPropertyFragment::class.java)
-//                startActivity(intent)
-//            }
-//            R.id.toolbar_edit -> {
-//                val intent = Intent(this, AddPropertyFragment::class.java)
-//                intent.putExtra(AddPropertyFragment.EDIT_ID, lastProperty2.last())
-//                startActivity(intent)
-//            }
-//
-//            R.id.toolbar_search -> {
-//                supportFragmentManager.beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .replace(R.id.main_fragment, SearchFragment(), "search_fragment")
-//                    .commit()
-//            }
-//
-//            R.id.toolbar_map -> {
-//                val intent = Intent(this, MapsFragment::class.java)
-//                startActivity(intent)
-//            }
-//        }
-//        return true
-//    }
-
-//    fun sendNewDetails(id: Int) {
-//        val transaction = supportFragmentManager.beginTransaction()
-//        val newFragment = DetailPropertyFragment()
-//        val args = Bundle()
-//        if (lastProperty2.last()!=id) lastProperty2.add(id)
-//        args.putInt("idProperty", id)
-//        newFragment.arguments = args
-//
-//        if (resources.getBoolean(R.bool.isTablet) == false) transaction.replace(R.id.main_fragment, newFragment, "detail_fragment")
-//        else transaction.replace(R.id.second_fragment, newFragment, "detail_fragment")
-//
-//        transaction.disallowAddToBackStack()
-//        transaction.commit()
-//    }
-//
-//    fun sendNewDetails(id: Int, navigationComponent: Boolean) {
-//
-//        if (lastProperty2.lastOrNull()!=id) lastProperty2.add(id)
-//
-//        if (resources.getBoolean(R.bool.isTablet) == false) {
-//            val sendData = ListPropertiesFragmentDirections.actionListPropertiesFragmentToDetailPropertyFragment()
-//            binding.navHostFragment?.findNavController()?.navigate(sendData)
-//        }
-//
-//
-//    }
-
 
 
 

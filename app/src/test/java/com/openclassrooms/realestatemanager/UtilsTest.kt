@@ -11,15 +11,16 @@ import java.util.*
 class UtilsTest {
     @Test
     fun convertDollarToEuro() {
-        val entry = 10
-        val expected = 8
-        Assert.assertEquals(expected.toLong(), Utils.convertDollarToEuro(entry).toLong())
+        val entry: Long = 10
+        val expected: Long = 8
+        Assert.assertEquals(expected, Utils.convertDollarToEuro(entry))
     }
 
     @Test
     fun convertEuroToDollar() {
-        val entry = 10
-        val expected = 12
+        val entry: Long = 10
+        val expected: Long = 12
+        Assert.assertEquals(expected, Utils.convertEuroToDollar(entry))
     }
 
     @Test

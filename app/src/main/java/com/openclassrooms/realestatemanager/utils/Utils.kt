@@ -24,8 +24,8 @@ object Utils {
      * @param dollars
      * @return
      */
-    fun convertDollarToEuro(dollars: Int): Int {
-        return Math.round(dollars * 0.812) as Int
+    fun convertDollarToEuro(dollars: Long): Long {
+        return Math.round(dollars * 0.812)
     }
 
     /**
@@ -34,8 +34,8 @@ object Utils {
      * @param euros
      * @return
      */
-    fun convertEuroToDollar(euros: Int): Int {
-        return Math.round(euros / 0.812).toInt()
+    fun convertEuroToDollar(euros: Long): Long {
+        return Math.round(euros / 0.812)
     }
 
     /**
