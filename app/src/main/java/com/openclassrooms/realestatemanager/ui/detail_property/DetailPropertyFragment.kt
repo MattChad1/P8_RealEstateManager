@@ -17,11 +17,9 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.core.keyframes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -49,7 +47,7 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
     private var readPermissionGranted = false
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
 
-    private val viewModel: DetailPropertyViewModel by viewModels() {
+    private val viewModel: DetailPropertyViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
     var adressForMap: String? = null
@@ -75,7 +73,7 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
         var navController = findNavController()
 
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
-            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.VISIBLE
         }
 
         viewModel.propertyLiveData.observe(viewLifecycleOwner) { property ->
@@ -147,7 +145,7 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
                 // Get a handle to the fragment and register the callback.
 
                 // Get a handle to the fragment and register the callback.
-                adressForMap =  property.adress
+                adressForMap = property.adress
                 val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map_in_detail) as SupportMapFragment
                 mapFragment.getMapAsync(this)
 
@@ -204,13 +202,13 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        googleMap.uiSettings.isMapToolbarEnabled = true;
-        googleMap.uiSettings.isZoomControlsEnabled = true;
+        googleMap.uiSettings.isMapToolbarEnabled = true
+        googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isScrollGesturesEnabled = false
         googleMap.uiSettings.isZoomGesturesEnabled = false
 
         if (adressForMap != null) {
-            val marker = getLocationByAddress(requireActivity(), adressForMap);
+            val marker = getLocationByAddress(requireActivity(), adressForMap)
             if (marker != null) {
                 googleMap.addMarker(MarkerOptions().position(marker))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15f))

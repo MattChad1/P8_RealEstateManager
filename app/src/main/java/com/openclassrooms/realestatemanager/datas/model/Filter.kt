@@ -8,5 +8,5 @@ data class Filter(
     var surface: Pair<Int?, Int?> = Pair(null, null),
     var proximity: MutableList<Int> = mutableListOf(),
     var dateStartSale: String? = null,
-    var dateSoldMax:  String? = null,
+    var dateSoldMax: String? = null,
 )

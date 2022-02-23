@@ -34,10 +34,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     private lateinit var allProperties: List<MapsViewStateItem>
     private lateinit var navController: NavController
 
-    private val viewModel: MapsViewModel by viewModels() {
+    private val viewModel: MapsViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
-
 
 
     override fun onCreateView(
@@ -47,7 +46,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     ): View? {
         binding = FragmentMapsBinding.inflate(layoutInflater)
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
-            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.VISIBLE
         }
 
         return binding.root
@@ -67,21 +66,20 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     }
 
 
-
     override fun onMapReady(googleMap: GoogleMap) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(40.712784, -74.005941), 10f))
-        googleMap.uiSettings.isZoomControlsEnabled = true;
+        googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isScrollGesturesEnabled = true
         googleMap.uiSettings.isZoomGesturesEnabled = true
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.setInfoWindowAdapter(this)
 
-        viewModel.allPropertiesLiveData.observe(this) {properties ->
+        viewModel.allPropertiesLiveData.observe(this) { properties ->
             googleMap.clear()
             allProperties = properties
             for (p in properties) {
                 if (p.adress != null) {
-                    val location = getLocationByAddress(requireActivity(), p.adress);
+                    val location = getLocationByAddress(requireActivity(), p.adress)
                     if (location != null) {
                         val marker = googleMap.addMarker(MarkerOptions().position(location))
                         marker?.tag = properties.indexOf(p)
@@ -112,11 +110,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     }
 
     override fun getInfoContents(marker: Marker): View? {
-        var bindingWindow: InfoWindowBinding = InfoWindowBinding.inflate(getLayoutInflater())
+        var bindingWindow: InfoWindowBinding = InfoWindowBinding.inflate(layoutInflater)
         val position = marker.tag
         val property = allProperties[position as Int]
         bindingWindow.ivMapwindow.setImageURI(
-            Uri.fromFile(File(MyApplication.instance.filesDir, "${property.photo.nameFile}.jpg")))
+            Uri.fromFile(File(MyApplication.instance.filesDir, "${property.photo.nameFile}.jpg"))
+        )
         bindingWindow.tvMapwindowTitle.text = property.type
         bindingWindow.tvMapwindowPrice.text = Utils.formatPrice(property.price)
         return bindingWindow.root

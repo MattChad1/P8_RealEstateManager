@@ -1,6 +1,9 @@
 package com.openclassrooms.realestatemanager.ui.search
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.Proximity
@@ -17,14 +20,11 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
     var allProximities: MutableList<Proximity> = mutableListOf()
 
     init {
-
         viewModelScope.launch {
             mediatorLiveData.addSource(allPropertiesLiveData) { value -> mediatorLiveData.setValue(countPropertiesWithFilter(value, filterLiveData.value)) }
             mediatorLiveData.addSource(filterLiveData) { filter ->
                 mediatorLiveData.setValue(countPropertiesWithFilter(allPropertiesLiveData.value, filter))
             }
-
-
         }
     }
 
@@ -69,7 +69,7 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
     fun updateFilterProximity(proximitiesInts: MutableList<Int>) {
         navigationRepository.filter.proximity = proximitiesInts
-        }
+    }
 
 
     private fun countPropertiesWithFilter(allProperties: List<PropertyWithProximity>?, filter: Filter?): Int {
@@ -124,10 +124,10 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
             if (filter.dateStartSale != null && it.property.dateStartSell < filter.dateStartSale!!) return@forEach
 
             // End sale, only max
-            if (filter.dateSoldMax != null && it.property.dateSold !=null && it.property.dateSold!! > filter.dateSoldMax!!) return@forEach
+            if (filter.dateSoldMax != null && it.property.dateSold != null && it.property.dateSold!! > filter.dateSoldMax!!) return@forEach
 
             // Proximities, contain
-            var mapProximitiesId = it.proximities.map{it.idProximity}
+            var mapProximitiesId = it.proximities.map { it.idProximity }
             for (pSearch in filter.proximity) {
                 if (pSearch !in mapProximitiesId) return@forEach
             }

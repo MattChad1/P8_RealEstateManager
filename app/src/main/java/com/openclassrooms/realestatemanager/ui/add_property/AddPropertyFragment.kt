@@ -41,7 +41,7 @@ import java.io.InputStream
 import java.util.*
 
 
-class AddPropertyFragment: Fragment() {
+class AddPropertyFragment : Fragment() {
 
     var testAgents = listOf<Agent>()
 
@@ -52,7 +52,7 @@ class AddPropertyFragment: Fragment() {
     private var readPermissionGranted = false
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
 
-    private val viewModel: AddPropertyViewModel by viewModels() {
+    private val viewModel: AddPropertyViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
 
@@ -68,7 +68,7 @@ class AddPropertyFragment: Fragment() {
         binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
         navController = findNavController()
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
-            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.GONE
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.GONE
         }
 
 
@@ -87,7 +87,7 @@ class AddPropertyFragment: Fragment() {
         updateOrRequestPermissions()
 
         // Checkbox for proximities
-        lifecycleScope.launch() {
+        lifecycleScope.launch {
             val proximities = viewModel.getAllProximities()
             val layout = binding.layoutForProximities
 
@@ -224,7 +224,7 @@ class AddPropertyFragment: Fragment() {
                         val nameFile = viewModel.maxId.toString() + "-" + UUID.randomUUID().toString()
                         val inputStream: InputStream? = ctx.contentResolver.openInputStream(it)
                         inputStream?.copyTo(MyApplication.instance.openFileOutput("$nameFile.jpg", MODE_PRIVATE))
-                        viewModel.addPhoto(nameFile, MediaStore.Images.Media.getBitmap( ctx.contentResolver, it), legend)
+                        viewModel.addPhoto(nameFile, MediaStore.Images.Media.getBitmap(ctx.contentResolver, it), legend)
 //                        loadPhotosFromInternalStorageIntoRecyclerView()
                         Toast.makeText(ctx, "Photo saved successfully", Toast.LENGTH_SHORT).show()
                     } else {

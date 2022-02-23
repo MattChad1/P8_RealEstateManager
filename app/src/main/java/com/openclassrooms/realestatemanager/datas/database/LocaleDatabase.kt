@@ -47,7 +47,7 @@ abstract class LocaleDatabase : RoomDatabase() {
 
                 }
 
-                return instance!!
+                return instance
             }
 
 

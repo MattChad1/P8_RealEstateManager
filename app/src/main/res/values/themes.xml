@@ -19,6 +19,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/toolBarStyle</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextAppearance</item>
+        <item name="android:textViewStyle">@style/tv_basics</item>
 
 
 <!--        <item name="textInputStyle">@style/Theme.RealEstateManager.TextInputEditTextOverlay</item>-->

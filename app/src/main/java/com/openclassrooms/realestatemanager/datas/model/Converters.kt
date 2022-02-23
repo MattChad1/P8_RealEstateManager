@@ -1,11 +1,5 @@
 package com.openclassrooms.realestatemanager.datas.model
 
-import androidx.room.TypeConverter
-import com.google.firebase.Timestamp
-import java.sql.Date
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
 
 class Converters {
 

@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.list_properties
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.openclassrooms.realestatemanager.ui.ItemClickListener
 import com.openclassrooms.realestatemanager.utils.Utils
 import java.io.File
 import java.io.IOException
-import javax.security.auth.login.LoginException
 
 class PropertiesAdapter(
     private val context: Context,
@@ -70,7 +68,7 @@ class PropertiesAdapter(
         }
 
         try {
-            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo?.nameFile + ".jpg")))
+            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo.nameFile + ".jpg")))
         }
         catch (e: IOException) {
             e.printStackTrace()
@@ -81,8 +79,8 @@ class PropertiesAdapter(
         //TODO : A changer pour le vrai quartier
         viewHolder.neighborhood.text = "Manhattan"
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
-        if (properties[position].dateSold!= null) {
-            viewHolder.tvSold.visibility=View.VISIBLE
+        if (properties[position].dateSold != null) {
+            viewHolder.tvSold.visibility = View.VISIBLE
         }
         viewHolder.itemView.setOnClickListener {
             clickListener.onItemAdapterClickListener(position)

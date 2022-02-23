@@ -3,13 +3,9 @@ package com.openclassrooms.realestatemanager.ui.main_activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.children
-import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,7 +23,7 @@ import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding;
+    lateinit var binding: ActivityMainBinding
     lateinit var toolbar: Toolbar
 
     val TAG = "MyLog MainActivity"
@@ -38,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
     lateinit var appBarConfiguration: AppBarConfiguration
 
-    private val viewModel: MainActivityViewModel by viewModels() {
+    private val viewModel: MainActivityViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
 
@@ -59,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navigateUp(navController,appBarConfiguration) || super.onSupportNavigateUp()
+        return navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     @ExperimentalBadgeUtils
@@ -69,14 +65,13 @@ class MainActivity : AppCompatActivity() {
         val badge = BadgeDrawable.create(this)
         viewModel.countFilterLiveData.observe(this) {
             badge.number = it
-            if (it>0) {
+            if (it > 0) {
                 BadgeUtils.attachBadgeDrawable(
                     badge,
                     toolbar,
                     R.id.searchFragment
                 )
-            }
-            else BadgeUtils.detachBadgeDrawable(
+            } else BadgeUtils.detachBadgeDrawable(
                 badge,
                 toolbar,
                 R.id.searchFragment
@@ -95,16 +90,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onBackPressed() {
         // If we are on DetailFragment && on tablet, use add history
-        if (navController.currentDestination?.id==R.id.detailPropertyFragment && resources.getBoolean(R.bool.isTablet) && viewModel.getPreviousAdd()!=null) {
+        if (navController.currentDestination?.id == R.id.detailPropertyFragment && resources.getBoolean(R.bool.isTablet) && viewModel.getPreviousAdd() != null) {
             navController.navigate(R.id.detailPropertyFragment)
-        }
-        else super.onBackPressed()
+        } else super.onBackPressed()
 
     }
-
 
 
 }

@@ -15,7 +15,6 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
 import com.openclassrooms.realestatemanager.ui.ItemClickListener
-import com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment
 import com.openclassrooms.realestatemanager.ui.main_activity.MainActivity
 
 class ListPropertiesFragment : Fragment(), ItemClickListener {
@@ -23,7 +22,7 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 
     var properties: MutableList<PropertyViewStateItem> = mutableListOf()
 
-    private val viewModel: ListPropertiesViewModel by viewModels() {
+    private val viewModel: ListPropertiesViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
 
@@ -81,14 +80,13 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
 //    }
 
     fun sendNewDetails(id: Int) {
-        val activity: MainActivity = getActivity() as MainActivity
+        val activity: MainActivity = activity as MainActivity
 //        if (activity.lastProperty2.lastOrNull() != id) activity.lastProperty2.add(id)
 
         if (resources.getBoolean(R.bool.isTablet) == false) {
             val sendData = ListPropertiesFragmentDirections.actionListPropertiesFragmentToDetailPropertyFragment(id)
             activity.navController.navigate(sendData)
-        }
-        else {
+        } else {
             activity.navController.navigate(R.id.detailPropertyFragment)
 
         }

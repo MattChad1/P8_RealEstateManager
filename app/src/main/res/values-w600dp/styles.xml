@@ -21,7 +21,7 @@
     </style>
 
     <style name="tv_basics">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="tv_detail" parent="tv_basics">

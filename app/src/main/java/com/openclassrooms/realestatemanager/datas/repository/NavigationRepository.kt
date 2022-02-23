@@ -13,9 +13,11 @@ class NavigationRepository {
         filterLiveData.value = filter
     }
 
-    fun updateLiveData () {filterLiveData.value = filter}
+    fun updateLiveData() {
+        filterLiveData.value = filter
+    }
 
-    fun newPropertyConsulted (id: Int) {
+    fun newPropertyConsulted(id: Int) {
         var values: MutableList<Int> = propertiesConsultedIdsLiveData.value ?: mutableListOf()
         if (values.lastOrNull() != id) values.add(id)
         propertiesConsultedIdsLiveData.value = values

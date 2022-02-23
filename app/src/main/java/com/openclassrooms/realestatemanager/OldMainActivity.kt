@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.utils.Utils
 
 class OldMainActivity : AppCompatActivity() {
-    lateinit private var textViewMain: TextView;
-    lateinit private var textViewQuantity: TextView
+    private lateinit var textViewMain: TextView
+    private lateinit var textViewQuantity: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.old_activity_main)
@@ -20,14 +20,14 @@ class OldMainActivity : AppCompatActivity() {
     }
 
     private fun configureTextViewMain() {
-        textViewMain.setTextSize(15f)
-        textViewMain.setText("Le premier bien immobilier enregistré vaut ")
+        textViewMain.textSize = 15f
+        textViewMain.text = "Le premier bien immobilier enregistré vaut "
     }
 
     private fun configureTextViewQuantity() {
         val quantity = Utils.convertDollarToEuro(100)
-        textViewQuantity.setTextSize(20f)
+        textViewQuantity.textSize = 20f
         // Bug 2 : setText avec int. Ajout de String.valueOf
-        textViewQuantity.setText(quantity.toString())
+        textViewQuantity.text = quantity.toString()
     }
 }

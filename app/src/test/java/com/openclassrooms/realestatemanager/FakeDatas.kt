@@ -6,6 +6,15 @@ import com.openclassrooms.realestatemanager.datas.model.*
 class FakeDatas {
 
     companion object {
+
+        val fakeAgents = PrepopulateDatas.preAgents
+        val fakeTypes = PrepopulateDatas.preTypes
+        val fakePhotos = PrepopulateDatas.prePhotos
+        val fakeCrossRef = PrepopulateDatas.preCrossRef
+        val fakeProximities = PrepopulateDatas.preProximities
+        var fakeProperties = PrepopulateDatas.preProperties
+
+
         val propertySold =
             Property(
                 4,
@@ -40,6 +49,8 @@ class FakeDatas {
             )
 
         )
+
+
 
 
     }

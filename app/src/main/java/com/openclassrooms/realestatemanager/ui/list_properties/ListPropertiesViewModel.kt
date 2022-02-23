@@ -16,9 +16,12 @@ class ListPropertiesViewModel(
     private val types = mutableListOf<TypeOfProperty>()
 
     val allPropertiesLiveData: LiveData<List<PropertyViewStateItem>> =
-        Transformations.map(repository.allPropertiesComplete.asLiveData(), ::displayProperty)
+        Transformations.map(
+            repository.allPropertiesComplete.asLiveData(), ::displayProperty
+        )
 
     val filterLiveData = navigationRepository.filterLiveData
+    val lastIdsLiveData = navigationRepository.propertiesConsultedIdsLiveData
 
     val mediatorLiveData: MediatorLiveData<List<PropertyViewStateItem>> = MediatorLiveData()
 
@@ -30,16 +33,22 @@ class ListPropertiesViewModel(
                     filterListProperties(
                         allPropertiesLiveData.value,
                         filterLiveData.value,
-                        navigationRepository.propertiesConsultedIdsLiveData.value?.last()
+                        lastIdsLiveData.value?.last()
                     )
                 )
             }
             mediatorLiveData.addSource(filterLiveData) { filter ->
-                mediatorLiveData.setValue(filterListProperties(allPropertiesLiveData.value, filter, navigationRepository.propertiesConsultedIdsLiveData.value?.last()))
+                mediatorLiveData.setValue(filterListProperties(allPropertiesLiveData.value, filter, lastIdsLiveData.value?.last()))
             }
 
-            mediatorLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) {ids ->
-                mediatorLiveData.setValue(filterListProperties(allPropertiesLiveData.value, filterLiveData.value, ids.lastOrNull()))
+            mediatorLiveData.addSource(lastIdsLiveData) { ids ->
+                mediatorLiveData.setValue(
+                    filterListProperties(
+                        allPropertiesLiveData.value,
+                        filterLiveData.value,
+                        ids?.lastOrNull()
+                    )
+                )
             }
         }
     }
@@ -49,23 +58,23 @@ class ListPropertiesViewModel(
         var propertiesToReturn = mutableListOf<PropertyViewStateItem>()
         if (properties == null) return listOf()
         for (property in properties) {
-                propertiesToReturn.add(
-                    PropertyViewStateItem(
-                        property.property.idProperty,
-                        property.typeOfProperty.nameType,
-                        property.property.price,
-                        property.property.squareFeet,
-                        property.property.rooms,
-                        property.property.bedrooms,
-                        property.property.bathrooms,
-                        property.property.description,
-                        property.photos[0],
-                        property.property.adress,
-                        property.proximities.map { it.idProximity },
-                        property.property.dateStartSell,
-                        property.property.dateSold
-                    )
+            propertiesToReturn.add(
+                PropertyViewStateItem(
+                    property.property.idProperty,
+                    property.typeOfProperty.nameType,
+                    property.property.price,
+                    property.property.squareFeet,
+                    property.property.rooms,
+                    property.property.bedrooms,
+                    property.property.bathrooms,
+                    property.property.description,
+                    property.photos[0],
+                    property.property.adress,
+                    property.proximities.map { it.idProximity },
+                    property.property.dateStartSell,
+                    property.property.dateSold
                 )
+            )
         }
         return propertiesToReturn
     }
@@ -120,20 +129,20 @@ class ListPropertiesViewModel(
             if (filter.dateStartSale != null && it.dateStartSale!! < filter.dateStartSale!!) return@forEach
 
             // End sale, only max
-            if (filter.dateSoldMax != null && it.dateSold !=null && it.dateSold!! > filter.dateSoldMax!!) return@forEach
+            if (filter.dateSoldMax != null && it.dateSold != null && it.dateSold!! > filter.dateSoldMax!!) return@forEach
 
             // Proximities, contain
             for (pSearch in filter.proximity) {
                 if (pSearch !in it.proximitiesIds) return@forEach
             }
 
-            it.selected = it.id==selection
+            it.selected = it.id == selection
             newList.add(it)
 
         }
         if (!newList.isEmpty() && newList.filter { it.selected }.isEmpty()) {
-            changeSelection(newList[0].id)
-            newList[0].selected=true
+//            changeSelection(newList[0].id)
+            newList[0].selected = true
         }
         return newList
     }
@@ -141,6 +150,7 @@ class ListPropertiesViewModel(
     fun changeSelection(id: Int) {
 //        selectionLiveData.value = id
         navigationRepository.newPropertyConsulted(id)
+
     }
 
 

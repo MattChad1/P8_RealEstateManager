@@ -30,8 +30,7 @@ class ViewModelFactory(private val propertyRepository: PropertyRepository, priva
         } else if (modelClass.isAssignableFrom(DetailPropertyViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return DetailPropertyViewModel(propertyRepository, navigationRepository) as T
-        }
-        else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return MapsViewModel(propertyRepository, navigationRepository) as T
         }

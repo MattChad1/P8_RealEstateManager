@@ -3,11 +3,8 @@ package com.openclassrooms.realestatemanager.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.wifi.WifiManager
 import android.os.Build
-import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.textfield.TextInputEditText
-import com.openclassrooms.realestatemanager.MyApplication
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -49,7 +46,6 @@ object Utils {
     }
 
 
-
     fun formatDateYearBefore(date: String?): String? {
         if (date == null) return null
         val split = date.split("/")
@@ -74,12 +70,12 @@ object Utils {
      * @param context
      * @return
      */
-    fun isInternetAvailable(context: Context?): Boolean? {
-        val wifi = context?.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        return wifi.isWifiEnabled
-    }
+//    fun isInternetAvailable(context: Context?): Boolean? {
+//        val wifi = context?.getSystemService(Context.WIFI_SERVICE) as WifiManager
+//        return wifi.isWifiEnabled
+//    }
 
-    private fun isInternetAvailable(context: Context): Boolean {
+    fun isInternetAvailable(context: Context): Boolean {
         var result = false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

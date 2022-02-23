@@ -1,6 +1,9 @@
 package com.openclassrooms.realestatemanager.ui.detail_property
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
@@ -18,10 +21,9 @@ class DetailPropertyViewModel(
 //    }
 
     init {
-        propertyLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) {it -> getLastProperty(it)}
-        propertyLiveData.addSource(tempLiveData) {propertyLiveData.value = it}
+        propertyLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) { it -> getLastProperty(it) }
+        propertyLiveData.addSource(tempLiveData) { propertyLiveData.value = it }
     }
-
 
 
     fun getPropertyById(id: Int): DetailPropertyViewState? {
@@ -30,7 +32,7 @@ class DetailPropertyViewModel(
 
         viewModelScope.launch {
 
-            repository.getPropertyCompleteById(id)?.let { property ->
+            repository.getPropertyCompleteById(id).let { property ->
                 valueReturn = DetailPropertyViewState(
                     property.property.idProperty,
                     property.typeOfProperty.nameType,
@@ -47,7 +49,7 @@ class DetailPropertyViewModel(
                     property.property.dateStartSell,
                     property.property.dateSold
                 )
-//                result.postValue(valueReturn)
+        //                result.postValue(valueReturn)
                 tempLiveData.value = valueReturn
             }
         }

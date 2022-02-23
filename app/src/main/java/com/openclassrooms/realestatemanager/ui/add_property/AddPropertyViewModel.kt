@@ -4,19 +4,21 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.MyApplication
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.datas.model.*
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.formatDateYearBefore
-import com.openclassrooms.realestatemanager.utils.Utils.getTodayDate
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
 
 
-class AddPropertyViewModel(private val propertyRepository: PropertyRepository) : ViewModel() {
+class AddPropertyViewModel(private val propertyRepository: PropertyRepository, private val application: MyApplication = MyApplication.instance) : AndroidViewModel(application) {
 
     val TAG = "MyLog AddPropertyVM"
+
+
 
     val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.allTypes.asLiveData()
 
@@ -58,7 +60,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         var idProperty = idEdit
         formFinished.value = false
         val dateStartSellFormatRoom = formatDateYearBefore(dateStartSell)
-        val currentDate = formatDateYearBefore(getTodayDate())
 
         val proximitiesForRoom = mutableListOf<Int>()
         if (!proximitiesSelected.isNullOrEmpty()) {
@@ -66,14 +67,14 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
         }
 
 
-        validAdress.value = if (adress.isNullOrEmpty()) "Vous devez indiquer une adresse" else null
-        validPrice.value = if (price == null) "Vous devez indiquer un prix" else null
-        validImage.value = if (imagesPrevLiveData.value.isNullOrEmpty()) "Vous devez choisir au moins une image" else null
-        validDateStartSell.value = if (dateStartSellFormatRoom == null) "Vous devez saisir une date" else null
-        validAgent.value = if (agent == null) "Indiquez l'agent en charge" else null
+        validAdress.value = if (adress.isNullOrEmpty()) application.getString(R.string.adress_required) else null
+        validPrice.value = if (price == null) application.getString(R.string.price_required) else null
+        validImage.value = if (imagesPrevLiveData.value.isNullOrEmpty()) application.getString(R.string.image_required) else null
+        validDateStartSell.value = if (dateStartSellFormatRoom == null) application.getString(R.string.date_start_sale_required) else null
+        validAgent.value = if (agent == null) application.getString(R.string.agent_required) else null
 
         if (validAdress.value == null && validPrice.value == null && validImage.value == null) {
-            val job = viewModelScope.launch {
+            viewModelScope.launch {
                 val newProperty = Property(
                     idEdit,
                     type.idType,
@@ -90,9 +91,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                 )
 
                 if (idEdit != 0) {
-//                    propertyRepository.updateProperty(newProperty)
                     propertyRepository.deletePhoto(idEdit)
-//                    propertyRepository.deleteProximityForProperty(idEdit)
                 }
 
                 idProperty = propertyRepository.insert(newProperty)
@@ -102,15 +101,8 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                 }
 
                 propertyRepository.updateProximityForProperty(idProperty, proximitiesForRoom)
-
-//                for (p in proximitiesForRoom) {
-//                    propertyRepository.insertPropertyProximityCrossRef(PropertyProximityCrossRef(idProperty, p.idProximity))
-//                }
-
                 formFinished.value = true
-
             }
-
         }
     }
 
@@ -159,7 +151,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository) :
                     Utils.formatDateDayBefore(property.property.dateSold)
                 )
             )
-            property.photos?.forEach { p ->
+            property.photos.forEach { p ->
                 addPhotoFromBase(p)
 
             }

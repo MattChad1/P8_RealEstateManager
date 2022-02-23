@@ -2,10 +2,6 @@ package com.openclassrooms.realestatemanager.datas.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.ServerTimestamp
-import kotlinx.serialization.Serializable
-import java.sql.Date
 
 @Entity
 data class Property(
@@ -24,6 +20,6 @@ data class Property(
     var dateSold: String? = null, // idem
     var lastUpdate: Long = System.currentTimeMillis()
 ) {
-    constructor() : this(0, 0, "", null, 0, 0, null, 0, 0, 0, "1970-01-01" )
+    constructor() : this(0, 0, "", null, 0, 0, null, 0, 0, 0, "1970-01-01")
 
 }

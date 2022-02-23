@@ -38,7 +38,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_description_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
@@ -57,7 +56,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_adress_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -78,7 +76,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_price_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_attach_money_24"
@@ -99,7 +96,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_date_start_sale_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -124,7 +120,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_num_rooms_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_house_24"
@@ -150,7 +145,6 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_num_bedrooms_input"
-                        style="@style/edittext_add_property"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
@@ -177,7 +171,6 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_num_bathrooms_input"
-                        style="@style/edittext_add_property"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_bathroom_24"
@@ -199,7 +192,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_surface_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_square_foot_24"
@@ -292,7 +284,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_date_sold_input"
-                    style="@style/edittext_add_property"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"

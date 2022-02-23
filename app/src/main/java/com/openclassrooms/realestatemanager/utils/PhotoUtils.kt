@@ -12,10 +12,8 @@ import com.openclassrooms.realestatemanager.datas.model.InternalStoragePhoto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
-import javax.security.auth.login.LoginException
 
 
 class PhotoUtils {
@@ -59,29 +57,27 @@ class PhotoUtils {
         }
 
 
-    fun synchronisePhotosWithFirebase() {
-        val storage = Firebase.storage
-        val storageRef = storage.reference
+        fun synchronisePhotosWithFirebase() {
+            val storage = Firebase.storage
+            val storageRef = storage.reference
 
-        val allFiles = MyApplication.instance.filesDir.listFiles { directory, filename -> filename.endsWith(".jpg") }
-        for (file in allFiles) {
-            val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
-            val imageRef: StorageReference = storageRef.child(file.name)
-            val uploadTask = imageRef.putBytes(data)
+            val allFiles = MyApplication.instance.filesDir.listFiles { directory, filename -> filename.endsWith(".jpg") }
+            for (file in allFiles) {
+                val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                val imageRef: StorageReference = storageRef.child(file.name)
+                val uploadTask = imageRef.putBytes(data)
 
-            uploadTask.addOnFailureListener {
-                Log.i("MyLog Firebase", "upload success")
-            }.addOnSuccessListener { taskSnapshot ->
-                Log.i("MyLog Firebase", "upload failed")
+                uploadTask.addOnFailureListener {
+                    Log.i("MyLog Firebase", "upload success")
+                }.addOnSuccessListener { taskSnapshot ->
+                    Log.i("MyLog Firebase", "upload failed")
+                }
             }
-
         }
-
-
     }
 
-    }
+
 }

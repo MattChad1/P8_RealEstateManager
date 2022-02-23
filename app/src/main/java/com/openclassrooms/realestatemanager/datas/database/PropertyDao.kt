@@ -61,7 +61,6 @@ interface PropertyDao {
     suspend fun insertAllImages(images: List<ImageRoom>)
 
 
-
     ///////////////
     // Proximity table
     ///////////////
@@ -110,11 +109,10 @@ interface PropertyDao {
     ////////
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateCrossRefInfosUpdate (data: CrossRefInfosUpdate)
+    suspend fun updateCrossRefInfosUpdate(data: CrossRefInfosUpdate)
 
     @Query("SELECT * FROM CrossRefInfosUpdate")
     suspend fun getCrossRefInfosUpdate(): List<CrossRefInfosUpdate>
-
 
 
     ///////////////
@@ -127,8 +125,6 @@ interface PropertyDao {
     @Transaction
     @Query("SELECT * FROM Property WHERE idProperty=:id")
     suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
-
-
 
 
 }

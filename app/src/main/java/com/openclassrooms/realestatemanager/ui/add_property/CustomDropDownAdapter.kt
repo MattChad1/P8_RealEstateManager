@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
-import java.util.*
 
 
 class CustomDropDownAdapter(val context: Context, var dataSource: List<Any>) : BaseAdapter() {
@@ -34,15 +32,15 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<Any>) : B
     }
 
     override fun getItem(position: Int): Any? {
-        return dataSource[position];
+        return dataSource[position]
     }
 
     override fun getCount(): Int {
-        return dataSource.size;
+        return dataSource.size
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong();
+        return position.toLong()
     }
 
 

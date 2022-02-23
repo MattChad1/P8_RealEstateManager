@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.MyApplication
@@ -30,7 +29,7 @@ class SearchFragment : Fragment() {
 
     lateinit var binding: FragmentSearchBinding
     lateinit var navController: NavController
-    private val viewModel: SearchViewModel by viewModels() {
+    private val viewModel: SearchViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
     var filter = Filter()
@@ -43,7 +42,7 @@ class SearchFragment : Fragment() {
 
         binding = FragmentSearchBinding.inflate(layoutInflater)
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
-            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility=View.VISIBLE
+            requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.VISIBLE
         }
         navController = findNavController()
 
@@ -62,7 +61,7 @@ class SearchFragment : Fragment() {
 //            transaction?.replace(R.id.main_fragment, newFragment)
 //            transaction?.disallowAddToBackStack()
 //            transaction?.commit()
-            val destination =  SearchFragmentDirections.actionSearchFragmentBackToMain()
+            val destination = SearchFragmentDirections.actionSearchFragmentBackToMain()
             navController.navigate(destination)
 
 
@@ -73,10 +72,10 @@ class SearchFragment : Fragment() {
         }
 
         viewModel.mediatorLiveData.observe(viewLifecycleOwner) { num ->
-            viewModel.filterLiveData.value?.let{filter = it}
+            viewModel.filterLiveData.value?.let { filter = it }
             if (filter != Filter()) {
                 binding.tvNumMatch.visibility = View.VISIBLE
-                if (!resources.getBoolean(R.bool.isTablet) && num!=0) binding.tvLinkToListFragment.visibility = View.VISIBLE
+                if (!resources.getBoolean(R.bool.isTablet) && num != 0) binding.tvLinkToListFragment.visibility = View.VISIBLE
                 else binding.tvLinkToListFragment.visibility = View.GONE
             }
             binding.tvNumMatch.text = getString(R.string.number_match, num)
@@ -85,7 +84,7 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-    fun displayAlertCalendar(field: String, value: String?) {
+    private fun displayAlertCalendar(field: String, value: String?) {
         val dpd = DatePickerDialog.OnDateSetListener { view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
             viewModel.updateFilter(field, "$year-$monthOfYear-$dayOfMonth", null)
         }
@@ -133,7 +132,7 @@ class SearchFragment : Fragment() {
     }
 
     fun displayAlertCheckbox(selected: List<Int>) {
-        lifecycleScope.launch() {
+        lifecycleScope.launch {
             val builder = AlertDialog.Builder(requireActivity())
             val layout = LinearLayout(requireActivity(), null, 0)
             val proximities = viewModel.getAllProximities()
