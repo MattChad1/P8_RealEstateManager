@@ -2,16 +2,15 @@ package com.openclassrooms.realestatemanager.ui.maps
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import com.openclassrooms.realestatemanager.FakeDatas
+import com.openclassrooms.realestatemanager.FakePropertyRepository
+import com.openclassrooms.realestatemanager.TestUtils.LiveDataTestUtils
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import com.openclassrooms.realestatemanager.ui.search.SearchViewModel
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -28,11 +27,8 @@ import org.mockito.MockitoAnnotations
 class MapsViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
-
     lateinit var viewModel: MapsViewModel
-
-    @Mock
-    lateinit var propertyRepository: PropertyRepository
+    val fakePropertyRepository = FakePropertyRepository()
 
     @Mock
     lateinit var navigationRepository: NavigationRepository
@@ -40,31 +36,20 @@ class MapsViewModelTest {
     @get:Rule
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val fakeLiveData = MutableLiveData<List<PropertyWithProximity>>()
-
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         MockitoAnnotations.openMocks(this)
-
-
-        fun fakeFlowProperties() = flow {
-            emit(FakeDatas.fakePropertiesCompletes)
-        }
-//        Mockito.`when`(propertyRepository.allPropertiesComplete.asLiveData()).thenReturn(fakeLiveData)
-        Mockito.doReturn(fakeFlowProperties()).`when`(propertyRepository).allPropertiesComplete
-        Mockito.doReturn(fakeLiveData).`when`(propertyRepository).allPropertiesComplete.asLiveData()
-        viewModel = MapsViewModel(propertyRepository, navigationRepository)
-          }
+    }
 
     @Test
     fun getAllPropertiesLiveData() = runTest {
-
-        delay(2000L)
-        fakeLiveData.value = FakeDatas.fakePropertiesCompletes
-        delay(2000L)
-        assertEquals(FakeDatas.fakePropertiesCompletes.size,viewModel.allPropertiesLiveData.value?.size)
+        val flow = MutableStateFlow(FakeDatas.fakePropertiesCompletes)
+        viewModel = MapsViewModel(fakePropertyRepository, navigationRepository)
+        flow.emit(FakeDatas.fakePropertiesCompletes)
+        val values = LiveDataTestUtils.getOrAwaitValue((viewModel.allPropertiesLiveData))
+        assertEquals(FakeDatas.fakePropertiesCompletes.size,values.size)
     }
 
 

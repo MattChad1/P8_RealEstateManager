@@ -3,22 +3,15 @@ package com.openclassrooms.realestatemanager.ui.list_properties
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.openclassrooms.realestatemanager.FakeDatas
-import com.openclassrooms.realestatemanager.TestUtils.LiveDataTestUtils.getOrAwaitValue
-import com.openclassrooms.realestatemanager.TestUtils.MainCoroutineRule
 import com.openclassrooms.realestatemanager.datas.database.PrepopulateDatas
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import junit.framework.TestCase
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.*
-import org.bouncycastle.util.test.SimpleTest.runTest
-import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -26,7 +19,6 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations.openMocks
-import org.mockito.Spy
 
 @ExperimentalCoroutinesApi
 class ListPropertiesViewModelTest {
@@ -41,7 +33,7 @@ class ListPropertiesViewModelTest {
     lateinit var viewModel: ListPropertiesViewModel
 
     @Mock
-    lateinit var repository: PropertyRepository
+    lateinit var repository: DefaultPropertyRepository
 
     @Mock
     lateinit var navigationRepository: NavigationRepository
@@ -69,8 +61,8 @@ class ListPropertiesViewModelTest {
         fun fakeFlowTypes() = flow { emit(PrepopulateDatas.preTypes) }
         val noFilter = Filter()
         filterLiveData.value = noFilter
-        Mockito.`when`(repository.allPropertiesComplete).thenReturn(fakeFlowProperties())
-        Mockito.`when`(repository.allTypes).thenReturn(fakeFlowTypes())
+        Mockito.`when`(repository.getAllPropertiesComplete()).thenReturn(fakeFlowProperties())
+        Mockito.`when`(repository.getAllTypes()).thenReturn(fakeFlowTypes())
 
         previousIdsLiveData.value = mutableListOf(1, 2)
         Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(previousIdsLiveData)

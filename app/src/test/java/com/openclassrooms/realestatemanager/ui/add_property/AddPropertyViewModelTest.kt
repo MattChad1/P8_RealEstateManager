@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.openclassrooms.realestatemanager.FakeDatas
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.datas.database.PrepopulateDatas
-import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +29,7 @@ class AddPropertyViewModelTest : TestCase() {
     lateinit var viewModel: AddPropertyViewModel
 
     @Mock
-    lateinit var propertyRepository: PropertyRepository
+    lateinit var propertyRepository: DefaultPropertyRepository
 
     @Mock
     lateinit var application: MyApplication
@@ -50,7 +50,7 @@ class AddPropertyViewModelTest : TestCase() {
         Mockito.`when`(application.getString(Mockito.anyInt())).thenReturn(" ")
 
         fun fakeFlowTypes() = flow { emit(PrepopulateDatas.preTypes) }
-        Mockito.`when`(propertyRepository.allTypes).thenReturn(fakeFlowTypes())
+        Mockito.`when`(propertyRepository.getAllTypes()).thenReturn(fakeFlowTypes())
 
     }
 

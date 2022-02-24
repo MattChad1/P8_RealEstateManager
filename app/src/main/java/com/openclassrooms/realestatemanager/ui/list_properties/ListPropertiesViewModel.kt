@@ -5,6 +5,7 @@ import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 
@@ -17,7 +18,7 @@ class ListPropertiesViewModel(
 
     val allPropertiesLiveData: LiveData<List<PropertyViewStateItem>> =
         Transformations.map(
-            repository.allPropertiesComplete.asLiveData(), ::displayProperty
+            repository.getAllPropertiesComplete().asLiveData(), ::displayProperty
         )
 
     val filterLiveData = navigationRepository.filterLiveData
@@ -27,7 +28,7 @@ class ListPropertiesViewModel(
 
     init {
         viewModelScope.launch {
-            repository.allTypes.asLiveData().value?.let { types.addAll(it) }
+            repository.getAllTypes().asLiveData().value?.let { types.addAll(it) }
             mediatorLiveData.addSource(allPropertiesLiveData) { value ->
                 mediatorLiveData.setValue(
                     filterListProperties(

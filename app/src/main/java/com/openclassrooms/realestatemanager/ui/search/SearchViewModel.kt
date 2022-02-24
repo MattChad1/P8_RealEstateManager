@@ -8,6 +8,7 @@ import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.Proximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 
@@ -15,7 +16,7 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
     val filterLiveData = navigationRepository.filterLiveData
 
-    private var allPropertiesLiveData = propertyRepository.allPropertiesComplete.asLiveData()
+    private var allPropertiesLiveData = propertyRepository.getAllPropertiesComplete().asLiveData()
     val mediatorLiveData = MediatorLiveData<Int>()
     var allProximities: MutableList<Proximity> = mutableListOf()
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.datas.model.*
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.formatDateYearBefore
@@ -20,7 +21,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
 
 
 
-    val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.allTypes.asLiveData()
+    val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.getAllTypes().asLiveData()
 
     var validAdress: MutableLiveData<String?> = MutableLiveData()
     var validPrice: MutableLiveData<String?> = MutableLiveData()

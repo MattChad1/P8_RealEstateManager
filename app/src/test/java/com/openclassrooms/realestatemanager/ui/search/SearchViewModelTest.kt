@@ -6,17 +6,14 @@ import com.openclassrooms.realestatemanager.FakeDatas
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
-import com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesViewModel
+import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.*
 
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +30,7 @@ class SearchViewModelTest {
     lateinit var viewModel: SearchViewModel
 
     @Mock
-    lateinit var propertyRepository: PropertyRepository
+    lateinit var propertyRepository: DefaultPropertyRepository
 
     @Mock
     lateinit var navigationRepository: NavigationRepository
@@ -55,7 +52,7 @@ class SearchViewModelTest {
         fun fakeFlowProperties() = flow {
             emit(FakeDatas.fakePropertiesCompletes)
         }
-        Mockito.`when`(propertyRepository.allPropertiesComplete).thenReturn(fakeFlowProperties())
+        Mockito.`when`(propertyRepository.getAllPropertiesComplete()).thenReturn(fakeFlowProperties())
 
         val noFilter = Filter()
         fakeFilterLiveData.value = noFilter
