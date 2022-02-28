@@ -15,13 +15,13 @@ class ListPropertiesViewModel(
 
     private val types = mutableListOf<TypeOfProperty>()
 
-    val allPropertiesLiveData: LiveData<List<PropertyViewStateItem>> =
+    private val allPropertiesLiveData: LiveData<List<PropertyViewStateItem>> =
         Transformations.map(
             repository.getAllPropertiesComplete().asLiveData(), ::displayProperty
         )
 
-    val filterLiveData = navigationRepository.filterLiveData
-    val lastIdsLiveData = navigationRepository.propertiesConsultedIdsLiveData
+    private val filterLiveData = navigationRepository.filterLiveData
+    private val lastIdsLiveData = navigationRepository.propertiesConsultedIdsLiveData
 
     val mediatorLiveData: MediatorLiveData<List<PropertyViewStateItem>> = MediatorLiveData()
 

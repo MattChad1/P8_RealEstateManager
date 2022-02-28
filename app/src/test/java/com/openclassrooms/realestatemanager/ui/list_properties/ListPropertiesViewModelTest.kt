@@ -1,30 +1,40 @@
 package com.openclassrooms.realestatemanager.ui.list_properties
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.openclassrooms.realestatemanager.FakeDatas
+import com.openclassrooms.realestatemanager.FakePropertyRepository
+import com.openclassrooms.realestatemanager.TestUtils.MainCoroutineRule
 import com.openclassrooms.realestatemanager.datas.database.PrepopulateDatas
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
 import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
+import com.openclassrooms.realestatemanager.ui.maps.MapsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.*
+import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations.openMocks
 
 @ExperimentalCoroutinesApi
 class ListPropertiesViewModelTest {
 
 
-    private val testDispatcher = StandardTestDispatcher()
+//    private val testDispatcher = StandardTestDispatcher()
+
+    private val fakePropertyRepository = FakePropertyRepository()
+
 
     private val fakeLiveData = MutableLiveData<List<PropertyWithProximity>>()
     private val filterLiveData = MutableLiveData<Filter>()
@@ -32,8 +42,8 @@ class ListPropertiesViewModelTest {
 
     lateinit var viewModel: ListPropertiesViewModel
 
-    @Mock
-    lateinit var repository: DefaultPropertyRepository
+    @get:Rule
+    val testCoroutineRule = MainCoroutineRule()
 
     @Mock
     lateinit var navigationRepository: NavigationRepository
@@ -44,39 +54,57 @@ class ListPropertiesViewModelTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
+//        Dispatchers.setMain(testDispatcher)
         openMocks(this)
 
+//        fakeLiveData.value = FakeDatas.fakePropertiesCompletes
+//        fun fakeFlowProperties() = flow {
+//            emit(FakeDatas.fakePropertiesCompletes)
+//        }
 
+//        fun fakeFlowTypes() = flow { emit(PrepopulateDatas.preTypes) }
+//        val noFilter = Filter()
+//        filterLiveData.value = noFilter
+//        Mockito.`when`(repository.getAllPropertiesComplete()).thenReturn(fakeFlowProperties())
+//        Mockito.`when`(repository.getAllTypes()).thenReturn(fakeFlowTypes())
 
-        fakeLiveData.value = FakeDatas.fakePropertiesCompletes
-        fun fakeFlowProperties() = flow {
-            emit(FakeDatas.fakePropertiesCompletes)
-        }
+//        previousIdsLiveData.value = mutableListOf(1, 2)
+//        Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(previousIdsLiveData)
+    }
 
-        fun fakeFlowTypes() = flow { emit(PrepopulateDatas.preTypes) }
+    @Test
+    fun getAllPropertiesLiveData() = runTest {
+        viewModel = ListPropertiesViewModel(fakePropertyRepository, navigationRepository)
         val noFilter = Filter()
-        filterLiveData.value = noFilter
-        Mockito.`when`(repository.getAllPropertiesComplete()).thenReturn(fakeFlowProperties())
-        Mockito.`when`(repository.getAllTypes()).thenReturn(fakeFlowTypes())
+        val mockFilterLiveData = MutableLiveData<Filter>()
+        mockFilterLiveData.value = noFilter
+        Mockito.`when`(navigationRepository.filterLiveData).thenReturn(mockFilterLiveData)
 
-        previousIdsLiveData.value = mutableListOf(1, 2)
-        Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(previousIdsLiveData)
+        val mockLastIdsLiveData = MutableLiveData<MutableList<Int>>()
+        mockLastIdsLiveData.value = mutableListOf(1, 2)
+        Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(mockLastIdsLiveData)
+
+
+        viewModel.mediatorLiveData.observeForTesting {
+            val value = assertNonNullLiveDataValue<List<PropertyViewStateItem>>(it)
+            Assert.assertEquals(FakeDatas.fakePropertiesCompletes.size +1, value.size)
+        }
     }
 
 
-
-
-
-
-    @Test
-    fun getFilterLiveData() = runTest {
-            viewModel = Mockito.spy(ListPropertiesViewModel(repository, navigationRepository))
-
-            Mockito.`when`(viewModel.filterLiveData).thenReturn(filterLiveData)
-            Mockito.`when`(viewModel.lastIdsLiveData).thenReturn(previousIdsLiveData)
-            val allPropertiesLiveDataTest = viewModel.allPropertiesLiveData
-            assertTrue(fakeLiveData.value!!.size == allPropertiesLiveDataTest.value?.size)
-
+    internal fun <T> LiveData<T>.observeForTesting(block: (LiveData<T>) -> Unit) {
+        val observer = Observer<T> { }
+        try {
+            observeForever(observer)
+            block(this)
+        } finally {
+            removeObserver(observer)
         }
+    }
+
+    inline fun <reified T> assertNonNullLiveDataValue(liveData: LiveData<*>): T = liveData.value.let {
+        it ?: throw AssertionError("LiveData value is NULL !")
+    }.let {
+        it as? T ?: throw AssertionError("LiveData value IS NOT of type [ ${T::class.java} ] (current type is = [ ${it::class.java} ])")
+    }
 }

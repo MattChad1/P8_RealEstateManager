@@ -13,13 +13,16 @@ class MyApplication : Application() {
 
     lateinit var propertyRepository: DefaultPropertyRepository
     lateinit var navigationRepository: NavigationRepository
+    open var isTestMode = false
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-        val database by lazy { LocaleDatabase.getInstance(this, applicationScope) }
-        propertyRepository = DefaultPropertyRepository(database.propertyDao())
-        navigationRepository = NavigationRepository()
+        if (!isTestMode) {
+            val database by lazy { LocaleDatabase.getInstance(this, applicationScope) }
+            propertyRepository = DefaultPropertyRepository(database.propertyDao())
+            navigationRepository = NavigationRepository()
+        }
 
     }
 
