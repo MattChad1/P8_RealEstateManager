@@ -41,10 +41,6 @@ class ListPropertiesViewModelTest {
     @get:Rule
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-//    @ExperimentalCoroutinesApi
-//    @get:Rule
-//    var mainCoroutineRule = MainCoroutineRule()
-
 
     @Before
     fun setUp() {
@@ -66,16 +62,10 @@ class ListPropertiesViewModelTest {
 
         previousIdsLiveData.value = mutableListOf(1, 2)
         Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(previousIdsLiveData)
-
-
     }
 
 
-//    @After
-//    override fun tearDown() {
-//        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
-////        testDispatcher.cleanupTestCoroutines()
-//    }
+
 
 
 

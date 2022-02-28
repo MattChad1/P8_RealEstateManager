@@ -18,15 +18,16 @@
             android:id="@+id/viewpager_rooms"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="@dimen/height_image_viewpager"
             tools:background="@drawable/flat1" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             app:layout_constraintTop_toBottomOf="@id/viewpager_rooms"
+            app:layout_constraintBottom_toTopOf="@id/tv_description_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             app:tabBackground="@drawable/dot_selector"
             app:tabIndicatorHeight="0dp"
@@ -35,7 +36,6 @@
             app:tabPaddingEnd="0dp"
             app:tabPaddingStart="0dp"
             app:tabPaddingTop="0dp"
-            android:background="#00000000"
             tools:background="@drawable/dot_selected" />
 
 
@@ -44,6 +44,7 @@
             android:id="@+id/tv_description_title"
             style="@style/tv_detail"
             app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -176,7 +177,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_map_title"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/imageViewPager"
+            android:layout_height="@dimen/map_embedded"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
@@ -215,7 +216,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="10dp"
-            android:text="Edit this add"
+            android:text="@string/edit_this_add"
+            />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/btn_edit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="Test internet"
             />
 
 

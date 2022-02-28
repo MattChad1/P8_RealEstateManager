@@ -16,10 +16,6 @@ class DetailPropertyViewModel(
     ViewModel() {
     val tempLiveData = MutableLiveData<DetailPropertyViewState?>()
     var propertyLiveData = MediatorLiveData<DetailPropertyViewState?>()
-//    val propertyLiveData: LiveData<DetailPropertyViewState?> = Transformations.map(navigationRepository.propertiesConsultedIdsLiveData) { it ->
-//       getLastProperty(it)
-//
-//    }
 
     init {
         propertyLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) { it -> getLastProperty(it) }
@@ -29,7 +25,6 @@ class DetailPropertyViewModel(
 
     fun getPropertyById(id: Int): DetailPropertyViewState? {
         var valueReturn: DetailPropertyViewState? = null
-//        val result = MutableLiveData<DetailPropertyViewState?>()
 
         viewModelScope.launch {
 
@@ -39,16 +34,16 @@ class DetailPropertyViewModel(
                     property.typeOfProperty.nameType,
                     property.agent,
                     property.property.price,
+                    property.property.adress,
                     property.property.squareFeet,
                     property.property.rooms,
                     property.property.bedrooms,
                     property.property.bathrooms,
                     property.property.description,
-                    property.photos,
-                    property.property.adress,
                     property.proximities,
                     property.property.dateStartSell,
-                    property.property.dateSold
+                    property.property.dateSold,
+                    if (!property.photos.isNullOrEmpty()) property.photos else null
                 )
         //                result.postValue(valueReturn)
                 tempLiveData.value = valueReturn

@@ -52,6 +52,8 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
     }
     var adressForMap: String? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -85,11 +87,11 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
 
                     if (allImages.size <= 1) binding.tabLayout.visibility = View.GONE
                     else {
+                        binding.tabLayout.visibility = View.VISIBLE
                         TabLayoutMediator(binding.tabLayout, binding.viewpagerRooms) { tab, position ->
                             tab.text = ""
                         }.attach()
                     }
-                    Log.d(TAG, "Images présentation : " + allImages.joinToString())
                 }
 
                 binding.tvDetailDescription.text = property.description
@@ -131,7 +133,6 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
                 }
 
                 val layoutProximity = binding.layoutProximityIcons
-                var i = 0
                 property.proximities?.forEach { proximity ->
                     val root: LinearLayout = layoutInflater.inflate(R.layout.item_proximity, layoutProximity, false) as LinearLayout
                     val imageView = root.findViewById<ImageView>(R.id.iv_item_proximity)
@@ -142,21 +143,10 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
                     layoutProximity.addView(root)
                 }
 
-                // Get a handle to the fragment and register the callback.
-
-                // Get a handle to the fragment and register the callback.
                 adressForMap = property.adress
                 val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map_in_detail) as SupportMapFragment
                 mapFragment.getMapAsync(this)
 
-//                val fragmentManager: FragmentManager = childFragmentManager
-//                val bundle = Bundle()
-//                bundle.putString("adress", property.adress)
-
-//                fragmentManager.beginTransaction()
-//                    .setReorderingAllowed(false)
-//                    .add(R.id.map_in_detail, MapsFragmentInDetail::class.java, bundle)
-//                    .commit()
 
                 // Contact infos
                 if (property.dateSold == null) binding.tvContactInfo.text =
@@ -168,10 +158,13 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
                     navController.navigate(destination)
 
                 }
-
-
             }
 
+        }
+
+        binding.btnTest.setOnClickListener {
+            if (Utils.isInternetAvailable(requireActivity())) Toast.makeText(requireActivity(), "Internet ok", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(requireActivity(), "Internet ko", Toast.LENGTH_SHORT).show()
         }
 
 

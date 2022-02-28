@@ -160,7 +160,10 @@ class AddPropertyFragment : Fragment() {
 
 
         // To deal with error messages
-        viewModel.validAdress.observe(ctx) { msg -> binding.editAdress.error = if (msg != null) msg else null }
+        viewModel.validAdress.observe(ctx) { msg ->
+            binding.editAdress.error = if (msg != null) msg else null
+            binding.editAdress.requestFocus()
+        }
         viewModel.validPrice.observe(ctx) { msg -> binding.editPrice.error = if (msg != null) msg else null }
         viewModel.validImage.observe(ctx) { msg -> binding.tvErreurPhotos.text = msg }
         viewModel.validDateStartSell.observe(ctx) { msg -> binding.editDateStartSale.error = msg }
@@ -243,20 +246,18 @@ class AddPropertyFragment : Fragment() {
         if (viewModel.idEdit != 0) {
             viewModel.getPropertyById(viewModel.idEdit.toInt()).observe(ctx) { property ->
                 binding.editAdressInput.setText(property?.adress)
-                binding.editDescriptionInput.setText(property?.description)
+                property?.description?.let {binding.editDescriptionInput.setText(it)}
                 property?.bathrooms?.let { binding.editNumBathroomsInput.setText(it.toString()) }
                 property?.bedrooms?.let { binding.editNumBedroomsInput.setText(it.toString()) }
                 property?.rooms?.let { binding.editNumRoomsInput.setText(it.toString()) }
                 property?.price?.let { binding.editPriceInput.setText(it.toString()) }
-                binding.editSurfaceInput.setText(property?.squareFeet.toString())
-                binding.editDateStartSaleInput.setText(property?.dateStartSell)
+                property?.squareFeet?.let {binding.editSurfaceInput.setText(it.toString())}
+                property?.dateStartSell?.let{binding.editDateStartSaleInput.setText(it)}
                 spinnerTypes.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
 
                 for (c in proximityCheckboxes) {
                     if (property.proximities?.contains(c.tag) == true) c.isChecked = true
                 }
-//                loadPhotosFromInternalStorageIntoRecyclerView(property.id)
-
 
                 // In case the sale is done, set visibility of the fields where to put the date of the sale
                 binding.titlePropertySold.visibility = View.VISIBLE
@@ -290,13 +291,12 @@ class AddPropertyFragment : Fragment() {
             )
 
             if (viewModel.validAdress.value == null && viewModel.validImage.value == null && viewModel.validPrice.value == null) {
-                Toast.makeText(ctx, R.string.add_property_conf, Toast.LENGTH_LONG).show()
 
                 val destination = AddPropertyFragmentDirections.actionAddFragmentBackToMain()
                 viewModel.formFinished.observe(ctx) {
                     if (it) navController.navigate(destination)
+                    Toast.makeText(ctx, R.string.add_property_conf, Toast.LENGTH_LONG).show()
                 }
-
             }
         }
         return binding.root

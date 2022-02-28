@@ -1,315 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f1f1f1"
-    android:orientation="vertical"
-    android:paddingHorizontal="6dp"
-    tools:context=".ui.add_property.AddPropertyFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/padding_screen"
+        tools:context=".ui.add_property.AddPropertyFragment">
 
+        <TextView
+            style="@style/titre2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description" />
 
+        <Spinner
+            android:id="@+id/form_type_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_spinner" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_description"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/form_description">
 
-            <TextView
-                style="@style/titre2"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_description_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description" />
+                android:inputType="textMultiLine"
+                android:maxLines="6"
+                android:minLines="3" />
 
-            <Spinner
-                android:id="@+id/form_type_property"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_adress"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_adress_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner" />
+                android:drawableLeft="@drawable/ic_baseline_location_on_24"
+                android:drawablePadding="15dp"
+                android:hint="@string/form_adress"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_price"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_price_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+                android:drawablePadding="15dp"
+                android:hint="@string/form_price"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_date_start_sale"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sale starting the..."
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_date_start_sale_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                tools:ignore="KeyboardInaccessibleWidget" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            style="@style/titre2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/characteristics" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_num_rooms"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_num_rooms_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_house_24"
+                android:drawablePadding="15dp"
+                android:hint="@string/num_rooms"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_description"
+                android:id="@+id/edit_num_bedrooms"
                 style="@style/field_add_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/form_description">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_description_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:maxLines="6"
-                    android:minLines="3" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_adress"
-                style="@style/field_add_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_adress_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_location_on_24"
-                    android:drawablePadding="15dp"
-                    android:hint="@string/form_adress"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_price"
-                style="@style/field_add_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_price_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_attach_money_24"
-                    android:drawablePadding="15dp"
-                    android:hint="@string/form_price"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_date_start_sale"
-                style="@style/field_add_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Sale starting the..."
-
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_date_start_sale_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false"
-                    tools:ignore="KeyboardInaccessibleWidget" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <TextView
-                style="@style/titre2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Characteristics" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_num_rooms"
-                style="@style/field_add_property"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_num_rooms_input"
+                    android:id="@+id/edit_num_bedrooms_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_house_24"
+                    android:layout_marginRight="15dp"
+                    android:drawableLeft="@drawable/ic_baseline_bed_24"
                     android:drawablePadding="15dp"
-                    android:hint="@string/num_rooms"
-                    android:inputType="number" />
+                    android:hint="@string/num_bedrooms"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:nextFocusForward="@+id/edit_num_bathrooms_input"
+                    android:singleLine="true"
+
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/edit_num_bedrooms"
-                    style="@style/field_add_property"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_num_bedrooms_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:drawableLeft="@drawable/ic_baseline_bed_24"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/num_bedrooms"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:nextFocusForward="@+id/edit_num_bathrooms_input"
-                        android:singleLine="true"
-
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/edit_num_bathrooms"
-                    style="@style/field_add_property"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_num_bathrooms_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_bathroom_24"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/num_bathrooms"
-                        android:inputType="number"
-
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_surface"
+                android:id="@+id/edit_num_bathrooms"
                 style="@style/field_add_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_surface_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_square_foot_24"
-                    android:drawablePadding="15dp"
-                    android:gravity="center_vertical"
-                    android:hint="@string/surface"
-                    android:inputType="numberDecimal" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/titre2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Proximity" />
+                android:layout_weight="1"
 
-
-            <GridLayout
-                android:id="@+id/layout_for_proximities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="auto_fit"
-                >
-
-            </GridLayout>
-
-
-            <TextView
-                style="@style/titre2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Photos" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:id="@+id/btnTakePhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_baseline_photo_camera_24" />
-
-                <ImageView
-                    android:id="@+id/btnTakePhotoGallery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_baseline_image_24" />
-
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/tv_erreur_photos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:textColor="#F00020" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPrivatePhotos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp" />
-
-
-            <TextView
-                android:id="@+id/title_property_sold"
-                style="@style/titre2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Already sold?"
-                android:visibility="gone"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_date_sold"
-                style="@style/field_add_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Date of the sale"
-                android:visibility="gone"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_date_sold_input"
+                    android:id="@+id/edit_num_bathrooms_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false" />
+                    android:drawableLeft="@drawable/ic_outline_bathroom_24"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/num_bathrooms"
+                    android:inputType="number"
+
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/titre2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other datas" />
-
-            <Spinner
-                android:id="@+id/spinner_agents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner" />
-
-
-            <Button
-                android:id="@+id/btn_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/form_submit" />
 
         </LinearLayout>
 
-    </ScrollView>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_surface"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_surface_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_square_foot_24"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:hint="@string/surface"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/titre2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proximity" />
+
+
+        <GridLayout
+            android:id="@+id/layout_for_proximities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="auto_fit">
+
+        </GridLayout>
+
+
+        <TextView
+            style="@style/titre2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/photos" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/btnTakePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_baseline_photo_camera_24" />
+
+            <ImageView
+                android:id="@+id/btnTakePhotoGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_baseline_image_24" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_erreur_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#F00020" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPrivatePhotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp" />
+
+
+        <TextView
+            android:id="@+id/title_property_sold"
+            style="@style/titre2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/already_sold"
+            android:visibility="gone" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_date_sold"
+            style="@style/field_add_property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/date_of_the_sale"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_date_sold_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/titre2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/other_datas" />
+
+        <Spinner
+            android:id="@+id/spinner_agents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_spinner" />
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/form_submit" />
+
+    </LinearLayout>
+
+</ScrollView>

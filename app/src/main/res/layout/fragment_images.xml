@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main_activity.MainActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_room"
         android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        android:background="#FFFFFF"
-        tools:src="@drawable/flat1" />
+        android:scaleType="centerCrop"
+        android:background="#333333"
+        tools:src="@drawable/flat8" />
 
     <TextView
         android:id="@+id/legende_viewpager"
-        android:layout_width="match_parent"
+       app:layout_constraintLeft_toLeftOf="@id/image_room"
+       app:layout_constraintRight_toRightOf="@id/image_room"
+        app:layout_constraintBottom_toBottomOf="@id/image_room"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/image_room"
         android:background="#333333"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="@dimen/tv_legend_viewpager"
         android:alpha="0.8"
         android:textColor="#FFFFFF"
         tools:text="Salon" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

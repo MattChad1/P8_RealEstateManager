@@ -52,7 +52,7 @@ class SearchFragment : Fragment() {
         binding.btnBathrooms.setOnClickListener { displayAlertRange(SearchViewModel.NUMBATHROOMS, filter.numBathrooms) }
         binding.btnSurface.setOnClickListener { displayAlertRange(SearchViewModel.SURFACE, filter.surface) }
         binding.btnDateStartSale.setOnClickListener { displayAlertCalendar(SearchViewModel.DATE_START_SALE, filter.dateStartSale) }
-        binding.btnDateStartSale.setOnClickListener { displayAlertCalendar(SearchViewModel.DATE_END_SALE, filter.dateSoldMax) }
+        binding.btnDateEndSale.setOnClickListener { displayAlertCalendar(SearchViewModel.DATE_END_SALE, filter.dateSoldMax) }
         binding.btnProximity.setOnClickListener { displayAlertCheckbox(filter.proximity) }
 
         binding.tvLinkToListFragment.setOnClickListener {

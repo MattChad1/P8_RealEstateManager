@@ -26,18 +26,14 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
 
-    lateinit var navController: NavController
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
 
-        var binding: FragmentListPropertiesBinding = FragmentListPropertiesBinding.inflate(inflater, container, false)
-
-
+        val binding: FragmentListPropertiesBinding = FragmentListPropertiesBinding.inflate(inflater, container, false)
         val rv: RecyclerView = binding.rvListProperties
         rv.layoutManager = LinearLayoutManager(requireActivity())
         rv.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
@@ -49,11 +45,6 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
             properties.addAll(newProperties)
             adapter.notifyDataSetChanged()
         }
-
-
-
-
-
         return binding.root
     }
 
@@ -63,26 +54,10 @@ class ListPropertiesFragment : Fragment(), ItemClickListener {
         viewModel.changeSelection(properties[position].id)
     }
 
-//    fun sendNewDetails(id: Int) {
-//        val transaction = activity?.supportFragmentManager?.beginTransaction()
-//        val newFragment = DetailPropertyFragment()
-//        val args = Bundle()
-//        val activity: MainActivity = getActivity() as MainActivity
-//        if (activity.lastProperty2.lastOrNull() != id) activity.lastProperty2.add(id)
-//        args.putInt("idProperty", id)
-//        newFragment.arguments = args
-//
-//        if (resources.getBoolean(R.bool.isTablet) == false) transaction?.replace(R.id.main_fragment, newFragment, "detail_fragment")
-//        else transaction?.replace(R.id.second_fragment, newFragment, "detail_fragment")
-//
-//        transaction?.disallowAddToBackStack()
-//        transaction?.commit()
-//    }
+
 
     fun sendNewDetails(id: Int) {
         val activity: MainActivity = activity as MainActivity
-//        if (activity.lastProperty2.lastOrNull() != id) activity.lastProperty2.add(id)
-
         if (resources.getBoolean(R.bool.isTablet) == false) {
             val sendData = ListPropertiesFragmentDirections.actionListPropertiesFragmentToDetailPropertyFragment(id)
             activity.navController.navigate(sendData)

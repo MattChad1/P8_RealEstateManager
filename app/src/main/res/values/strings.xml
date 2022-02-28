@@ -36,23 +36,28 @@
     // Add Property Activity
     <string name="title_activity_add_property">AddProperty</string>
     <string name="form_description">Property description</string>
-    <string name="form_adress">Adress</string>
+    <string name="form_adress">Address</string>
     <string name="form_price">Sale price</string>
     <string name="form_submit">Submit</string>
     <string name="form_type">Type of property</string>
     <string name="add_property_conf">The property has been added successfully</string>
     <string name="date_for_datePicker">%1$02d/%2$02d/%3$d</string>
-    <string name="adress_required">You must enter an adress</string>
+    <string name="adress_required">You must enter an address</string>
     <string name="price_required">You must enter a price</string>
     <string name="image_required">You must pick at least one image</string>
     <string name="date_start_sale_required">You must pick a date</string>
     <string name="agent_required">You must select the agent in charge</string>
+    <string name="proximity">Proximity</string>
+    <string name="photos">Photos</string>
+    <string name="already_sold">Already sold?</string>
+    <string name="date_of_the_sale">Date of the sale</string>
+    <string name="other_datas">Other datas</string>
 
     //Search
     <string name="number_match">%d properties match your criteria</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="characteristics">Characteristics</string>
+    <string name="edit_this_add">Edit this add</string>
 
 
 </resources>

@@ -9,14 +9,14 @@ data class DetailPropertyViewState(
     var type: String,
     var agent: Agent,
     var price: Long,
+    var adress: String,
     var squareFeet: Double? = null,
     var rooms: Int? = 0,
     var bedrooms: Int? = 0,
     var bathrooms: Int? = 0,
     var description: String? = null,
-    var photos: MutableList<ImageRoom>? = null,
-    var adress: String? = null,
     var proximities: List<Proximity>? = null,
     var dateStartSell: String, // format yyyy-mm-dd for easy sorting in sqlite
     var dateSold: String? = null, // format yyyy-mm-dd for easy sorting in sqlite
+    var photos: MutableList<ImageRoom>? = null,
 )

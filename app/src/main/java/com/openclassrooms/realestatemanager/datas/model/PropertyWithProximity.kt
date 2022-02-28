@@ -28,7 +28,7 @@ data class PropertyWithProximity(
         entity = ImageRoom::class
 
     )
-    var photos: MutableList<ImageRoom>,
+    var photos: MutableList<ImageRoom>?,
 
     @Relation(
         parentColumn = "agent",

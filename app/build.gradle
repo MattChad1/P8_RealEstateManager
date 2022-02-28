@@ -9,7 +9,6 @@ plugins {
 }
 
 android {
-
     compileSdkVersion 31
     defaultConfig {
         applicationId "com.openclassrooms.realestatemanager"
@@ -80,6 +79,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.room_version"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
     implementation 'androidx.test:runner:1.4.0'
+    implementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     kapt "androidx.room:room-compiler:$rootProject.room_version"
 
 
@@ -90,17 +90,21 @@ dependencies {
 
 
     // Tests
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     testImplementation "androidx.room:room-testing:$rootProject.room_version"
     testImplementation 'org.mockito:mockito-inline:2.22.0'
     testImplementation "org.mockito:mockito-core:3.12.4"
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.3'
+    androidTestImplementation "com.android.support.test:runner:$rootProject.androidXTestVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestVersion"
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
+    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestVersion"
     testImplementation 'org.robolectric:robolectric:4.6'
+
+
 
 
 

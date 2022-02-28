@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/row_property">
@@ -11,11 +11,10 @@
         android:id="@+id/item_property_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:layout_width="110dp"
-        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:layout_width="@dimen/imageListItem_width"
+        android:layout_height="@dimen/imageListItem_height"
         android:src="@drawable/flat1"
         />
 
@@ -27,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="2dp"
-        tools:text="Flat"
-        android:textSize="20sp"
+        android:textSize="@dimen/title_list_item_fontsize"
         android:textStyle="bold"
+        tools:text="Flat"
         />
 
     <TextView
@@ -43,7 +42,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="2dp"
         android:text="Sold !"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintHorizontal_bias="0.8"

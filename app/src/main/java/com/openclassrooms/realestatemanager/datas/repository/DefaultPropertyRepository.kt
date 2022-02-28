@@ -146,6 +146,7 @@ class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyR
                     imageRef.putBytes(data).await()
                     imagesInFirestore.remove(firestoreItem)
                 }
+                else if (firestoreItem.lastUpdate == roomItem.lastUpdate) imagesInFirestore.remove(firestoreItem)
             }
 
                 propertyDao.insertAllImages(imagesInFirestore)

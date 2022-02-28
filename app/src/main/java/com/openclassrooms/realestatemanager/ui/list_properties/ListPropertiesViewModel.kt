@@ -5,7 +5,6 @@ import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.TypeOfProperty
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 
@@ -64,16 +63,16 @@ class ListPropertiesViewModel(
                     property.property.idProperty,
                     property.typeOfProperty.nameType,
                     property.property.price,
+                    property.property.adress,
                     property.property.squareFeet,
                     property.property.rooms,
                     property.property.bedrooms,
                     property.property.bathrooms,
                     property.property.description,
-                    property.photos[0],
-                    property.property.adress,
                     property.proximities.map { it.idProximity },
                     property.property.dateStartSell,
-                    property.property.dateSold
+                    property.property.dateSold,
+                    if (!property.photos.isNullOrEmpty()) property.photos?.get(0) else null
                 )
             )
         }
@@ -142,16 +141,14 @@ class ListPropertiesViewModel(
 
         }
         if (!newList.isEmpty() && newList.filter { it.selected }.isEmpty()) {
-//            changeSelection(newList[0].id)
+            changeSelection(newList[0].id)
             newList[0].selected = true
         }
         return newList
     }
 
     fun changeSelection(id: Int) {
-//        selectionLiveData.value = id
         navigationRepository.newPropertyConsulted(id)
-
     }
 
 

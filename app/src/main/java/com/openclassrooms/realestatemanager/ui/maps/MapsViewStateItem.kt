@@ -6,6 +6,6 @@ data class MapsViewStateItem(
     var id: Int,
     var type: String,
     var price: Long,
-    var photo: ImageRoom,
-    var adress: String? = null,
+    var adress: String,
+    var photo: ImageRoom? = null,
 )

@@ -11,8 +11,7 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
-        <!-- Status bar color. -->
-        <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
@@ -20,10 +19,10 @@
         <item name="android:actionBarStyle">@style/toolBarStyle</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextAppearance</item>
         <item name="android:textViewStyle">@style/tv_basics</item>
+        <item name="android:checkboxStyle">@style/checkbox</item>
+        <item name="android:datePickerDialogTheme">@style/date_picker_style</item>
 
 
-<!--        <item name="textInputStyle">@style/Theme.RealEstateManager.TextInputEditTextOverlay</item>-->
-        <!-- Customize your theme here. -->
     </style>
 
     <style name="Theme.RealEstateManager.NoActionBar">
@@ -32,22 +31,8 @@
     </style>
 
     <style name="Theme.RealEstateManager.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.RealEstateManager.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<!--    <style name="Theme.RealEstateManager.TextInputEditTextOverlay" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">-->
-<!--        <item name="materialThemeOverlay">@style/Theme.RealEstateManager.MaterialThemeOverlay</item>-->
-<!--    </style>-->
 
-<!--    <style name="Theme.RealEstateManager.MaterialThemeOverlay">-->
-<!--        <item name="editTextStyle">@style/Theme.RealEstateManager.TextInputEditTextStyle</item>-->
-<!--    </style>-->
-
-<!--    <style name="Theme.RealEstateManager.TextInputEditTextStyle" parent="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox">-->
-<!--        <item name="android:textColor">@color/colorPrimary</item>-->
-<!--        <item name="hintTextAppearance">@style/hint_form</item>-->
-<!--        <item name="textAppearanceCaption">@style/textCaption</item>-->
-
-<!--    </style>-->
 
 </resources>

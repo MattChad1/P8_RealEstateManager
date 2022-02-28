@@ -10,6 +10,7 @@ import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepo
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.formatDateYearBefore
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
@@ -75,7 +76,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         validAgent.value = if (agent == null) application.getString(R.string.agent_required) else null
 
         if (validAdress.value == null && validPrice.value == null && validImage.value == null) {
-            viewModelScope.launch {
+            val job = viewModelScope.launch {
                 val newProperty = Property(
                     idEdit,
                     type.idType,
@@ -100,8 +101,11 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                 for (i in imagesPrevLiveData.value!!) {
                     propertyRepository.addPhoto(idProperty, i.name, i.legend)
                 }
-
                 propertyRepository.updateProximityForProperty(idProperty, proximitiesForRoom)
+
+            }
+            viewModelScope.launch {
+                job.join()
                 formFinished.value = true
             }
         }
@@ -152,7 +156,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     Utils.formatDateDayBefore(property.property.dateSold)
                 )
             )
-            property.photos.forEach { p ->
+            property.photos?.forEach { p ->
                 addPhotoFromBase(p)
 
             }

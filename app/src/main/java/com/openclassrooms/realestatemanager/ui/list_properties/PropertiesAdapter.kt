@@ -47,37 +47,20 @@ class PropertiesAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        // Get element from the dataset at this position and replace the
-        // contents of the view with that element
-//        if (properties[position].id == itemSelected) {
-//            viewHolder.itemView.setBackgroundColor(
-//                ContextCompat.getColor(
-//                    context,
-//                    R.color.colorAccent
-//                )
-//            )
-//        } else viewHolder.itemView.setBackgroundColor(
-//            ContextCompat.getColor(
-//                context,
-//                R.color.white
-//            )
-//        )
         if (MyApplication.instance.resources.getBoolean(R.bool.isTablet)) {
             if (properties[position].selected == true) highlightItem(viewHolder.itemView)
             else noSelectItem(viewHolder.itemView)
         }
 
         try {
-            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo.nameFile + ".jpg")))
+            viewHolder.image.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, properties[position].photo?.nameFile + ".jpg")))
         }
         catch (e: IOException) {
             e.printStackTrace()
 
         }
         viewHolder.type.text = properties[position].type
-//        viewHolder.neighborhood.text = properties[position].description
-        //TODO : A changer pour le vrai quartier
-        viewHolder.neighborhood.text = "Manhattan"
+        viewHolder.neighborhood.text = properties[position].adress
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
         if (properties[position].dateSold != null) {
             viewHolder.tvSold.visibility = View.VISIBLE

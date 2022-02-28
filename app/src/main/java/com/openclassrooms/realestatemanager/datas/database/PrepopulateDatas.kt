@@ -19,6 +19,10 @@ class PrepopulateDatas {
             PropertyProximityCrossRef(1, 4),
             PropertyProximityCrossRef(2, 1),
             PropertyProximityCrossRef(2, 3),
+            PropertyProximityCrossRef(3, 1),
+            PropertyProximityCrossRef(4, 2),
+            PropertyProximityCrossRef(5, 3),
+            PropertyProximityCrossRef(6, 4),
         )
 
         val preTypes = listOf<TypeOfProperty>(
@@ -37,7 +41,15 @@ class PrepopulateDatas {
             ImageRoom(1, 1, "flat1", "Living-room"),
             ImageRoom(2, 2, "flat2", "A room"),
             ImageRoom(3, 1, "flat2", "Another Room"),
-            ImageRoom(4, 3, "flat3", "Living-room"),
+            ImageRoom(4, 3, "flat3", "1st Room"),
+            ImageRoom(5, 4, "flat4", "1st Room"),
+            ImageRoom(6, 5, "flat5", "1st Room"),
+            ImageRoom(7, 6, "flat6", "1st Room"),
+            ImageRoom(8, 3, "flat4", "2nd Room"),
+            ImageRoom(9, 4, "flat5", "2nd Room"),
+            ImageRoom(10, 5, "flat6", "2nd Room"),
+            ImageRoom(11, 6, "flat7", "2nd Room"),
+            ImageRoom(12, 1, "flat8", "Another Room"),
         )
 
         val preProperties = listOf(
@@ -81,6 +93,49 @@ class PrepopulateDatas {
                 1,
                 1,
                 "2022-01-01",
+                null
+            ),
+
+            Property(
+                4,
+                2,
+                "550 Monroe Ave, Elizabeth",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
+                1,
+                1900000,
+                130.00,
+                7,
+                4,
+                2,
+                "2022-01-30",
+                null
+            ),
+            Property(
+                5,
+                3,
+                "428-410 Clinton Pl, Newark",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
+                2,
+                1600000,
+                140.00,
+                8,
+                5,
+                2,
+                "2022-02-02",
+                null
+            ),
+            Property(
+                6,
+                1,
+                "171-0-171-98 67th Ave",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non.",
+                2,
+                2500000,
+                100.00,
+                5,
+                3,
+                2,
+                "2022-02-02",
                 null
             )
         )

@@ -28,9 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     val TAG = "MyLog MainActivity"
 
-    // History of the adds consulted
-    var lastProperty2: MutableList<Int> = mutableListOf()
-
     lateinit var navController: NavController
     lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -51,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -83,6 +83,11 @@ abstract class LocaleDatabase : RoomDatabase() {
             PhotoUtils.savePhotoToInternalStorage("flat1", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat1))
             PhotoUtils.savePhotoToInternalStorage("flat2", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat2))
             PhotoUtils.savePhotoToInternalStorage("flat3", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat3))
+            PhotoUtils.savePhotoToInternalStorage("flat4", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat4))
+            PhotoUtils.savePhotoToInternalStorage("flat5", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat5))
+            PhotoUtils.savePhotoToInternalStorage("flat6", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat6))
+            PhotoUtils.savePhotoToInternalStorage("flat7", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat7))
+            PhotoUtils.savePhotoToInternalStorage("flat8", BitmapFactory.decodeResource(MyApplication.instance.resources, R.drawable.flat8))
 
 
         }

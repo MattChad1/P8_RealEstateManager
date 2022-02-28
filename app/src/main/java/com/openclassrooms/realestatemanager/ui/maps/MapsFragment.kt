@@ -113,13 +113,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         var bindingWindow: InfoWindowBinding = InfoWindowBinding.inflate(layoutInflater)
         val position = marker.tag
         val property = allProperties[position as Int]
-        bindingWindow.ivMapwindow.setImageURI(
-            Uri.fromFile(File(MyApplication.instance.filesDir, "${property.photo.nameFile}.jpg"))
-        )
-        bindingWindow.tvMapwindowTitle.text = property.type
-        bindingWindow.tvMapwindowPrice.text = Utils.formatPrice(property.price)
-        return bindingWindow.root
-    }
+        property.photo?.let {
+            bindingWindow.ivMapwindow.setImageURI(
+                Uri.fromFile(File(MyApplication.instance.filesDir, "${property.photo!!.nameFile}.jpg"))
+            )
+        }
+            bindingWindow.tvMapwindowTitle.text = property.type
+            bindingWindow.tvMapwindowPrice.text = Utils.formatPrice(property.price)
+            return bindingWindow.root
+        }
+
 
     override fun getInfoWindow(p0: Marker): View? {
         return null

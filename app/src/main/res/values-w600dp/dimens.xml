@@ -3,10 +3,24 @@
 
     <bool name="isTablet">true</bool>
 
-    //sizes
-    <dimen name="imageViewPager">450dp</dimen>
-    <dimen name="fab_margin">48dp</dimen>
 
+
+    // sizes police
+    <dimen name="tv_usual">16sp</dimen>
+    <dimen name="toolbar_sp">16sp</dimen>
+    <dimen name="title">26sp</dimen>
+    <dimen name="title_list_item_fontsize">24sp</dimen>
+    <dimen name="tv_legend_viewpager">20sp</dimen>
+
+
+    // sizes margin
+    <dimen name="fab_margin">48dp</dimen>
+    <dimen name="padding_screen">22dp</dimen>
+
+
+    // sizes icons
     <dimen name="icon_proximity">24dp</dimen>
+
+
 
 </resources>

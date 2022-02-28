@@ -2,13 +2,20 @@ package com.openclassrooms.realestatemanager
 
 import com.openclassrooms.realestatemanager.datas.model.*
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FakePropertyRepository: PropertyRepository {
 
     override fun getAllPropertiesComplete(): Flow<List<PropertyWithProximity>?> {
-        return flow {emit(FakeDatas.fakePropertiesCompletes)}
+        return flow {
+            emit(FakeDatas.fakePropertiesCompletes)
+        delay(1000)
+            emit(FakeDatas.fakePropertiesCompletes)
+            delay(1000)
+            emit(FakeDatas.fakePropertiesCompletes)
+        }
     }
 
     override suspend fun insert(property: Property): Int {

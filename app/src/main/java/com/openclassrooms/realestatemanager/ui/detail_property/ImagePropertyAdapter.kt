@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.openclassrooms.realestatemanager.datas.model.ImageRoom
 
-class ImagePropertyAdapter(activity: AppCompatActivity, val images: MutableList<ImageRoom>) :
+class ImagePropertyAdapter(activity: AppCompatActivity, private val images: MutableList<ImageRoom>) :
     FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int {

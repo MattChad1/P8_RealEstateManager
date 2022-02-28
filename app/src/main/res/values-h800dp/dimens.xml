@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //sizes component
+    <dimen name="height_image_viewpager">360dp</dimen>
+
+</resources>

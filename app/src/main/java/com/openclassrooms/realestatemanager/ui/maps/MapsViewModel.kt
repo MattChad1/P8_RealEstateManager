@@ -11,7 +11,6 @@ class MapsViewModel(val propertyRepository: PropertyRepository, val navigationRe
     val allPropertiesLiveData: LiveData<List<MapsViewStateItem>> =
         Transformations.map(propertyRepository.getAllPropertiesComplete().asLiveData(), ::filterProperty)
 
-
     private fun filterProperty(properties: List<PropertyWithProximity>?): List<MapsViewStateItem> {
         val newList = mutableListOf<MapsViewStateItem>()
         properties?.forEach { p ->
@@ -21,8 +20,8 @@ class MapsViewModel(val propertyRepository: PropertyRepository, val navigationRe
                         p.property.idProperty,
                         p.typeOfProperty.nameType,
                         p.property.price,
-                        p.photos[0],
-                        p.property.adress
+                        p.property.adress,
+                        if (!p.photos.isNullOrEmpty()) p.photos!![0] else null
                     )
                 )
         }
