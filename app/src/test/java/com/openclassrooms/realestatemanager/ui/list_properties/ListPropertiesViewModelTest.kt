@@ -32,13 +32,8 @@ class ListPropertiesViewModelTest {
 
     private val fakePropertyRepository = FakePropertyRepository()
 
-
-    private val fakeLiveData = MutableLiveData<List<PropertyWithProximity>>()
-    private val filterLiveData = MutableLiveData<Filter>()
-    private val previousIdsLiveData = MutableLiveData<MutableList<Int>>()
-
     lateinit var viewModel: ListPropertiesViewModel
-
+//
 //    @get:Rule
 //    val testCoroutineRule = MainCoroutineRule()
 
