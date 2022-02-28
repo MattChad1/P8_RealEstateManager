@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.ui.add_property
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.openclassrooms.realestatemanager.FakeDatas
+import com.openclassrooms.realestatemanager.FakePropertyRepository
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.datas.database.PrepopulateDatas
 import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
@@ -28,13 +29,10 @@ class AddPropertyViewModelTest : TestCase() {
     private val testDispatcher = StandardTestDispatcher()
     lateinit var viewModel: AddPropertyViewModel
 
-    @Mock
-    lateinit var propertyRepository: DefaultPropertyRepository
+    private val fakePropertyRepository = FakePropertyRepository()
 
     @Mock
     lateinit var application: MyApplication
-
-
 
 
     @get:Rule
@@ -44,13 +42,9 @@ class AddPropertyViewModelTest : TestCase() {
     @Before
     override fun setUp() {
         Dispatchers.setMain(testDispatcher)
-
-
         MockitoAnnotations.openMocks(this)
         Mockito.`when`(application.getString(Mockito.anyInt())).thenReturn(" ")
 
-        fun fakeFlowTypes() = flow { emit(PrepopulateDatas.preTypes) }
-        Mockito.`when`(propertyRepository.getAllTypes()).thenReturn(fakeFlowTypes())
 
     }
 
@@ -62,16 +56,7 @@ class AddPropertyViewModelTest : TestCase() {
 
 
     fun testAddNewProperty()= runTest {
-            `when`(propertyRepository.getMaxId()).thenReturn(0)
-            `when`(propertyRepository.getAllAgents()).thenReturn(FakeDatas.fakeAgents)
-            viewModel = AddPropertyViewModel(propertyRepository, application)
-
-
-            Mockito.doNothing().`when`(propertyRepository.deletePhoto(Mockito.anyInt()))
-            Mockito.doReturn(1).`when`(propertyRepository.insert(Mockito.any()))
-            Mockito.doNothing().`when`(propertyRepository.addPhoto(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString()))
-            Mockito.doNothing().`when`(propertyRepository.updateProximityForProperty(Mockito.anyInt(), Mockito.anyList()))
-
+            viewModel = AddPropertyViewModel(fakePropertyRepository, application)
             viewModel.addNewProperty(
                 FakeDatas.fakeTypes[0],
                 FakeDatas.fakeAgents[0],
@@ -87,8 +72,9 @@ class AddPropertyViewModelTest : TestCase() {
                 null
             )
 
-
+        viewModel.validAdress.observeForever {
             assertTrue(viewModel.validAdress.value != null)
+        }
 
 
     }

@@ -17,11 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.*
-import org.junit.Assert
+import org.junit.*
 import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -31,7 +28,7 @@ import org.mockito.MockitoAnnotations.openMocks
 class ListPropertiesViewModelTest {
 
 
-//    private val testDispatcher = StandardTestDispatcher()
+    private val testDispatcher = StandardTestDispatcher()
 
     private val fakePropertyRepository = FakePropertyRepository()
 
@@ -42,8 +39,8 @@ class ListPropertiesViewModelTest {
 
     lateinit var viewModel: ListPropertiesViewModel
 
-    @get:Rule
-    val testCoroutineRule = MainCoroutineRule()
+//    @get:Rule
+//    val testCoroutineRule = MainCoroutineRule()
 
     @Mock
     lateinit var navigationRepository: NavigationRepository
@@ -54,7 +51,7 @@ class ListPropertiesViewModelTest {
 
     @Before
     fun setUp() {
-//        Dispatchers.setMain(testDispatcher)
+        Dispatchers.setMain(testDispatcher)
         openMocks(this)
 
 //        fakeLiveData.value = FakeDatas.fakePropertiesCompletes
@@ -70,6 +67,12 @@ class ListPropertiesViewModelTest {
 
 //        previousIdsLiveData.value = mutableListOf(1, 2)
 //        Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(previousIdsLiveData)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
+//        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
