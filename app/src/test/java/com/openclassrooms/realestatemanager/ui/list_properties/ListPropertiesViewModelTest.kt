@@ -53,27 +53,14 @@ class ListPropertiesViewModelTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         openMocks(this)
-
-//        fakeLiveData.value = FakeDatas.fakePropertiesCompletes
-//        fun fakeFlowProperties() = flow {
-//            emit(FakeDatas.fakePropertiesCompletes)
-//        }
-
-//        fun fakeFlowTypes() = flow { emit(PrepopulateDatas.preTypes) }
-//        val noFilter = Filter()
-//        filterLiveData.value = noFilter
-//        Mockito.`when`(repository.getAllPropertiesComplete()).thenReturn(fakeFlowProperties())
-//        Mockito.`when`(repository.getAllTypes()).thenReturn(fakeFlowTypes())
-
-//        previousIdsLiveData.value = mutableListOf(1, 2)
-//        Mockito.`when`(navigationRepository.propertiesConsultedIdsLiveData).thenReturn(previousIdsLiveData)
-    }
+ }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
 //        testDispatcher.cleanupTestCoroutines()
     }
+
 
     @Test
     fun getAllPropertiesLiveData() = runTest {
