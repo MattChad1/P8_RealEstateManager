@@ -45,7 +45,6 @@ class SearchFragment : Fragment() {
             requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.VISIBLE
         }
         navController = findNavController()
-
         binding.btnPrice.setOnClickListener { displayAlertRange(SearchViewModel.PRICE, filter.price) }
         binding.btnRooms.setOnClickListener { displayAlertRange(SearchViewModel.NUMROOMS, filter.numRooms) }
         binding.btnBedrooms.setOnClickListener { displayAlertRange(SearchViewModel.NUMBEDROOMS, filter.numBedrooms) }
@@ -56,17 +55,13 @@ class SearchFragment : Fragment() {
         binding.btnProximity.setOnClickListener { displayAlertCheckbox(filter.proximity) }
 
         binding.tvLinkToListFragment.setOnClickListener {
-//            val transaction = activity?.supportFragmentManager?.beginTransaction()
-//            val newFragment = ListPropertiesFragment()
-//            transaction?.replace(R.id.main_fragment, newFragment)
-//            transaction?.disallowAddToBackStack()
-//            transaction?.commit()
             val destination = SearchFragmentDirections.actionSearchFragmentBackToMain()
             navController.navigate(destination)
-
-
         }
 
+        binding.ivReset.setOnClickListener {
+            viewModel.resetFilter()
+        }
         viewModel.filterLiveData.observe(viewLifecycleOwner) {
             setBtnColor(it)
         }
@@ -80,6 +75,8 @@ class SearchFragment : Fragment() {
             }
             binding.tvNumMatch.text = getString(R.string.number_match, num)
         }
+
+
 
         return binding.root
     }

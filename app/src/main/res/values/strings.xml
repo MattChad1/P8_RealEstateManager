@@ -31,6 +31,7 @@
     <string name="neighborhood">Neighborhood</string>
     <string name="strenghts">Strenghts</string>
     <string name="map">Map</string>
+    <string name="characteristics">Characteristics</string>
 
 
     // Add Property Activity
@@ -56,8 +57,14 @@
     //Search
     <string name="number_match">%d properties match your criteria</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="characteristics">Characteristics</string>
     <string name="edit_this_add">Edit this add</string>
+    <string name="see_the_list">See the list</string>
+    <string name="reset_all_filters">Reset all filters</string>
+    <string name="search_num_bedrooms">Num. bedrooms</string>
+    <string name="search_num_bathrooms">Num. bathrooms</string>
+    <string name="search_num_rooms">Num. rooms</string>
+
+
 
 
 </resources>

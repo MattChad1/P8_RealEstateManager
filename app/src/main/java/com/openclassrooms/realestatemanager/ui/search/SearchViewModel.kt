@@ -61,7 +61,7 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
             NUMBATHROOMS -> navigationRepository.filter.numBathrooms = Pair(val1?.toInt(), val2?.toInt())
             SURFACE -> navigationRepository.filter.surface = Pair(val1?.toInt(), val2?.toInt())
             DATE_START_SALE -> navigationRepository.filter.dateStartSale = val1
-            DATE_END_SALE -> navigationRepository.filter.dateStartSale = val1
+            DATE_END_SALE -> navigationRepository.filter.dateSoldMax = val1
 
         }
         navigationRepository.updateLiveData()
@@ -70,6 +70,10 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
     fun updateFilterProximity(proximitiesInts: MutableList<Int>) {
         navigationRepository.filter.proximity = proximitiesInts
+    }
+
+    fun resetFilter() {
+        navigationRepository.filter = Filter()
     }
 
 

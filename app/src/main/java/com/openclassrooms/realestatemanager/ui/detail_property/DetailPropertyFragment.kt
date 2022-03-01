@@ -162,12 +162,6 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
 
         }
 
-        binding.btnTest.setOnClickListener {
-            if (Utils.isInternetAvailable(requireActivity())) Toast.makeText(requireActivity(), "Internet ok", Toast.LENGTH_SHORT).show()
-            else Toast.makeText(requireActivity(), "Internet ko", Toast.LENGTH_SHORT).show()
-        }
-
-
         return binding.root
     }
 

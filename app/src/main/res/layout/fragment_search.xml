@@ -13,13 +13,24 @@
     <TextView
         android:id="@+id/title_search_criteria"
         style="@style/titre2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
         android:text="Your search criteria"
-        android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/iv_reset"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_refresh_24"
+        app:layout_constraintLeft_toRightOf="@id/title_search_criteria"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingStart="15dp"
+        android:layout_marginTop="30dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_price"
@@ -37,7 +48,7 @@
         style="@style/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Surface"
+        android:text="@string/surface"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
@@ -46,7 +57,7 @@
         style="@style/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Num. rooms"
+        android:text="@string/search_num_rooms"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
@@ -55,7 +66,7 @@
         style="@style/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Num. bedrooms"
+        android:text="@string/search_num_bedrooms"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
@@ -64,7 +75,7 @@
         style="@style/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Num. bathrooms"
+        android:text="@string/search_num_bathrooms"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
@@ -73,7 +84,7 @@
         style="@style/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Proximity"
+        android:text="@string/proximity"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
@@ -99,7 +110,7 @@
         android:id="@+id/flowView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         app:constraint_referenced_ids="btn_price, btn_rooms, btn_bedrooms, btn_bathrooms, btn_surface, btn_proximity, btn_date_start_sale,btn_date_end_sale"
         app:flow_horizontalGap="5dp"
         app:flow_horizontalStyle="spread"
@@ -111,18 +122,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_search_criteria" />
 
+
+
     <TextView
         android:id="@+id/tv_num_match"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/flowView"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"
         android:visibility="gone"
+        tools:text="8 properties match your criteria"
+        tools:visibility="visible"
         />
+
 
     <TextView
         android:id="@+id/tv_linkToListFragment"
@@ -130,14 +146,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="See the list"
+        android:text="@string/see_the_list"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_num_match"
         android:visibility="gone"
+        tools:visibility="visible"
         />
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
