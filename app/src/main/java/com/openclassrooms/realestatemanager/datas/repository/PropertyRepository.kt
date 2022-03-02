@@ -13,7 +13,7 @@ interface PropertyRepository {
 
         suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
 
-        suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String)
+        suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String, idBase: Int)
 
         suspend fun deletePhoto(idProperty: Int)
 

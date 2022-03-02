@@ -23,8 +23,6 @@ class PropertiesAdapter(
 ) :
     RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
-    var itemSelected: Int? = null
-    var viewSelected: View? = null
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,7 +30,7 @@ class PropertiesAdapter(
         val neighborhood: TextView = view.findViewById(R.id.item_property_tv_neighborhood)
         val price: TextView = view.findViewById(R.id.item_property_tv_price)
         val image: ImageView = view.findViewById(R.id.item_property_image)
-        val tvSold: TextView = view.findViewById(R.id.item_property_tv_sold)
+        val ivSold: ImageView = view.findViewById(R.id.item_property_tv_sold)
 
     }
 
@@ -63,13 +61,10 @@ class PropertiesAdapter(
         viewHolder.neighborhood.text = properties[position].adress
         viewHolder.price.text = Utils.formatPrice(properties[position].price)
         if (properties[position].dateSold != null) {
-            viewHolder.tvSold.visibility = View.VISIBLE
+            viewHolder.ivSold.visibility = View.VISIBLE
         }
         viewHolder.itemView.setOnClickListener {
             clickListener.onItemAdapterClickListener(position)
-//            noSelectItem(viewSelected)
-//            viewSelected = viewHolder.itemView
-//            highlightItem(viewSelected)
         }
     }
 

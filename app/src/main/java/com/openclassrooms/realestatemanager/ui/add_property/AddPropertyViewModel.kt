@@ -6,20 +6,18 @@ import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.datas.model.*
-import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.formatDateYearBefore
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
 
 
-class AddPropertyViewModel(private val propertyRepository: PropertyRepository, private val application: MyApplication = MyApplication.instance) : AndroidViewModel(application) {
+class AddPropertyViewModel(private val propertyRepository: PropertyRepository, private val application: MyApplication = MyApplication.instance) :
+    AndroidViewModel(application) {
 
     val TAG = "MyLog AddPropertyVM"
-
 
 
     val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.getAllTypes().asLiveData()
@@ -61,7 +59,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
     ) {
         var idProperty = idEdit
         formFinished.value = false
-        val dateStartSellFormatRoom = formatDateYearBefore(dateStartSell)
+        val dateStartSaleFormatRoom = formatDateYearBefore(dateStartSell)
 
         val proximitiesForRoom = mutableListOf<Int>()
         if (!proximitiesSelected.isNullOrEmpty()) {
@@ -72,7 +70,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         validAdress.value = if (adress.isNullOrEmpty()) application.getString(R.string.adress_required) else null
         validPrice.value = if (price == null) application.getString(R.string.price_required) else null
         validImage.value = if (imagesPrevLiveData.value.isNullOrEmpty()) application.getString(R.string.image_required) else null
-        validDateStartSell.value = if (dateStartSellFormatRoom == null) application.getString(R.string.date_start_sale_required) else null
+        validDateStartSell.value = if (dateStartSaleFormatRoom == null) application.getString(R.string.date_start_sale_required) else null
         validAgent.value = if (agent == null) application.getString(R.string.agent_required) else null
 
         if (validAdress.value == null && validPrice.value == null && validImage.value == null) {
@@ -92,14 +90,14 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     formatDateYearBefore(dateSold)
                 )
 
-                if (idEdit != 0) {
-                    propertyRepository.deletePhoto(idEdit)
-                }
+//                if (idEdit != 0) {
+//                    propertyRepository.deletePhoto(idEdit)
+//                }
 
                 idProperty = propertyRepository.insert(newProperty)
 
                 for (i in imagesPrevLiveData.value!!) {
-                    propertyRepository.addPhoto(idProperty, i.name, i.legend)
+                    propertyRepository.addPhoto(idProperty, i.name, i.legend, i.idBase)
                 }
                 propertyRepository.updateProximityForProperty(idProperty, proximitiesForRoom)
 
@@ -123,10 +121,11 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
         val f = File(MyApplication.instance.filesDir, img.nameFile + ".jpg")
         val b = BitmapFactory.decodeStream(FileInputStream(f))
 
-        val imgInStorage: InternalStoragePhoto = InternalStoragePhoto(
+        val imgInStorage = InternalStoragePhoto(
             img.nameFile,
             b,
-            img.legende
+            img.legende,
+            img.id
         )
 
         if (imgInStorage !in photos) photos.add(imgInStorage)

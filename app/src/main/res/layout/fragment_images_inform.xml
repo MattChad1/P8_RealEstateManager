@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_image_viewpager"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main_activity.MainActivity">
 
@@ -10,13 +10,13 @@
         android:id="@+id/image_room"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:background="#333333"
-        tools:src="@drawable/flat8" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/flat8"
+        tools:layout_width="150dp"
+        />
 
     <TextView
         android:id="@+id/legende_viewpager"

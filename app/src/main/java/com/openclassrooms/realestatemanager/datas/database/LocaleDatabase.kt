@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
     version = 1,
     exportSchema = false
 )
-//@TypeConverters(Converters::class)
 abstract class LocaleDatabase : RoomDatabase() {
 
     abstract fun propertyDao(): PropertyDao

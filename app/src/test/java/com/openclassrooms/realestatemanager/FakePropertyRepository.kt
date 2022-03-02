@@ -29,7 +29,7 @@ class FakePropertyRepository: PropertyRepository {
         return FakeDatas.fakePropertiesCompletes[0]
     }
 
-    override suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String) {
+    override suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String, idBase: Int) {
     }
 
     override suspend fun deletePhoto(idProperty: Int) {

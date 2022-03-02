@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.openclassrooms.realestatemanager.ui.maps.MapsFragment"
-        android:label="fragment_maps"
+        android:label="Map"
         tools:layout="@layout/fragment_maps" >
         <action
             android:id="@+id/action_mapsFragment_to_detailPropertyFragment"

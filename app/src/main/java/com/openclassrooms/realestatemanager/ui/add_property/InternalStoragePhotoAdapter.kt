@@ -1,20 +1,25 @@
 package com.openclassrooms.realestatemanager.ui.add_property
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.openclassrooms.realestatemanager.MyApplication
 import com.openclassrooms.realestatemanager.databinding.FragmentImagesBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentImagesInformBinding
 
 import com.openclassrooms.realestatemanager.datas.model.InternalStoragePhoto
+import java.io.File
 
 class InternalStoragePhotoAdapter(
     private val onPhotoClick: (InternalStoragePhoto) -> Unit
 ) : ListAdapter<InternalStoragePhoto, InternalStoragePhotoAdapter.PhotoViewHolder>(Companion) {
 
-    inner class PhotoViewHolder(val binding: FragmentImagesBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class PhotoViewHolder(val binding: FragmentImagesInformBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object : DiffUtil.ItemCallback<InternalStoragePhoto>() {
         override fun areItemsTheSame(oldItem: InternalStoragePhoto, newItem: InternalStoragePhoto): Boolean {
@@ -28,7 +33,7 @@ class InternalStoragePhotoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         return PhotoViewHolder(
-            FragmentImagesBinding.inflate(
+            FragmentImagesInformBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -39,15 +44,9 @@ class InternalStoragePhotoAdapter(
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photo = currentList[position]
         holder.binding.apply {
+//
             imageRoom.setImageBitmap(photo.bmp)
             legendeViewpager.text = photo.legend
-
-            val aspectRatio = photo.bmp.width.toFloat() / photo.bmp.height.toFloat()
-            ConstraintSet().apply {
-                clone(root)
-                setDimensionRatio(imageRoom.id, aspectRatio.toString())
-                applyTo(root)
-            }
 
             imageRoom.setOnLongClickListener {
                 onPhotoClick(photo)

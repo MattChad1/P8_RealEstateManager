@@ -6,10 +6,10 @@ class PrepopulateDatas {
 
     companion object {
         val preProximities = listOf(
-            Proximity(1, "School", "icon_proximity_school", "proximity_school"),
-            Proximity(2, "Stores", "icon_proximity_stores", "proximity_stores"),
-            Proximity(3, "Public transports", "icon_proximity_transports", "proximity_transports"),
-            Proximity(4, "Park", "icon_proximity_park", "proximity_park")
+            Proximity(1, "School", "icon_proximity_school", "proximity_school",1000L),
+            Proximity(2, "Stores", "icon_proximity_stores", "proximity_stores",1000L),
+            Proximity(3, "Public transports", "icon_proximity_transports", "proximity_transports",1000L),
+            Proximity(4, "Park", "icon_proximity_park", "proximity_park",1000L)
         )
 
         val preCrossRef = listOf(
@@ -26,30 +26,30 @@ class PrepopulateDatas {
         )
 
         val preTypes = listOf<TypeOfProperty>(
-            TypeOfProperty(1, "Condo"),
-            TypeOfProperty(2, "Loft"),
-            TypeOfProperty(3, "Mansion"),
-            TypeOfProperty(4, "Single Family House")
+            TypeOfProperty(1, "Condo",1000L),
+            TypeOfProperty(2, "Loft",1000L),
+            TypeOfProperty(3, "Mansion",1000L),
+            TypeOfProperty(4, "Single Family House",1000L)
         )
 
         val preAgents = listOf(
-            Agent(1, "Mike Money"),
-            Agent(2, "Melissa BigDollars")
+            Agent(1, "Mike Money",1000L),
+            Agent(2, "Melissa BigDollars",1000L)
         )
 
         val prePhotos = listOf(
-            ImageRoom(1, 1, "flat1", "Living-room"),
-            ImageRoom(2, 2, "flat2", "A room"),
-            ImageRoom(3, 1, "flat2", "Another Room"),
-            ImageRoom(4, 3, "flat3", "1st Room"),
-            ImageRoom(5, 4, "flat4", "1st Room"),
-            ImageRoom(6, 5, "flat5", "1st Room"),
-            ImageRoom(7, 6, "flat6", "1st Room"),
-            ImageRoom(8, 3, "flat4", "2nd Room"),
-            ImageRoom(9, 4, "flat5", "2nd Room"),
-            ImageRoom(10, 5, "flat6", "2nd Room"),
-            ImageRoom(11, 6, "flat7", "2nd Room"),
-            ImageRoom(12, 1, "flat8", "Another Room"),
+            ImageRoom(1, 1, "flat1", "Living-room",1000L),
+            ImageRoom(2, 2, "flat2", "A room",1000L),
+            ImageRoom(3, 1, "flat2", "Another Room",1000L),
+            ImageRoom(4, 3, "flat3", "1st Room",1000L),
+            ImageRoom(5, 4, "flat4", "1st Room",1000L),
+            ImageRoom(6, 5, "flat5", "1st Room",1000L),
+            ImageRoom(7, 6, "flat6", "1st Room",1000L),
+            ImageRoom(8, 3, "flat4", "2nd Room",1000L),
+            ImageRoom(9, 4, "flat5", "2nd Room",1000L),
+            ImageRoom(10, 5, "flat6", "2nd Room",1000L),
+            ImageRoom(11, 6, "flat7", "2nd Room",1000L),
+            ImageRoom(12, 1, "flat8", "Another Room",1000L),
         )
 
         val preProperties = listOf(
@@ -65,7 +65,8 @@ class PrepopulateDatas {
                 4,
                 2,
                 "2022-01-01",
-                null
+                null,
+                1000L
             ),
             Property(
                 2,
@@ -79,7 +80,8 @@ class PrepopulateDatas {
                 3,
                 1,
                 "2022-01-01",
-                null
+                null,
+                1000L
             ),
             Property(
                 3,
@@ -93,7 +95,8 @@ class PrepopulateDatas {
                 1,
                 1,
                 "2022-01-01",
-                null
+                null,
+                1000L
             ),
 
             Property(
@@ -108,7 +111,8 @@ class PrepopulateDatas {
                 4,
                 2,
                 "2022-01-30",
-                null
+                null,
+                1000L
             ),
             Property(
                 5,
@@ -122,7 +126,8 @@ class PrepopulateDatas {
                 5,
                 2,
                 "2022-02-02",
-                null
+                null,
+                1000L
             ),
             Property(
                 6,
@@ -136,7 +141,8 @@ class PrepopulateDatas {
                 3,
                 2,
                 "2022-02-02",
-                null
+                null,
+                1000L
             )
         )
 

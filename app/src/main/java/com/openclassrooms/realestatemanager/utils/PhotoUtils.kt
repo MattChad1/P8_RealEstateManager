@@ -24,7 +24,7 @@ class PhotoUtils {
             val h = bitmap.height
             val aspRat = w.toDouble() / h
             val newWidth = 600
-            val newHeight = newWidth * aspRat
+            val newHeight = newWidth / aspRat
             val b = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight.toInt(), false)
             return b
         }

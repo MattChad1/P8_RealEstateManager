@@ -81,9 +81,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isScrollGesturesEnabled = true
         googleMap.uiSettings.isZoomGesturesEnabled = true
-
-
-
+        googleMap.uiSettings.isMyLocationButtonEnabled=true
         enableMyLocation()
 
 
@@ -152,7 +150,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
             googleMap.isMyLocationEnabled = true
-            googleMap.uiSettings.isMyLocationButtonEnabled=true
             googleMap.setOnMyLocationButtonClickListener(this)
             googleMap.setOnMyLocationClickListener(this)
         } else {

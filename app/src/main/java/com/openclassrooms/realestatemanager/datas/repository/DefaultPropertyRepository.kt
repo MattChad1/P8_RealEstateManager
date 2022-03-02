@@ -22,13 +22,13 @@ import java.io.FileInputStream
 class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyRepository {
 
     var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    val propertyCollection = db.collection("Property")
-    val typeCollection = db.collection("TypeOfProperty")
-    val proximityCollection = db.collection("Proximity")
-    val imagesCollection = db.collection("ImageRoom")
-    val agentCollection = db.collection("Agent")
-    val crossRefCollection = db.collection("PropertyProximityCrossRef")
-    val crossRefInfosUpdateCollection = db.collection("CrossRefInfosUpdate")
+    private val propertyCollection = db.collection("Property")
+    private val typeCollection = db.collection("TypeOfProperty")
+    private val proximityCollection = db.collection("Proximity")
+    private val imagesCollection = db.collection("ImageRoom")
+    private val agentCollection = db.collection("Agent")
+    private val crossRefCollection = db.collection("PropertyProximityCrossRef")
+    private val crossRefInfosUpdateCollection = db.collection("CrossRefInfosUpdate")
 
 
     override fun getAllPropertiesComplete(): Flow<List<PropertyWithProximity>?> = propertyDao.getPropertiesComplete()
@@ -43,8 +43,8 @@ class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyR
 
     override suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity = propertyDao.getPropertyCompleteById(id)
 
-    override suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String) {
-        propertyDao.addPhoto(ImageRoom(0, idProperty, nameFile, legende))
+    override suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String, idBase: Int) {
+        propertyDao.addPhoto(ImageRoom(idBase, idProperty, nameFile, legende))
     }
 
     override suspend fun deletePhoto(idProperty: Int) {
@@ -129,14 +129,17 @@ class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyR
 
         val storage = Firebase.storage
         val storageRef = storage.reference
-        val imagesInRoom = propertyDao.getAllImages()
         val max_size: Long = 1024 * 1024
+
+
+        val imagesInRoom = propertyDao.getAllImages()
         val resultFirebaseImageRoom = imagesCollection.get().await()
             val imagesInFirestore = resultFirebaseImageRoom.toObjects(ImageRoom::class.java)
             for (roomItem in imagesInRoom) {
                 val firestoreItem = imagesInFirestore.firstOrNull { it.id == roomItem.id }
                 if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
                     imagesCollection.document(roomItem.id.toString()).set(roomItem).await()
+                    imagesInFirestore.remove(firestoreItem)
                     val file = File(MyApplication.instance.filesDir, roomItem.nameFile + ".jpg")
                     val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
                     val baos = ByteArrayOutputStream()
@@ -144,7 +147,6 @@ class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyR
                     val data = baos.toByteArray()
                     val imageRef: StorageReference = storageRef.child(file.name)
                     imageRef.putBytes(data).await()
-                    imagesInFirestore.remove(firestoreItem)
                 }
                 else if (firestoreItem.lastUpdate == roomItem.lastUpdate) imagesInFirestore.remove(firestoreItem)
             }

@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.textfield.TextInputEditText
@@ -131,10 +132,10 @@ class AddPropertyFragment : Fragment() {
                 )
             }
             val dateStartSaleDatePicker = Calendar.getInstance()
-            if (binding.editDateStartSaleInput.text!=null) {
-                val dateSplit = binding.editDateSoldInput.text!!.split("/")
+            if (!binding.editDateStartSaleInput.text.isNullOrEmpty()) {
+                val dateSplit = binding.editDateStartSaleInput.text!!.split("/")
                 dateStartSaleDatePicker[Calendar.YEAR] = dateSplit[2].toInt()
-                dateStartSaleDatePicker[Calendar.MONTH] = dateSplit[1].toInt()
+                dateStartSaleDatePicker[Calendar.MONTH] = dateSplit[1].toInt() - 1
                 dateStartSaleDatePicker[Calendar.DAY_OF_MONTH] = dateSplit[0].toInt()
             }
 
@@ -155,10 +156,10 @@ class AddPropertyFragment : Fragment() {
                 )
             }
             val dateSoldDatePicker = Calendar.getInstance()
-            if (binding.editDateSoldInput.text!=null) {
+            if (!binding.editDateSoldInput.text.isNullOrEmpty()) {
                 val dateSplit = binding.editDateSoldInput.text!!.split("/")
                 dateSoldDatePicker[Calendar.YEAR] = dateSplit[2].toInt()
-                dateSoldDatePicker[Calendar.MONTH] = dateSplit[1].toInt()
+                dateSoldDatePicker[Calendar.MONTH] = dateSplit[1].toInt() -1
                 dateSoldDatePicker[Calendar.DAY_OF_MONTH] = dateSplit[0].toInt()
             }
 
@@ -325,6 +326,7 @@ class AddPropertyFragment : Fragment() {
     private fun setupInternalStorageRecyclerView() = binding.rvPrivatePhotos.apply {
         adapter = internalStoragePhotoAdapter
         layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
+
     }
 
     private fun updateOrRequestPermissions() {
