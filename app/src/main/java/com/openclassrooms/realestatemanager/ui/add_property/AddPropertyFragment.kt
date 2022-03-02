@@ -121,22 +121,29 @@ class AddPropertyFragment : Fragment() {
         }
 
 
-//        loadPhotosFromInternalStorageIntoRecyclerView()
+
 
         /* 2 DatePickerDialog */
-        val currentDate = Calendar.getInstance()
         binding.editDateStartSaleInput.setOnClickListener {
             val dpd = OnDateSetListener { view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 binding.editDateStartSaleInput.setText(
                     getString(R.string.date_for_datePicker, dayOfMonth, monthOfYear + 1, year)
                 )
             }
+            val dateStartSaleDatePicker = Calendar.getInstance()
+            if (binding.editDateStartSaleInput.text!=null) {
+                val dateSplit = binding.editDateSoldInput.text!!.split("/")
+                dateStartSaleDatePicker[Calendar.YEAR] = dateSplit[2].toInt()
+                dateStartSaleDatePicker[Calendar.MONTH] = dateSplit[1].toInt()
+                dateStartSaleDatePicker[Calendar.DAY_OF_MONTH] = dateSplit[0].toInt()
+            }
+
             val d = DatePickerDialog(
                 ctx,
                 dpd,
-                currentDate[Calendar.YEAR],
-                currentDate[Calendar.MONTH],
-                currentDate[Calendar.DAY_OF_MONTH]
+                dateStartSaleDatePicker[Calendar.YEAR],
+                dateStartSaleDatePicker[Calendar.MONTH],
+                dateStartSaleDatePicker[Calendar.DAY_OF_MONTH]
             )
             d.show()
         }
@@ -147,13 +154,20 @@ class AddPropertyFragment : Fragment() {
                     getString(R.string.date_for_datePicker, dayOfMonth, monthOfYear + 1, year)
                 )
             }
+            val dateSoldDatePicker = Calendar.getInstance()
+            if (binding.editDateSoldInput.text!=null) {
+                val dateSplit = binding.editDateSoldInput.text!!.split("/")
+                dateSoldDatePicker[Calendar.YEAR] = dateSplit[2].toInt()
+                dateSoldDatePicker[Calendar.MONTH] = dateSplit[1].toInt()
+                dateSoldDatePicker[Calendar.DAY_OF_MONTH] = dateSplit[0].toInt()
+            }
 
             val d = DatePickerDialog(
                 ctx,
                 dpd,
-                currentDate[Calendar.YEAR],
-                currentDate[Calendar.MONTH],
-                currentDate[Calendar.DAY_OF_MONTH]
+                dateSoldDatePicker[Calendar.YEAR],
+                dateSoldDatePicker[Calendar.MONTH],
+                dateSoldDatePicker[Calendar.DAY_OF_MONTH]
             )
             d.show()
         }
@@ -161,10 +175,10 @@ class AddPropertyFragment : Fragment() {
 
         // To deal with error messages
         viewModel.validAdress.observe(ctx) { msg ->
-            binding.editAdress.error = if (msg != null) msg else null
+            binding.editAdress.error = msg
             binding.editAdress.requestFocus()
         }
-        viewModel.validPrice.observe(ctx) { msg -> binding.editPrice.error = if (msg != null) msg else null }
+        viewModel.validPrice.observe(ctx) { msg -> binding.editPrice.error = msg }
         viewModel.validImage.observe(ctx) { msg -> binding.tvErreurPhotos.text = msg }
         viewModel.validDateStartSell.observe(ctx) { msg -> binding.editDateStartSale.error = msg }
 
@@ -173,7 +187,6 @@ class AddPropertyFragment : Fragment() {
         internalStoragePhotoAdapter = InternalStoragePhotoAdapter {
             val isDeletionSuccessful = deletePhotoFromInternalStorage(it.name)
             if (isDeletionSuccessful) {
-//                loadPhotosFromInternalStorageIntoRecyclerView()
                 Toast.makeText(ctx, "Photo successfully deleted", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(ctx, "Failed to delete photo", Toast.LENGTH_SHORT).show()
@@ -191,7 +204,7 @@ class AddPropertyFragment : Fragment() {
             if (it != null) {
                 val builder = AlertDialog.Builder(ctx)
                 val mView: View = layoutInflater.inflate(R.layout.dialog_name_file, null)
-                builder.setTitle("Which room is it?")
+                builder.setTitle(getString(R.string.title_which_room))
                 builder.setView(mView)
                 builder.setPositiveButton(
                     "OK"
@@ -202,7 +215,6 @@ class AddPropertyFragment : Fragment() {
                         val isSavedSuccessfully = savePhotoToInternalStorage(nameFile, it)
                         if (isSavedSuccessfully) {
                             viewModel.addPhoto(nameFile, it, legend)
-//                            loadPhotosFromInternalStorageIntoRecyclerView()
                             Toast.makeText(ctx, "Photo saved successfully", Toast.LENGTH_SHORT).show()
                         }
                     } else {
@@ -228,7 +240,6 @@ class AddPropertyFragment : Fragment() {
                         val inputStream: InputStream? = ctx.contentResolver.openInputStream(it)
                         inputStream?.copyTo(MyApplication.instance.openFileOutput("$nameFile.jpg", MODE_PRIVATE))
                         viewModel.addPhoto(nameFile, MediaStore.Images.Media.getBitmap(ctx.contentResolver, it), legend)
-//                        loadPhotosFromInternalStorageIntoRecyclerView()
                         Toast.makeText(ctx, "Photo saved successfully", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(ctx, "Failed to save photo", Toast.LENGTH_SHORT).show()
@@ -303,21 +314,13 @@ class AddPropertyFragment : Fragment() {
     }
 
 
-    fun loadPhotosFromInternalStorageIntoRecyclerView() {
-        lifecycleScope.launch {
-            val photos = viewModel.imagesPrevLiveData
-        }
-
-    }
-
-//    private fun loadPhotosFromInternalStorageIntoRecyclerView() {
+//    fun loadPhotosFromInternalStorageIntoRecyclerView() {
 //        lifecycleScope.launch {
-//            val photos = viewModel.imagesPrevLiveData.value
-////            var prefix = id ?: viewModel.getMaxId()
-//            val photos = loadPhotosFromInternalStorage("${prefix}-")
-//            viewModel.checkLiveDataPhotos(photos)
+//            val photos = viewModel.imagesPrevLiveData
 //        }
+//
 //    }
+
 
     private fun setupInternalStorageRecyclerView() = binding.rvPrivatePhotos.apply {
         adapter = internalStoragePhotoAdapter

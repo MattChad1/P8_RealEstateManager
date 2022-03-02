@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.openclassrooms.realestatemanager.FakeDatas
 import com.openclassrooms.realestatemanager.FakePropertyRepository
 import com.openclassrooms.realestatemanager.MyApplication
+import com.openclassrooms.realestatemanager.TestUtils.MainCoroutineRule
 import com.openclassrooms.realestatemanager.TestUtils.NinoCoroutineRule
 import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +22,13 @@ import org.mockito.MockitoAnnotations
 @ExperimentalCoroutinesApi
 class AddPropertyViewModelTest : TestCase() {
 
-    @get:Rule
+    @Rule
+    @Suppress("unused")
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     @ExperimentalCoroutinesApi
-    @get:Rule
+    @Suppress("unused")
+    @Rule
     var mainCoroutineRule = NinoCoroutineRule()
 
     private val testDispatcher = StandardTestDispatcher()
@@ -38,7 +41,9 @@ class AddPropertyViewModelTest : TestCase() {
     lateinit var application: MyApplication
 
 
+
     @Before
+    @Throws(Exception::class)
     override fun setUp() {
         Dispatchers.setMain(testDispatcher)
         MockitoAnnotations.openMocks(this)
@@ -48,7 +53,8 @@ class AddPropertyViewModelTest : TestCase() {
 
     @ExperimentalCoroutinesApi
     fun testAddNewProperty()= runBlockingTest {
-            viewModel = AddPropertyViewModel(fakePropertyRepository, application)
+        val viewModel by lazy { AddPropertyViewModel(fakePropertyRepository, application) }
+
 //        Mockito.`when`(viewModel.formFinished).thenReturn(fakeFormLiveData)
             viewModel.addNewProperty(
                 FakeDatas.fakeTypes[0],

@@ -204,7 +204,7 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    fun getLocationByAddress(context: Context, strAddress: String?): LatLng? {
+    private fun getLocationByAddress(context: Context, strAddress: String?): LatLng? {
         val coder = Geocoder(context)
         try {
             val address = coder.getFromLocationName(strAddress, 1) ?: return null

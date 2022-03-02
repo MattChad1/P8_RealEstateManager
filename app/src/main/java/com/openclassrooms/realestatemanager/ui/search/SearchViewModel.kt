@@ -74,6 +74,7 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
     fun resetFilter() {
         navigationRepository.filter = Filter()
+        navigationRepository.updateLiveData()
     }
 
 

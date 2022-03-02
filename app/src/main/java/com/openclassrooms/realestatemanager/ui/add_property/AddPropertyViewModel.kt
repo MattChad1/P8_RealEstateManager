@@ -160,7 +160,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                 addPhotoFromBase(p)
 
             }
-
         }
         return result
     }
