@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/listPropertiesFragment"
         android:name="com.openclassrooms.realestatemanager.ui.list_properties.ListPropertiesFragment"
-        android:label="List of properties" >
+        android:label="List of our properties" >
         <action
             android:id="@+id/action_listPropertiesFragment_to_detailPropertyFragment"
             app:destination="@id/detailPropertyFragment" />
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/detailPropertyFragment"
         android:name="com.openclassrooms.realestatemanager.ui.detail_property.DetailPropertyFragment"
-        android:label="fragment_detail_property"
+        android:label="Real Estate Manager"
         tools:layout="@layout/fragment_detail_property" >
         <action
             android:id="@+id/action_detailPropertyFragment_to_listPropertiesFragment"
@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.openclassrooms.realestatemanager.ui.search.SearchFragment"
-        android:label="Search" >
+        android:label="Search in database" >
         <action
             android:id="@+id/action_searchFragment_back_to_main"
             app:destination="@id/listPropertiesFragment" />
@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.openclassrooms.realestatemanager.ui.add_property.AddPropertyFragment"
-        android:label="fragment_add">
+        android:label="Add a new property">
 
         <argument
             android:name="idProperty"
