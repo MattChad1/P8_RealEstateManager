@@ -23,13 +23,11 @@ import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
-    lateinit var toolbar: Toolbar
-
-    val TAG = "MyLog MainActivity"
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var toolbar: Toolbar
 
     lateinit var navController: NavController
-    lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val viewModel: MainActivityViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)

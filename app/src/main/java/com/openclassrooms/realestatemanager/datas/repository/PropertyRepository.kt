@@ -5,31 +5,31 @@ import kotlinx.coroutines.flow.Flow
 
 interface PropertyRepository {
 
-        fun getAllPropertiesComplete(): Flow<List<PropertyWithProximity>?>
+    fun getAllPropertiesComplete(): Flow<List<PropertyWithProximity>?>
 
-        suspend fun insert(property: Property): Int
+    suspend fun insert(property: Property): Int
 
-        suspend fun updateProperty(property: Property)
+    suspend fun updateProperty(property: Property)
 
-        suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
+    suspend fun getPropertyCompleteById(id: Int): PropertyWithProximity
 
-        suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String, idBase: Int)
+    suspend fun addPhoto(idProperty: Int, nameFile: String, legende: String, idBase: Int)
 
-        suspend fun deletePhoto(idProperty: Int)
+    suspend fun deletePhoto(idProperty: Int)
 
-        suspend fun updateProximityForProperty(idProperty: Int, proximityIds: List<Int>)
+    suspend fun updateProximityForProperty(idProperty: Int, proximityIds: List<Int>)
 
-        suspend fun getMaxId(): Int
+    suspend fun getMaxId(): Int
 
-        suspend fun getAllProximities(): List<Proximity>
+    suspend fun getAllProximities(): List<Proximity>
 
-        fun getAllTypes(): Flow<List<TypeOfProperty>>
+    fun getAllTypes(): Flow<List<TypeOfProperty>>
 
-        suspend fun getAllAgents(): List<Agent>
+    suspend fun getAllAgents(): List<Agent>
 
-        suspend fun synchroniseRoomToFirestore()
+    suspend fun synchroniseRoomToFirestore()
 
-    }
+}
 
 
 

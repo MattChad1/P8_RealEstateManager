@@ -13,9 +13,7 @@ import java.io.File
 
 class ImagesFragment : Fragment() {
 
-    var TAG = "MyLog ImagesFragment"
-
-    lateinit var binding: FragmentImagesBinding
+    private lateinit var binding: FragmentImagesBinding
 
     companion object {
         const val ARG_POSITION = "position"
@@ -33,7 +31,7 @@ class ImagesFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentImagesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,7 +40,7 @@ class ImagesFragment : Fragment() {
         val position = requireArguments().getInt(ARG_POSITION)
         val imageFilePath = requireArguments().getString(ARG_SRC)
         val legendeImage = requireArguments().getString(ARG_LEGENDE)
-        imageFilePath?.let { binding.imageRoom.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, imageFilePath + ".jpg"))) }
+        imageFilePath?.let { binding.imageRoom.setImageURI(Uri.fromFile(File(MyApplication.instance.filesDir, "$imageFilePath.jpg"))) }
 
         if (legendeImage.isNullOrEmpty()) binding.legendeViewpager.visibility = View.GONE
         else {

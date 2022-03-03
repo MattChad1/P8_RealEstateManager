@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.search
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.openclassrooms.realestatemanager.FakeDatas
+import com.openclassrooms.realestatemanager.FakePropertyRepository
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
@@ -30,15 +31,11 @@ class SearchViewModelTest {
     lateinit var viewModel: SearchViewModel
 
     @Mock
-    lateinit var propertyRepository: DefaultPropertyRepository
-
-    @Mock
     lateinit var navigationRepository: NavigationRepository
 
     @get:Rule
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val fakeLiveData = MutableLiveData<List<PropertyWithProximity>>()
     private val fakeFilterLiveData = MutableLiveData<Filter>()
 
 
@@ -46,13 +43,7 @@ class SearchViewModelTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         MockitoAnnotations.openMocks(this)
-
-
-        fakeLiveData.value = FakeDatas.fakePropertiesCompletes
-        fun fakeFlowProperties() = flow {
-            emit(FakeDatas.fakePropertiesCompletes)
-        }
-        Mockito.`when`(propertyRepository.getAllPropertiesComplete()).thenReturn(fakeFlowProperties())
+        var propertyRepository = FakePropertyRepository()
 
         val noFilter = Filter()
         fakeFilterLiveData.value = noFilter

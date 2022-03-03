@@ -8,7 +8,6 @@ import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.model.Proximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 
@@ -18,7 +17,7 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
     private var allPropertiesLiveData = propertyRepository.getAllPropertiesComplete().asLiveData()
     val mediatorLiveData = MediatorLiveData<Int>()
-    var allProximities: MutableList<Proximity> = mutableListOf()
+    private var allProximities: MutableList<Proximity> = mutableListOf()
 
     init {
         viewModelScope.launch {
@@ -84,56 +83,56 @@ class SearchViewModel(private val propertyRepository: PropertyRepository, privat
 
         var i = 0
 
-        allProperties.forEach {
+        allProperties.forEach { property ->
 
             // Filter price, min and max
             if (filter.price.first != null) {
-                if (it.property.price < filter.price.first!!) return@forEach
+                if (property.property.price < filter.price.first!!) return@forEach
             }
             if (filter.price.second != null) {
-                if (it.property.price > filter.price.second!!) return@forEach
+                if (property.property.price > filter.price.second!!) return@forEach
             }
 
             // Filter number of rooms, min and max
             if (filter.numRooms.first != null) {
-                if (it.property.rooms == null || it.property.rooms!! < filter.numRooms.first!!) return@forEach
+                if (property.property.rooms == null || property.property.rooms!! < filter.numRooms.first!!) return@forEach
             }
             if (filter.numRooms.second != null) {
-                if (it.property.rooms == null || it.property.rooms!! > filter.numRooms.second!!) return@forEach
+                if (property.property.rooms == null || property.property.rooms!! > filter.numRooms.second!!) return@forEach
             }
 
             // Filter number of bedrooms, min and max
             if (filter.numBedrooms.first != null) {
-                if (it.property.bedrooms == null || it.property.bedrooms!! < filter.numBedrooms.first!!) return@forEach
+                if (property.property.bedrooms == null || property.property.bedrooms!! < filter.numBedrooms.first!!) return@forEach
             }
             if (filter.numBedrooms.second != null) {
-                if (it.property.bedrooms == null || it.property.bedrooms!! > filter.numBedrooms.second!!) return@forEach
+                if (property.property.bedrooms == null || property.property.bedrooms!! > filter.numBedrooms.second!!) return@forEach
             }
 
             // Filter number of bathrooms, min and max
             if (filter.numBathrooms.first != null) {
-                if (it.property.bathrooms == null || it.property.bathrooms!! < filter.numBathrooms.first!!) return@forEach
+                if (property.property.bathrooms == null || property.property.bathrooms!! < filter.numBathrooms.first!!) return@forEach
             }
             if (filter.numBathrooms.second != null) {
-                if (it.property.bathrooms == null || it.property.bathrooms!! > filter.numBathrooms.second!!) return@forEach
+                if (property.property.bathrooms == null || property.property.bathrooms!! > filter.numBathrooms.second!!) return@forEach
             }
 
             // Filter surface, min and max
             if (filter.surface.first != null) {
-                if (it.property.squareFeet == null || it.property.squareFeet!! < filter.surface.first!!) return@forEach
+                if (property.property.squareFeet == null || property.property.squareFeet!! < filter.surface.first!!) return@forEach
             }
             if (filter.surface.second != null) {
-                if (it.property.squareFeet == null || it.property.squareFeet!! > filter.surface.second!!) return@forEach
+                if (property.property.squareFeet == null || property.property.squareFeet!! > filter.surface.second!!) return@forEach
             }
 
             // Start sale, only min
-            if (filter.dateStartSale != null && it.property.dateStartSell < filter.dateStartSale!!) return@forEach
+            if (filter.dateStartSale != null && property.property.dateStartSell < filter.dateStartSale!!) return@forEach
 
             // End sale, only max
-            if (filter.dateSoldMax != null && it.property.dateSold != null && it.property.dateSold!! > filter.dateSoldMax!!) return@forEach
+            if (filter.dateSoldMax != null && property.property.dateSold != null && property.property.dateSold!! > filter.dateSoldMax!!) return@forEach
 
             // Proximities, contain
-            var mapProximitiesId = it.proximities.map { it.idProximity }
+            val mapProximitiesId = property.proximities.map { it.idProximity }
             for (pSearch in filter.proximity) {
                 if (pSearch !in mapProximitiesId) return@forEach
             }

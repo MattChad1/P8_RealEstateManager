@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.model.Filter
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
@@ -28,7 +27,7 @@ class MainActivityViewModel(private val repository: PropertyRepository, private 
         }
     }
 
-    fun countFilters(filter: Filter): Int {
+    private fun countFilters(filter: Filter): Int {
         var numFilter = 0
         if (filter.price != Pair(null, null)) numFilter += 1
         if (filter.numRooms != Pair(null, null)) numFilter += 1

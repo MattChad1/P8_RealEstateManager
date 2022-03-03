@@ -45,7 +45,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     private lateinit var allProperties: List<MapsViewStateItem>
     private lateinit var navController: NavController
 
-    lateinit var googleMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
     private var permissionDenied = false
 
     private val viewModel: MapsViewModel by viewModels {
@@ -57,7 +57,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMapsBinding.inflate(layoutInflater)
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
             requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.VISIBLE
@@ -81,7 +81,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isScrollGesturesEnabled = true
         googleMap.uiSettings.isZoomGesturesEnabled = true
-        googleMap.uiSettings.isMyLocationButtonEnabled=true
+        googleMap.uiSettings.isMyLocationButtonEnabled = true
         enableMyLocation()
 
 
@@ -103,7 +103,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     }
 
 
-    fun getLocationByAddress(context: Context, strAddress: String?): LatLng? {
+    private fun getLocationByAddress(context: Context, strAddress: String?): LatLng? {
         val coder = Geocoder(context)
         try {
             val address = coder.getFromLocationName(strAddress, 5) ?: return null
@@ -122,7 +122,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         navController.navigate(sendData)
     }
 
-    override fun getInfoContents(marker: Marker): View? {
+    override fun getInfoContents(marker: Marker): View {
         val bindingWindow: InfoWindowBinding = InfoWindowBinding.inflate(layoutInflater)
         val position = marker.tag
         val property = allProperties[position as Int]
@@ -131,10 +131,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
                 Uri.fromFile(File(MyApplication.instance.filesDir, "${property.photo!!.nameFile}.jpg"))
             )
         }
-            bindingWindow.tvMapwindowTitle.text = property.type
-            bindingWindow.tvMapwindowPrice.text = Utils.formatPrice(property.price)
-            return bindingWindow.root
-        }
+        bindingWindow.tvMapwindowTitle.text = property.type
+        bindingWindow.tvMapwindowPrice.text = Utils.formatPrice(property.price)
+        return bindingWindow.root
+    }
 
 
     override fun getInfoWindow(p0: Marker): View? {
@@ -154,7 +154,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
             googleMap.setOnMyLocationClickListener(this)
         } else {
             // Permission to access the location is missing. Show rationale and request permission
-            requestPermission(requireActivity() as MainActivity, LOCATION_PERMISSION_REQUEST_CODE,
+            requestPermission(
+                requireActivity() as MainActivity, LOCATION_PERMISSION_REQUEST_CODE,
                 Manifest.permission.ACCESS_FINE_LOCATION, true
             )
         }

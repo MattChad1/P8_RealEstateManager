@@ -55,7 +55,7 @@ class ListPropertiesViewModel(
 
 
     private fun displayProperty(properties: List<PropertyWithProximity>?): List<PropertyViewStateItem> {
-        var propertiesToReturn = mutableListOf<PropertyViewStateItem>()
+        val propertiesToReturn = mutableListOf<PropertyViewStateItem>()
         if (properties == null) return listOf()
         for (property in properties) {
             propertiesToReturn.add(
@@ -79,8 +79,8 @@ class ListPropertiesViewModel(
         return propertiesToReturn
     }
 
-    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?, selection: Int?): List<PropertyViewStateItem>? {
-        if (properties == null) return listOf<PropertyViewStateItem>()
+    private fun filterListProperties(properties: List<PropertyViewStateItem>?, filter: Filter?, selection: Int?): List<PropertyViewStateItem> {
+        if (properties == null) return listOf()
         if (filter == null) return properties
         val newList = mutableListOf<PropertyViewStateItem>()
 
@@ -140,7 +140,7 @@ class ListPropertiesViewModel(
             newList.add(it)
 
         }
-        if (!newList.isEmpty() && newList.filter { it.selected }.isEmpty()) {
+        if (newList.isNotEmpty() && newList.filter { it.selected }.isEmpty()) {
             changeSelection(newList[0].id)
             newList[0].selected = true
         }

@@ -17,9 +17,6 @@ import java.io.FileInputStream
 class AddPropertyViewModel(private val propertyRepository: PropertyRepository, private val application: MyApplication = MyApplication.instance) :
     AndroidViewModel(application) {
 
-    val TAG = "MyLog AddPropertyVM"
-
-
     val allTypes: LiveData<List<TypeOfProperty>> = propertyRepository.getAllTypes().asLiveData()
 
     var validAdress: MutableLiveData<String?> = MutableLiveData()
@@ -33,7 +30,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
     var imagesPrevLiveData: MutableLiveData<MutableList<InternalStoragePhoto>> = MutableLiveData()
     var maxId: Int = 0
     var idEdit = 0
-    var allProximities: MutableList<Proximity> = mutableListOf()
+    private var allProximities: MutableList<Proximity> = mutableListOf()
     var allAgents: MutableLiveData<List<Agent>> = MutableLiveData()
 
     init {
@@ -89,10 +86,6 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     formatDateYearBefore(dateStartSell)!!,
                     formatDateYearBefore(dateSold)
                 )
-
-//                if (idEdit != 0) {
-//                    propertyRepository.deletePhoto(idEdit)
-//                }
 
                 idProperty = propertyRepository.insert(newProperty)
 
@@ -150,7 +143,7 @@ class AddPropertyViewModel(private val propertyRepository: PropertyRepository, p
                     property.property.description,
                     property.photos,
                     property.property.adress,
-                    property.proximities.map { it -> it.idProximity },
+                    property.proximities.map { it.idProximity },
                     Utils.formatDateDayBefore(property.property.dateStartSell),
                     Utils.formatDateDayBefore(property.property.dateSold)
                 )

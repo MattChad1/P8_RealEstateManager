@@ -39,9 +39,9 @@ import com.openclassrooms.realestatemanager.utils.Utils
 
 class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
 
-    var TAG = "MyLog DetailProperty"
-    val allImages = mutableListOf<ImageRoom>()
-    lateinit var binding: FragmentDetailPropertyBinding
+
+    private val allImages = mutableListOf<ImageRoom>()
+    private lateinit var binding: FragmentDetailPropertyBinding
     var property: DetailPropertyViewState? = null
 
     private var readPermissionGranted = false
@@ -50,8 +50,7 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: DetailPropertyViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
-    var adressForMap: String? = null
-
+    private var adressForMap: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,10 +68,10 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
-        var navController = findNavController()
+        val navController = findNavController()
 
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
             requireActivity().findViewById<FragmentContainerView>(R.id.fragment_left_column).visibility = View.VISIBLE
@@ -111,14 +110,14 @@ class DetailPropertyFragment : Fragment(), OnMapReadyCallback {
                     R.drawable.ic_baseline_location_on_24
                 )
                 val titles = listOf(
-                    com.openclassrooms.realestatemanager.R.string.surface,
-                    com.openclassrooms.realestatemanager.R.string.num_rooms,
-                    com.openclassrooms.realestatemanager.R.string.num_bathrooms,
-                    com.openclassrooms.realestatemanager.R.string.num_bedrooms,
-                    com.openclassrooms.realestatemanager.R.string.location
+                    R.string.surface,
+                    R.string.num_rooms,
+                    R.string.num_bathrooms,
+                    R.string.num_bedrooms,
+                    R.string.location
                 )
                 val datas = listOf(
-                    this.getString(com.openclassrooms.realestatemanager.R.string.surface_data, property.squareFeet),
+                    this.getString(R.string.surface_data, property.squareFeet),
                     property.rooms.toString(),
                     property.bathrooms.toString(),
                     property.bedrooms.toString(),

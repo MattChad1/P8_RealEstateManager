@@ -19,9 +19,9 @@ import java.io.File
 import java.io.FileInputStream
 
 
-class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyRepository {
+class DefaultPropertyRepository(private val propertyDao: PropertyDao) : PropertyRepository {
 
-    var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val propertyCollection = db.collection("Property")
     private val typeCollection = db.collection("TypeOfProperty")
     private val proximityCollection = db.collection("Proximity")
@@ -90,104 +90,101 @@ class DefaultPropertyRepository(private val propertyDao: PropertyDao): PropertyR
         val proximitiesInRoom = propertyDao.getAllProximities()
         val resultFirebaseProximities = proximityCollection.get().await()
         val proximitiesInFirestore = resultFirebaseProximities.toObjects(Proximity::class.java).toMutableList()
-            for (roomItem in proximitiesInRoom) {
-                val firestoreItem = proximitiesInFirestore.firstOrNull { it.idProximity == roomItem.idProximity }
-                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                    proximityCollection.document(roomItem.idProximity.toString()).set(roomItem).await()
-                    proximitiesInFirestore.remove(firestoreItem)
-                }
+        for (roomItem in proximitiesInRoom) {
+            val firestoreItem = proximitiesInFirestore.firstOrNull { it.idProximity == roomItem.idProximity }
+            if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
+                proximityCollection.document(roomItem.idProximity.toString()).set(roomItem).await()
+                proximitiesInFirestore.remove(firestoreItem)
             }
+        }
         propertyDao.insertAllProximities(proximitiesInFirestore)
 
         val propertiesInRoom = propertyDao.getAllPropertiesNoFlow()
         val resultFirebaseProperties = propertyCollection.get().await()
         val propertiesInFirestore = resultFirebaseProperties.toObjects(Property::class.java).toMutableList()
-            if (propertiesInRoom != null) {
-                for (roomItem in propertiesInRoom) {
-                    val firestoreItem = propertiesInFirestore.firstOrNull { it.idProperty == roomItem.idProperty }
-                    if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                        propertyCollection.document(roomItem.idProperty.toString()).set(roomItem).await()
-                        propertiesInFirestore.remove(firestoreItem)
-                    }
+        if (propertiesInRoom != null) {
+            for (roomItem in propertiesInRoom) {
+                val firestoreItem = propertiesInFirestore.firstOrNull { it.idProperty == roomItem.idProperty }
+                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
+                    propertyCollection.document(roomItem.idProperty.toString()).set(roomItem).await()
+                    propertiesInFirestore.remove(firestoreItem)
                 }
             }
+        }
         propertyDao.insertAllProperties(propertiesInFirestore)
 
 
         val typesInRoom = propertyDao.getAllTypesNoFlow()
         val resultFirebaseTypes = typeCollection.get().await()
-            val typesInFirestore = resultFirebaseTypes.toObjects(TypeOfProperty::class.java)
-            for (roomItem in typesInRoom) {
-                val firestoreItem = typesInFirestore.firstOrNull { it.idType == roomItem.idType }
-                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                    typeCollection.document(roomItem.idType.toString()).set(roomItem).await()
-                    typesInFirestore.remove(firestoreItem)
-                }
+        val typesInFirestore = resultFirebaseTypes.toObjects(TypeOfProperty::class.java)
+        for (roomItem in typesInRoom) {
+            val firestoreItem = typesInFirestore.firstOrNull { it.idType == roomItem.idType }
+            if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
+                typeCollection.document(roomItem.idType.toString()).set(roomItem).await()
+                typesInFirestore.remove(firestoreItem)
             }
+        }
         propertyDao.insertAllTypes(typesInFirestore)
 
 
         val storage = Firebase.storage
         val storageRef = storage.reference
-        val max_size: Long = 1024 * 1024
+        val maxSize: Long = 1024 * 1024
 
 
         val imagesInRoom = propertyDao.getAllImages()
         val resultFirebaseImageRoom = imagesCollection.get().await()
-            val imagesInFirestore = resultFirebaseImageRoom.toObjects(ImageRoom::class.java)
-            for (roomItem in imagesInRoom) {
-                val firestoreItem = imagesInFirestore.firstOrNull { it.id == roomItem.id }
-                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                    imagesCollection.document(roomItem.id.toString()).set(roomItem).await()
-                    imagesInFirestore.remove(firestoreItem)
-                    val file = File(MyApplication.instance.filesDir, roomItem.nameFile + ".jpg")
-                    val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
-                    val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                    val data = baos.toByteArray()
-                    val imageRef: StorageReference = storageRef.child(file.name)
-                    imageRef.putBytes(data).await()
-                }
-                else if (firestoreItem.lastUpdate == roomItem.lastUpdate) imagesInFirestore.remove(firestoreItem)
+        val imagesInFirestore = resultFirebaseImageRoom.toObjects(ImageRoom::class.java)
+        for (roomItem in imagesInRoom) {
+            val firestoreItem = imagesInFirestore.firstOrNull { it.id == roomItem.id }
+            if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
+                imagesCollection.document(roomItem.id.toString()).set(roomItem).await()
+                imagesInFirestore.remove(firestoreItem)
+                val file = File(MyApplication.instance.filesDir, roomItem.nameFile + ".jpg")
+                val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                val imageRef: StorageReference = storageRef.child(file.name)
+                imageRef.putBytes(data).await()
+            } else if (firestoreItem.lastUpdate == roomItem.lastUpdate) imagesInFirestore.remove(firestoreItem)
+        }
+
+        propertyDao.insertAllImages(imagesInFirestore)
+        for (image in imagesInFirestore) {
+            val imageRef = storageRef.child(image.nameFile + ".jpg")
+            imageRef.getBytes(maxSize).addOnSuccessListener {
+                val img = BitmapFactory.decodeByteArray(it, 0, it.size)
+                PhotoUtils.savePhotoToInternalStorage(image.nameFile, img)
+            }.addOnFailureListener {
+                Log.i("MyLog Firebase", "download image failed : " + image.nameFile)
             }
-
-                propertyDao.insertAllImages(imagesInFirestore)
-                for (image in imagesInFirestore) {
-                    val imageRef = storageRef.child(image.nameFile + ".jpg")
-                    imageRef.getBytes(max_size).addOnSuccessListener {
-                        val img = BitmapFactory.decodeByteArray(it, 0, it.size)
-                        PhotoUtils.savePhotoToInternalStorage(image.nameFile, img)
-                    }.addOnFailureListener {
-                        Log.i("MyLog Firebase", "download image failed : " + image.nameFile)
-                    }
-                }
-
-
+        }
 
 
         val infosUpdateCrossRefInRoom = propertyDao.getCrossRefInfosUpdate()
         val crossRefsInRoom = propertyDao.getAllCrossRef()
         val resultFirebaseInfosUpdateCrossRef = crossRefInfosUpdateCollection.get().await()
         val crossRefInfosUpdateInFirestore = resultFirebaseInfosUpdateCrossRef.toObjects(CrossRefInfosUpdate::class.java)
-            for (roomItem in infosUpdateCrossRefInRoom) {
-                val firestoreItem = crossRefInfosUpdateInFirestore.firstOrNull { it.idProperty == roomItem.idProperty }
-                if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
-                    crossRefInfosUpdateCollection.document("${roomItem.idProperty}").set(roomItem)
-                    val resultFirebaseCrossRefItems = crossRefCollection.whereEqualTo("idProperty", roomItem.idProperty).get().await()
-                    resultFirebaseCrossRefItems.forEach { it.reference.delete().await()}
-                        crossRefsInRoom.filter { it.idProperty == roomItem.idProperty }.forEach {
-                            crossRefCollection.document("${it.idProperty}_${it.idProximity}").set(it)
-                        }
-                    }
-                    crossRefInfosUpdateInFirestore.remove(firestoreItem)
+        for (roomItem in infosUpdateCrossRefInRoom) {
+            val firestoreItem = crossRefInfosUpdateInFirestore.firstOrNull { it.idProperty == roomItem.idProperty }
+            if (firestoreItem == null || (firestoreItem.lastUpdate < roomItem.lastUpdate)) {
+                crossRefInfosUpdateCollection.document("${roomItem.idProperty}").set(roomItem)
+                val resultFirebaseCrossRefItems = crossRefCollection.whereEqualTo("idProperty", roomItem.idProperty).get().await()
+                resultFirebaseCrossRefItems.forEach { it.reference.delete().await() }
+                crossRefsInRoom.filter { it.idProperty == roomItem.idProperty }.forEach {
+                    crossRefCollection.document("${it.idProperty}_${it.idProximity}").set(it)
                 }
+            }
+            crossRefInfosUpdateInFirestore.remove(firestoreItem)
+        }
 
 
-                for (item in crossRefInfosUpdateInFirestore) {
-                    propertyDao.updateCrossRefInfosUpdate(item)
-                    val itemFirebase = crossRefCollection.whereEqualTo("idProperty", item.idProperty).get().await()
-                    propertyDao.insertAllCrossRef(itemFirebase.toObjects(PropertyProximityCrossRef::class.java))
-                }
+        for (item in crossRefInfosUpdateInFirestore) {
+            propertyDao.updateCrossRefInfosUpdate(item)
+            val itemFirebase = crossRefCollection.whereEqualTo("idProperty", item.idProperty).get().await()
+            propertyDao.insertAllCrossRef(itemFirebase.toObjects(PropertyProximityCrossRef::class.java))
+        }
 
 
         PhotoUtils.synchronisePhotosWithFirebase()

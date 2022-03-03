@@ -24,7 +24,6 @@ class PropertiesAdapter(
     RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
 
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val type: TextView = view.findViewById(R.id.item_property_tv_type)
         val neighborhood: TextView = view.findViewById(R.id.item_property_tv_neighborhood)
@@ -71,12 +70,12 @@ class PropertiesAdapter(
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = properties.size
 
-    fun highlightItem(v: View?) {
+    private fun highlightItem(v: View?) {
         v?.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
         v?.findViewById<TextView>(R.id.item_property_tv_price)?.setTextColor(ContextCompat.getColor(context, R.color.white))
     }
 
-    fun noSelectItem(v: View?) {
+    private fun noSelectItem(v: View?) {
         v?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         v?.findViewById<TextView>(R.id.item_property_tv_price)?.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
     }

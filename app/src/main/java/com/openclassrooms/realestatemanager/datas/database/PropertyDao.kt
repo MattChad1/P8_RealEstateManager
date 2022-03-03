@@ -48,7 +48,7 @@ interface PropertyDao {
     ///////////////
     // ImageRoom table
     ///////////////
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPhoto(imageRoom: ImageRoom)
 
     @Query("DELETE FROM ImageRoom WHERE idProperty=:idProperty")

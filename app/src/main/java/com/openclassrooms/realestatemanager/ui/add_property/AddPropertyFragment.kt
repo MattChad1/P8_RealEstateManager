@@ -24,7 +24,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.textfield.TextInputEditText
@@ -44,10 +43,8 @@ import java.util.*
 
 class AddPropertyFragment : Fragment() {
 
-    var testAgents = listOf<Agent>()
-
-    lateinit var binding: FragmentAddPropertyBinding
-    lateinit var navController: NavController
+    private lateinit var binding: FragmentAddPropertyBinding
+    private lateinit var navController: NavController
     private lateinit var internalStoragePhotoAdapter: InternalStoragePhotoAdapter
 
     private var readPermissionGranted = false
@@ -63,7 +60,7 @@ class AddPropertyFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreate(savedInstanceState)
 
         binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
@@ -116,12 +113,9 @@ class AddPropertyFragment : Fragment() {
 
         val spinnerAgents: Spinner = binding.spinnerAgents
         viewModel.allAgents.observe(ctx) { agents ->
-            testAgents = agents
             val adapter = CustomDropDownAdapter(ctx, agents)
             spinnerAgents.adapter = adapter
         }
-
-
 
 
         /* 2 DatePickerDialog */
@@ -159,7 +153,7 @@ class AddPropertyFragment : Fragment() {
             if (!binding.editDateSoldInput.text.isNullOrEmpty()) {
                 val dateSplit = binding.editDateSoldInput.text!!.split("/")
                 dateSoldDatePicker[Calendar.YEAR] = dateSplit[2].toInt()
-                dateSoldDatePicker[Calendar.MONTH] = dateSplit[1].toInt() -1
+                dateSoldDatePicker[Calendar.MONTH] = dateSplit[1].toInt() - 1
                 dateSoldDatePicker[Calendar.DAY_OF_MONTH] = dateSplit[0].toInt()
             }
 
@@ -256,15 +250,15 @@ class AddPropertyFragment : Fragment() {
 
         // To get datas if user wants to edit an add
         if (viewModel.idEdit != 0) {
-            viewModel.getPropertyById(viewModel.idEdit.toInt()).observe(ctx) { property ->
+            viewModel.getPropertyById(viewModel.idEdit).observe(ctx) { property ->
                 binding.editAdressInput.setText(property?.adress)
-                property?.description?.let {binding.editDescriptionInput.setText(it)}
+                property?.description?.let { binding.editDescriptionInput.setText(it) }
                 property?.bathrooms?.let { binding.editNumBathroomsInput.setText(it.toString()) }
                 property?.bedrooms?.let { binding.editNumBedroomsInput.setText(it.toString()) }
                 property?.rooms?.let { binding.editNumRoomsInput.setText(it.toString()) }
                 property?.price?.let { binding.editPriceInput.setText(it.toString()) }
-                property?.squareFeet?.let {binding.editSurfaceInput.setText(it.toString())}
-                property?.dateStartSell?.let{binding.editDateStartSaleInput.setText(it)}
+                property?.squareFeet?.let { binding.editSurfaceInput.setText(it.toString()) }
+                property?.dateStartSell?.let { binding.editDateStartSaleInput.setText(it) }
                 spinnerTypes.setSelection(viewModel.allTypes.value!!.indexOf(property?.type!!))
 
                 for (c in proximityCheckboxes) {

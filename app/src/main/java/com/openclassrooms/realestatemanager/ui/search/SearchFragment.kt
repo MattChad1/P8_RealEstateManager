@@ -27,18 +27,18 @@ import java.util.*
 
 class SearchFragment : Fragment() {
 
-    lateinit var binding: FragmentSearchBinding
-    lateinit var navController: NavController
+    private lateinit var binding: FragmentSearchBinding
+    private lateinit var navController: NavController
     private val viewModel: SearchViewModel by viewModels {
         ViewModelFactory(MyApplication.instance.propertyRepository, MyApplication.instance.navigationRepository)
     }
     var filter = Filter()
-    var proximityCheckboxes = mutableListOf<CheckBox>()
+    private var proximityCheckboxes = mutableListOf<CheckBox>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSearchBinding.inflate(layoutInflater)
         if (requireActivity().resources.getBoolean(R.bool.isTablet)) {
@@ -85,9 +85,9 @@ class SearchFragment : Fragment() {
         val dpd = DatePickerDialog.OnDateSetListener { view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
             viewModel.updateFilter(field, "$year-$monthOfYear-$dayOfMonth", null)
         }
-        var dateToShow = Calendar.getInstance()
+        val dateToShow = Calendar.getInstance()
         if (value != null) {
-            var dateTab = value.toString().split("-")
+            val dateTab = value.toString().split("-")
             dateToShow.set(dateTab[0].toInt(), dateTab[1].toInt(), dateTab[2].toInt())
         }
         val d = DatePickerDialog(
@@ -101,7 +101,7 @@ class SearchFragment : Fragment() {
 
     }
 
-    fun displayAlertRange(field: String, range: Pair<Any?, Any?>, dates: Boolean = false) {
+    private fun displayAlertRange(field: String, range: Pair<Any?, Any?>, dates: Boolean = false) {
         val builder = AlertDialog.Builder(requireActivity())
         val view: View = layoutInflater.inflate(R.layout.form_range, null)
         val inputLow: TextInputEditText = view.findViewById(R.id.edit_low_range_input)
@@ -128,7 +128,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    fun displayAlertCheckbox(selected: List<Int>) {
+    private fun displayAlertCheckbox(selected: List<Int>) {
         lifecycleScope.launch {
             val builder = AlertDialog.Builder(requireActivity())
             val layout = LinearLayout(requireActivity(), null, 0)
@@ -173,7 +173,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    fun setBtnColor(filter: Filter) {
+    private fun setBtnColor(filter: Filter) {
         val colorActive = ContextCompat.getColor(requireActivity(), R.color.colorPrimaryDark)
         val colorNotActive = ContextCompat.getColor(requireActivity(), R.color.colorSecondaryDark)
 
@@ -186,7 +186,7 @@ class SearchFragment : Fragment() {
         }
 
         val btnListOneValue = listOf<Button>(binding.btnDateStartSale, binding.btnDateEndSale)
-        val values1 = listOf<String?>(filter.dateStartSale, filter.dateSoldMax)
+        val values1 = listOf(filter.dateStartSale, filter.dateSoldMax)
         for (i in 0 until values1.size) {
             if (values1[i] == null) btnListOneValue[i].setBackgroundColor(colorNotActive)
             else btnListOneValue[i].setBackgroundColor(colorActive)

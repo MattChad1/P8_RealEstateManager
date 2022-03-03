@@ -1,9 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.maps
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.openclassrooms.realestatemanager.datas.model.PropertyWithProximity
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 
 class MapsViewModel(val propertyRepository: PropertyRepository, val navigationRepository: NavigationRepository) : ViewModel() {

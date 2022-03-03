@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.openclassrooms.realestatemanager.R
 
 
-class CustomDropDownAdapter(val context: Context, var dataSource: List<Any>) : BaseAdapter() {
+class CustomDropDownAdapter(val context: Context, private var dataSource: List<Any>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val listViews = arrayListOf<View>()
@@ -31,7 +31,7 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<Any>) : B
         return view
     }
 
-    override fun getItem(position: Int): Any? {
+    override fun getItem(position: Int): Any {
         return dataSource[position]
     }
 
@@ -45,11 +45,7 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<Any>) : B
 
 
     private class ItemHolder(row: View) {
-        val label: TextView
-
-        init {
-            label = row.findViewById(R.id.spinner_item)
-        }
+        val label: TextView = row.findViewById(R.id.spinner_item)
     }
 
 }

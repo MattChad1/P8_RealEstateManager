@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.datas.repository.NavigationRepository
-import com.openclassrooms.realestatemanager.datas.repository.DefaultPropertyRepository
 import com.openclassrooms.realestatemanager.datas.repository.PropertyRepository
 import kotlinx.coroutines.launch
 
@@ -14,16 +13,16 @@ class DetailPropertyViewModel(
     private val navigationRepository: NavigationRepository
 ) :
     ViewModel() {
-    val tempLiveData = MutableLiveData<DetailPropertyViewState?>()
+    private val tempLiveData = MutableLiveData<DetailPropertyViewState?>()
     var propertyLiveData = MediatorLiveData<DetailPropertyViewState?>()
 
     init {
-        propertyLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) { it -> getLastProperty(it) }
+        propertyLiveData.addSource(navigationRepository.propertiesConsultedIdsLiveData) { getLastProperty(it) }
         propertyLiveData.addSource(tempLiveData) { propertyLiveData.value = it }
     }
 
 
-    fun getPropertyById(id: Int): DetailPropertyViewState? {
+    private fun getPropertyById(id: Int): DetailPropertyViewState? {
         var valueReturn: DetailPropertyViewState? = null
 
         viewModelScope.launch {
@@ -45,17 +44,16 @@ class DetailPropertyViewModel(
                     property.property.dateSold,
                     if (!property.photos.isNullOrEmpty()) property.photos else null
                 )
-        //                result.postValue(valueReturn)
+                //                result.postValue(valueReturn)
                 tempLiveData.value = valueReturn
             }
         }
         return valueReturn
     }
 
-    fun getLastProperty(propertiesIds: List<Int>): DetailPropertyViewState? {
+    private fun getLastProperty(propertiesIds: List<Int>): DetailPropertyViewState? {
         val lastProperty = propertiesIds.last()
         return getPropertyById(lastProperty)
-
     }
 
 

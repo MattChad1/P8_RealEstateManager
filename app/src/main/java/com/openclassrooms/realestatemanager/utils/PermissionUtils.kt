@@ -1,5 +1,5 @@
 package com.openclassrooms.realestatemanager.utils
-import com.openclassrooms.realestatemanager.R
+
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
+import com.openclassrooms.realestatemanager.R
 
 
 /**

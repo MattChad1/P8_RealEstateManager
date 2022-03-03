@@ -36,6 +36,7 @@
         app:layout_constraintRight_toLeftOf="@id/nav_host_fragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
         app:layout_constraintHorizontal_weight="40"
         android:paddingBottom="?attr/actionBarSize"
         app:layout_constrainedHeight="true"

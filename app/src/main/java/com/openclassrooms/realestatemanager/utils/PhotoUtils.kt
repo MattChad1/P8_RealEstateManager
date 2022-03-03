@@ -19,20 +19,19 @@ import java.io.IOException
 class PhotoUtils {
 
     companion object {
-        fun resizePhoto(bitmap: Bitmap): Bitmap {
+        private fun resizePhoto(bitmap: Bitmap): Bitmap {
             val w = bitmap.width
             val h = bitmap.height
             val aspRat = w.toDouble() / h
             val newWidth = 600
             val newHeight = newWidth / aspRat
-            val b = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight.toInt(), false)
-            return b
+            return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight.toInt(), false)
         }
 
         fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
             val baos = ByteArrayOutputStream()
             var tooBig = bmp.compress(Bitmap.CompressFormat.JPEG, 95, baos)
-            val imgResize = if (baos.toByteArray().size> 400000) resizePhoto(bmp) else bmp
+            val imgResize = if (baos.toByteArray().size > 400000) resizePhoto(bmp) else bmp
             return try {
                 MyApplication.instance.openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
                     if (!imgResize.compress(Bitmap.CompressFormat.JPEG, 95, stream)) {

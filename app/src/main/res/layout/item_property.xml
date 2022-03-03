@@ -17,7 +17,7 @@
         android:layout_width="@dimen/imageListItem_width"
         android:layout_height="0dp"
         android:background="#FFFFFF"
-        android:src="@drawable/flat1"
+        tools:src="@drawable/flat1"
         />
 
     <TextView
@@ -39,12 +39,18 @@
         android:id="@+id/item_property_tv_neighborhood"
         app:layout_constraintTop_toBottomOf="@id/item_property_tv_type"
         app:layout_constraintLeft_toRightOf="@id/item_property_image"
-        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:layout_width="0dp"
+        android:paddingEnd="5dp"
+        android:minWidth="70dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        tools:text="Adress Adress Adress Adress Adress"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/tv_usual"
+        tools:text="Adress Adress Adress Adress Adress Adress Adress Adress Adress Adress"
         />
 
     <TextView
