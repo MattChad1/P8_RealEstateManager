@@ -21,50 +21,49 @@ import org.robolectric.annotation.Config
 class InternetUtilsTest {
 
 
-        lateinit var connectivityManager: ConnectivityManager
+    lateinit var connectivityManager: ConnectivityManager
 
 
+    @Before
+    fun setUp() {
+        connectivityManager = findConnectivityManager()
+        FirebaseApp.initializeApp(InstrumentationRegistry.getInstrumentation().targetContext)
+    }
 
-        @Before
-        fun setUp() {
-            connectivityManager = findConnectivityManager()
-            FirebaseApp.initializeApp(InstrumentationRegistry.getInstrumentation().targetContext)
-        }
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.M], manifest = Config.NONE, application = Application::class)
+    fun `Checking internet connection above Android M with success`() {
+        val shadowNetworkCapabilities =
+            Shadows.shadowOf(connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork))
+        //Has Internet
+        shadowNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+        Assert.assertTrue(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
 
-        @Test
-        @Config(sdk = [Build.VERSION_CODES.M], manifest = Config.NONE, application = Application::class)
-        fun `Checking internet connection above Android M with success`() {
-            val shadowNetworkCapabilities =
-                Shadows.shadowOf(connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork))
-            //Has Internet
-            shadowNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-            Assert.assertTrue(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
-
-            //Hasn't Internet
-            shadowNetworkCapabilities.removeTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            shadowNetworkCapabilities.removeTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-            shadowNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_BLUETOOTH)
-            Assert.assertFalse(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
-
-        }
-
-        @Test
-        @Config(sdk = [Build.VERSION_CODES.LOLLIPOP], manifest = Config.NONE, application = Application::class)
-        fun `Checking internet connection below Android M with success`() {
-            val shadowNetworkInfo = Shadows.shadowOf(connectivityManager.activeNetworkInfo)
-            //Has Internet
-            shadowNetworkInfo.setConnectionType(ConnectivityManager.TYPE_MOBILE)
-            Assert.assertTrue(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
-
-            //Hasn't Internet
-            shadowNetworkInfo.setConnectionType(ConnectivityManager.TYPE_BLUETOOTH)
-            Assert.assertFalse(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
-
-        }
-
-        private fun findConnectivityManager() =
-            ApplicationProvider.getApplicationContext<Context>().getSystemService(
-                Context.CONNECTIVITY_SERVICE
-            ) as ConnectivityManager
+        //Hasn't Internet
+        shadowNetworkCapabilities.removeTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+        shadowNetworkCapabilities.removeTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+        shadowNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_BLUETOOTH)
+        Assert.assertFalse(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
 
     }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.LOLLIPOP], manifest = Config.NONE, application = Application::class)
+    fun `Checking internet connection below Android M with success`() {
+        val shadowNetworkInfo = Shadows.shadowOf(connectivityManager.activeNetworkInfo)
+        //Has Internet
+        shadowNetworkInfo.setConnectionType(ConnectivityManager.TYPE_MOBILE)
+        Assert.assertTrue(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
+
+        //Hasn't Internet
+        shadowNetworkInfo.setConnectionType(ConnectivityManager.TYPE_BLUETOOTH)
+        Assert.assertFalse(Utils.isInternetAvailable(ApplicationProvider.getApplicationContext()))
+
+    }
+
+    private fun findConnectivityManager() =
+        ApplicationProvider.getApplicationContext<Context>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+
+}

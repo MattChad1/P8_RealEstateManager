@@ -28,14 +28,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             app:tabBackground="@drawable/dot_selector"
             app:tabIndicatorHeight="0dp"
             android:layout_gravity="center_horizontal"
-            app:tabPaddingBottom="0dp"
-            app:tabPaddingEnd="0dp"
-            app:tabPaddingStart="0dp"
-            app:tabPaddingTop="0dp"
+            app:tabPadding="0dp"
             tools:background="@drawable/dot_selected" />
 
 
@@ -58,45 +55,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non."
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eleifend tortor. Phasellus consequat velit risus, sed tincidunt massa gravida eu. Etiam justo eros, ultrices ac efficitur vel, efficitur nec sem. Duis pharetra vulputate hendrerit. Fusce pellentesque, nunc quis lacinia pellentesque, odio ante iaculis nulla, non consequat ante ipsum a justo. Nam a elit sed ipsum feugiat eleifend. Sed non."
             app:layout_constraintTop_toBottomOf="@id/tv_description_title"
             tools:layout_editor_absoluteX="0dp" />
+
+        <GridLayout
+            android:id="@+id/gridlayout_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:columnCount="2"
+            android:useDefaultMargins="true"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_description"
+            >
 
         <include
             android:id="@+id/cardview_square_meters"
             layout="@layout/card_datas_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_description"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
             />
 
         <include
             layout="@layout/card_datas_details"
             android:id="@+id/cardview_number_rooms"
-            app:layout_constraintTop_toBottomOf="@id/cardview_square_meters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            />
+
 
         <include
             layout="@layout/card_datas_details"
             android:id="@+id/cardview_number_bathrooms"
-            app:layout_constraintTop_toBottomOf="@id/cardview_number_rooms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1" />
 
 
         <include
             android:id="@+id/cardview_number_bedrooms"
             layout="@layout/card_datas_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/cardview_number_bathrooms"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
             />
+
+        </GridLayout>
 
         <include
             layout="@layout/card_datas_details"
             android:id="@+id/cardview_location"
-            app:layout_constraintTop_toBottomOf="@id/cardview_number_bedrooms"
+            app:layout_constraintTop_toBottomOf="@id/gridlayout_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
