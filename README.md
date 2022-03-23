@@ -20,10 +20,10 @@ annonce avec des photos. Les modifications sont visibles en direct par les autre
 
 ## Captures d'écran
 
-<img src="app/src/main/assets/screenshot_list.png" style="width:270px;margin-right:15px;float:left" />
-<img src="app/src/main/assets/screenshot_detail.png" style="width:270px;margin-right:15px; float:left" />
-<img src="app/src/main/assets/screenshot_map.png" style="width:270px;margin-right:15px;float:left" />
-<img src="app/src/main/assets/screenshot_search.png" style="width:270px;margin-right:15px;float:left" />
+<img src="app/src/main/assets/screenshot_list.png" style="width:270px;margin-right:15px;" align="left" />
+<img src="app/src/main/assets/screenshot_detail.png" style="width:270px;margin-right:15px;" align="right" />
+<img src="app/src/main/assets/screenshot_map.png" style="width:270px;margin-right:15px;" align="left" />
+<img src="app/src/main/assets/screenshot_search.png" style="width:270px;margin-right:15px;" align="right" />
 
 ## Dernière modification
 05/03/2022
