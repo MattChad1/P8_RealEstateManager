@@ -9,6 +9,7 @@
     <dimen name="imageListItem_width">120dp</dimen>
     <dimen name="imageListItem_height">100dp</dimen>
     <dimen name="map_embedded">250dp</dimen>
+    <dimen name="width_info_window">150dp</dimen>
 
 
     // sizes police

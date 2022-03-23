@@ -309,12 +309,6 @@ class AddPropertyFragment : Fragment() {
     }
 
 
-//    fun loadPhotosFromInternalStorageIntoRecyclerView() {
-//        lifecycleScope.launch {
-//            val photos = viewModel.imagesPrevLiveData
-//        }
-//
-//    }
 
 
     private fun setupInternalStorageRecyclerView() = binding.rvPrivatePhotos.apply {

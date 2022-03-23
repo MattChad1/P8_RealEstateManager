@@ -13,8 +13,6 @@
         <action
             android:id="@+id/action_listPropertiesFragment_to_detailPropertyFragment"
             app:destination="@id/detailPropertyFragment" />
-
-
     </fragment>
 
     <fragment
@@ -33,6 +31,7 @@
             android:id="@+id/action_detailPropertyFragment_to_addFragment"
             app:destination="@id/addFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.openclassrooms.realestatemanager.ui.search.SearchFragment"

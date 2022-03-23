@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/mchad/.gradle/caches/transforms-3/77ea4e649305b82894b0f94d7dbf8dd4/transformed/appcompat-1.4.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.18020833333333333" />
+        <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/background.xml" value="0.2785" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/border_edittext.xml" value="0.1435" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/border_spinner.xml" value="0.1005" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/dot_default.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/shape_card_border.xml" value="0.2785" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-w600dp/activity_main.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-w600dp/info_window.xml" value="0.1640625" />
         <entry key="..\:/Users/mchad/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-w600dp/modal_bottom_sheet.xml" value="0.16197916666666667" />

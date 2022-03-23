@@ -38,15 +38,5 @@
         app:navGraph="@navigation/shema_navigation"
         tools:layout="@layout/fragment_list_properties" />
 
-    <!--    <androidx.fragment.app.FragmentContainerView-->
-    <!--        android:id="@+id/main_fragment"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/appbar"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:paddingBottom="?attr/actionBarSize"-->
-    <!--        app:layout_constrainedHeight="true"-->
-    <!--        tools:layout="@layout/fragment_list_properties"-->
-    <!--        />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

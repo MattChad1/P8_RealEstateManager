@@ -42,9 +42,7 @@ class DetailPropertyViewModel(
                     property.proximities,
                     property.property.dateStartSell,
                     property.property.dateSold,
-                    if (!property.photos.isNullOrEmpty()) property.photos else null
-                )
-                //                result.postValue(valueReturn)
+                    if (!property.photos.isNullOrEmpty()) property.photos else null)
                 tempLiveData.value = valueReturn
             }
         }
