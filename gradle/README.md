@@ -16,7 +16,7 @@ annonce avec des photos. Les modifications sont visibles en direct par les autre
 - Room + Firbase Firestore  
 - Coroutines
 - Google Maps API
-- Navigation différenciée pour tablette et mobile, gérée avec Navigation Component
+- Navigation différenciée pour tablette et mobile, gérée avec Navigation Component 
 
 
 
